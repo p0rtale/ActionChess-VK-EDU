@@ -1,26 +1,19 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-//#include "Sprite.h"
-struct collider{
-    int x;
-    int y;
-    int width;
-    int height;
-};
-class Figure{
+#include "Sprite.h"
+
+
+class Figure : public Sprite{
 private:
-    int ID;
-    sf::Vector2f position;
-    sf::Sprite sprite;
-    collider collide;
-    sf::Texture texture;
+    int id;
     char color;
     bool Alive;
     bool isInFlight;
 public:
-    void update();
+    Figure();
+    void update() override;
     int del();
     bool isInFlight();
     int getID();
-    sf::Sprite getSprite();
+    void move();
 };

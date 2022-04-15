@@ -13,10 +13,12 @@ Engine::Engine()
  
     // Загружаем фон в текстуру
     // Подготовьте изображение под ваш размер экрана в редакторе
-    m_BackgroundTexture.loadFromFile("background.jpg");
+    BackgroundTexture.loadFromFile("background.jpg");
  
     // Связываем спрайт и текстуру
-    m_BackgroundSprite.setTexture(m_BackgroundTexture);
+    BackgroundSprite.setTexture(BackgroundTexture);
+
+
  
 }
 
@@ -31,9 +33,11 @@ void Engine::draw()
     window.clear(sf::Color::White);
  
     // Отрисовываем фон
-    window.draw(m_BackgroundSprite);
+    window.draw(BackgroundSprite);
     
     window.draw(board.getSprite());
+
+    window.draw(board.get_rect());
 
     std::vector<sf::Sprite> Sprites = figures.getSprites(); 
     for (int i=0; i < Sprites.size();++i){

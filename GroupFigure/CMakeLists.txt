@@ -4,7 +4,6 @@ project(groupfigure_lib)
 set(GROUPFIGURE_LIB_LIBRARIES)
 set(GROUPFIGURE_LIB_INCLUDE_DIRS)
 
-add_subdirectory(Sprite)
 add_subdirectory(Figure)
 
 
@@ -13,8 +12,6 @@ message("FIGURE_LIB_LIBRARIES = ${FIGURE_LIB_LIBRARIES}")
 
 add_executable(${PROJECT_NAME} GroupFigure.cpp)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${SPRITE_LIB_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SPRITE_LIB_LIBRARIES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${FIGURE_LIB_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${FIGURE_LIB_LIBRARIES})

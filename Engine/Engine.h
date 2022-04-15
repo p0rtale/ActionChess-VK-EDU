@@ -12,8 +12,9 @@ private:
     sf::RenderWindow window;  
  
     // Create Sprite and Tecture
-    sf::Sprite m_BackgroundSprite;
-    sf::Texture m_BackgroundTexture;
+    sf::Sprite BackgroundSprite;
+    sf::Texture BackgroundTexture;
+    sf::Font font;
     
     int Round;
  
@@ -23,12 +24,14 @@ private:
  
     void update(float dtAsSeconds);
     void draw();
- 
+    
 public:
     // Конструктор движка
     Engine();
  
     // Функция старт вызовет все приватные функции
     void start();
+
+    void changefont();
  
 };

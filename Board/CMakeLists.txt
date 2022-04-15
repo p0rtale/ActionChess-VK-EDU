@@ -4,15 +4,15 @@ project(board_lib)
 set(BOARD_LIB_LIBRARIES)
 set(BOARD_LIB_INCLUDE_DIRS)
 
-#add_subdirectory(Sprite)
+add_subdirectory(Sprite)
 
-#message("SPRITE_LIB_INCLUDE_DIRS = ${SPRITE_LIB_INCLUDE_DIRS}")
-#message("SPRITE_LIB_LIBRARIES = ${SPRITE_LIB_LIBRARIES}")
+message("SPRITE_LIB_INCLUDE_DIRS = ${SPRITE_LIB_INCLUDE_DIRS}")
+message("SPRITE_LIB_LIBRARIES = ${SPRITE_LIB_LIBRARIES}")
 
-#add_executable(${PROJECT_NAME} Board.cpp)
+add_executable(${PROJECT_NAME} Board.cpp)
 
-#target_include_directories(${PROJECT_NAME} PUBLIC ${SPRITE_LIB_INCLUDE_DIRS})
-#target_link_libraries(${PROJECT_NAME} PRIVATE ${SPRITE_LIB_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PUBLIC ${SPRITE_LIB_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SPRITE_LIB_LIBRARIES})
 
 file(GLOB SOURCES *.cpp)
 file(GLOB INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})

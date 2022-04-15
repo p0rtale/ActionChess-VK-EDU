@@ -10,14 +10,13 @@ class GroupFigure
 
     int CountAlive;
     int CountDeath;
-    std::vector<Figure> getFigures();
+
 
 
     public:
-
     GroupFigure();
-    int addFigure();
-    int delFigure();
+    void addFigure();
+    bool delFigure();
     void update(float dtAsSeconds);
     std::vector<sf::Sprite> getSprites();
 };

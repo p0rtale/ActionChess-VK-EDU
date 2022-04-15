@@ -7,12 +7,18 @@ struct collider{
     int width;
     int height;
 };
+struct Tile {
+    unsigned int column;
+    unsigned int row;
+};
 class Sprite
 {
-private:
+protected:
+    Tile position;
     collider collide;
     sf::Sprite sprite;
     sf::Texture texture;
 public:
-    sf::Sprite getSprite();
+    virtual sf::Sprite getSprite();
+    virtual void update();
 };
