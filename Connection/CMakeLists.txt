@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(figure_lib)
+
+set(FIGURE_LIB_LIBRARIES)
+set(FIGURE_LIB_INCLUDE_DIRS)
+
+add_subdirectory(Sprite)
+
+message("SPRITE_LIB_INCLUDE_DIRS = ${SPRITE_LIB_INCLUDE_DIRS}")
+message("SPRITE_LIB_LIBRARIES = ${SPRITE_LIB_LIBRARIES}")
+
+add_executable(${PROJECT_NAME} Figure.cpp)
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${SPRITE_LIB_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SPRITE_LIB_LIBRARIES})
+
+file(GLOB SOURCES *.cpp)
+file(GLOB INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(${PROJECT_NAME} STATIC ${SOURCES})
+
+set(FIGURE_LIB_LIBRARIES ${PROJECT_NAME} PARENT_SCOPE)
+set(FIGURE_LIB_INCLUDE_DIRS ${INCLUDE_DIRS} PARENT_SCOPE)
