@@ -5,7 +5,7 @@ bool Figure::isInFlight(){
     return isInFlight;
 }
 
-int Figure::del(){
+bool Figure::del(){
     return 1;
 }
 

@@ -12,7 +12,7 @@ private:
 public:
     Figure();
     void update() override;
-    int del();
+    bool del();
     bool isInFlight();
     int getID();
     void move();
