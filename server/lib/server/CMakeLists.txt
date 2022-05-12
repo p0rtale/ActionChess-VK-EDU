@@ -1,5 +1,10 @@
-file(GLOB sources src/*.cpp src/handler/*.cpp src/message/*.cpp src/room/*.cpp)
+file(GLOB server_sources src/*.cpp src/handler/*.cpp src/message/*.cpp src/net/*.cpp src/room/*.cpp)
 
-add_library(server STATIC ${sources})
-target_include_directories(server PUBLIC include include/handler include/message include/room)
-target_link_libraries(server PRIVATE ${Boost_LIBRARIES} OpenSSL::SSL)
+add_library(server STATIC ${server_sources})
+
+target_include_directories(server PUBLIC include/handler include/message include/net include/room include/user
+                                  PRIVATE ${RAPIDJSON_INCLUDE_DIR})
+
+# add_subdirectory(lib/game)
+
+target_link_libraries(server PRIVATE common #[[ game ]] ${Boost_LIBRARIES} OpenSSL::SSL)

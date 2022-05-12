@@ -1,7 +1,23 @@
 #include "Handler.hpp"
 
-Handler::Handler(const Request* request, Session* service) {}
+#include "Session.hpp"
 
-void Handler::run() {}
+namespace Handlers {
 
-void Handler::sendResponse() {}
+    Handler::Handler(const Request* request, Session* session)
+        : m_request(request), m_session(session) {}
+
+    void Handler::run() {
+        if (isValid()) {
+            execute();
+        }
+        sendResponse();
+    }
+
+    void Handler::sendResponse() {
+        std::string responseStr;
+        m_response.toJSON(responseStr);
+        m_session->write(responseStr);
+    }
+
+}  // namespace Handlers

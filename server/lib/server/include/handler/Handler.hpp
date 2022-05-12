@@ -1,27 +1,151 @@
 #pragma once
 
+#include <memory>
+
+#include "Message.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
 
 class Session;
 
-class Handler {
-public:
-    Handler(const Request* request, Session* service);
- 
-    virtual ~Handler() = default;
+namespace Handlers {
 
-    void run();
+    class Handler {
+    public:
+        Handler(const Request* request, Session* session);
 
-protected:
+        virtual ~Handler() = default;
 
-    void sendResponse();
+        void run();
 
-    virtual bool isValid() = 0;
+    protected:
+        void sendResponse();
 
-    virtual void execute() = 0;
+        virtual bool isValid() = 0;
 
-    const Request* m_request { nullptr };
-    Session* m_session { nullptr };
-    Response m_response {};
-};
+        virtual void execute() = 0;
+
+        const Request* m_request = nullptr;
+        Session* m_session = nullptr;
+        Response m_response;
+    };
+
+    class CreateRoom: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    class JoinRoom: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    class LeaveRoom: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    class GetAllRooms: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    class WriteMessage: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    class StartGame: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    class MakeMove: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    template<RequestType requestType>
+    struct HandlerTrait {
+        using type = void; 
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::CREATE_ROOM> {
+        using type = CreateRoom;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::JOIN_ROOM> {
+        using type = JoinRoom;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::LEAVE_ROOM> {
+        using type = LeaveRoom;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::GET_ALL_ROOMS> {
+        using type = GetAllRooms;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::WRITE_MESSAGE> {
+        using type = WriteMessage;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::MAKE_MOVE> {
+        using type = MakeMove;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::START_GAME> {
+        using type = StartGame;
+    };
+
+    template<RequestType requestType>
+    using HandlerTrait_t = typename HandlerTrait<requestType>::type;
+
+    template<RequestType requestType>
+    std::unique_ptr<Handler> createHandler(const Request* request, Session* session) {
+        return std::make_unique<HandlerTrait_t<requestType>>(request, session);
+    }
+
+}  // namespace Handlers
