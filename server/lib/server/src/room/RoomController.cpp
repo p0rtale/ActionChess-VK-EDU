@@ -145,14 +145,7 @@ void RoomController::broadcast(const std::string& message, std::uint64_t id) {
 }
 
 void RoomController::clear() {
-    {
-        std::lock_guard<std::mutex> guard(m_mutex);
-        for (auto& pair: m_rooms) {
-            auto room = pair.second;
-            room->clear();
-        }
-        m_rooms.clear();
-    }
-
+    std::lock_guard<std::mutex> guard(m_mutex);
+    m_rooms.clear();
     m_mainRoom->clear();
 }

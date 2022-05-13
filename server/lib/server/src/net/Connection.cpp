@@ -82,16 +82,15 @@ void Connection::write() {
 void Connection::readHandler(const boost::system::error_code& error, std::size_t transferredBytes) {
     if (!error) {
         const auto data = m_readBuf.data();
-        std::string str {
-            boost::asio::buffers_begin(data), 
-            boost::asio::buffers_begin(data) + transferredBytes - kMessageSeparator.size()
-        };
+        std::string str(boost::asio::buffers_begin(data), 
+                        boost::asio::buffers_begin(data) + transferredBytes - kMessageSeparator.size());
         m_readBuf.consume(transferredBytes);
 
         Request request;
         request.parseJSON(str);
         m_requestQueue->push(std::move(request));
         publishRequest();
+
         read();
     } else { 
 

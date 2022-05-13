@@ -28,7 +28,7 @@ void Server::run() {
             }
             run();
         }
-    });    
+    });
 }
 
 void Server::shutdown() {

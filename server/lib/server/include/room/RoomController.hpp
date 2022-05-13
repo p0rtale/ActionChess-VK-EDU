@@ -11,7 +11,6 @@ class Session;
 
 class RoomController final {
 public:
-
     RoomController() = default;
 
     ~RoomController();
@@ -45,7 +44,6 @@ public:
     static constexpr std::uint64_t s_mainRoomID = 0;
 
 private:
-
     std::unordered_map<std::uint64_t, std::shared_ptr<GameRoom>> m_rooms;  // Guarded by m_mutex 
 
     std::shared_ptr<Room> m_mainRoom = std::make_shared<Room>(s_mainRoomID, "MainRoom", Room::s_infiniteUserNum);

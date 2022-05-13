@@ -88,7 +88,7 @@ namespace Handlers {
             m_response.m_data = valueToString(roomToValue(m_session->getRoom(), allocator));
         } else {
             m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
-        }    
+        }
     }
 
     bool JoinRoom::isValid() {

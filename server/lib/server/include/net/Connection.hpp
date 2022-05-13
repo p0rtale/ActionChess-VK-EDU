@@ -51,7 +51,7 @@ private:
 
     boost::asio::io_context::strand m_strand;
 
-    std::shared_ptr<RequestQueue> m_requestQueue = nullptr;
+    std::shared_ptr<RequestQueue> m_requestQueue;
 
     std::weak_ptr<Session> m_bindedSession;
 

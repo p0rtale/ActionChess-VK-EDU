@@ -33,5 +33,5 @@ private:
 
     std::optional<boost::asio::ip::tcp::socket> m_socket;
 
-    std::shared_ptr<RoomController> m_roomController = nullptr;
+    std::shared_ptr<RoomController> m_roomController;
 };

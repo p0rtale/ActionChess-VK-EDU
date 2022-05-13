@@ -26,11 +26,8 @@ void Request::toJSON(std::string& json) const {
     rapidjson::Value value;
 
     const auto type = typeToStr(m_type);
-    value.SetString(type.c_str(), alloc);
+    value.SetString(type.data(), alloc);
     doc.AddMember("type", value, alloc);
-
-    value.SetString(m_data.c_str(), alloc);
-    doc.AddMember("data", value, alloc);
 
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
