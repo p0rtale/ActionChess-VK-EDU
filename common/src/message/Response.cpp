@@ -27,7 +27,7 @@ void Response::toJSON(std::string& json) const {
     rapidjson::Value value;
 
     const auto type = typeToStr(m_type);
-    value.SetString(type.c_str(), alloc);
+    value.SetString(type.data(), alloc);
     doc.AddMember("type", value, alloc);
 
     value.SetInt(static_cast<int>(m_status));
