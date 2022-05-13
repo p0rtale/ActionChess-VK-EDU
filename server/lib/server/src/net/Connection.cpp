@@ -7,9 +7,9 @@ Connection::Connection(boost::asio::io_context* ioContext,
                        boost::asio::ssl::context* sslContext,
                        boost::asio::ip::tcp::socket&& socket,
                        std::shared_ptr<RequestQueue> requestQueue)
-                       : m_socket { std::move(socket), *sslContext },  
-                         m_strand { *ioContext }, 
-                         m_requestQueue { requestQueue } {}
+                       : m_socket(std::move(socket), *sslContext),  
+                         m_strand(*ioContext), 
+                         m_requestQueue(requestQueue) {}
 
 Connection::~Connection() {
     if (m_state != State::CLOSED) {

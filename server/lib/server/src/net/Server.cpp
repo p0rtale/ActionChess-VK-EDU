@@ -53,6 +53,6 @@ void Server::setupSSLContext() {
 }
 
 std::string Server::passwordCallback(std::size_t maxSize,
-                             boost::asio::ssl::context::password_purpose purpose) const {
+                                     boost::asio::ssl::context::password_purpose purpose) const {
     return "passphrase";
 }
