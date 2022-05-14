@@ -7,7 +7,7 @@ public:
     ~WriteBufferSequence() = default;
 
     void push(std::string&& data) {
-        m_buffers.emplace_back(data);
+        m_buffers.emplace_back(std::move(data));
     }
 
     void popAll(std::vector<boost::asio::const_buffer>& bufferSequence) {

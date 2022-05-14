@@ -8,6 +8,8 @@ public:
 
     ~GameRoom() = default;
 
+    bool addSession(const std::shared_ptr<Session>& session) override;
+
     void runGame();
 
 private:

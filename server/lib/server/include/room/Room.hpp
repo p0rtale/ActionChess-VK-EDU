@@ -20,7 +20,7 @@ public:
 
     std::uint64_t getMaxUsersNum() const;
 
-    bool addSession(const std::shared_ptr<Session>& session);
+    virtual bool addSession(const std::shared_ptr<Session>& session);
 
     bool removeSession(std::uint64_t id);
 
@@ -34,7 +34,7 @@ public:
 
     static constexpr std::uint64_t s_infiniteUserNum = std::numeric_limits<std::uint64_t>::max();
 
-private:
+protected:
     std::string m_name;
 
     const std::uint64_t m_id = 0;
