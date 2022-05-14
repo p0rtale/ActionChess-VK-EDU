@@ -17,9 +17,18 @@ public:
         string msg = this->requestQueue.get();
         try 
         {
-            int figure_id = stoi(temp.find("figure"));
-            int start_tile = stoi(temp.find("start"));
-            int end_tile = stoi(temp.find("end"));
+            string delimeter = ",";
+            int position = 0;
+            string temp;
+            string key[3] = {"\"figure\":","\"start\":", "\"end\":"}
+            for (int i = 0; i < 3; i++)
+            {
+                position = msg.find(delimeter);
+                temp = msg.substr(msq.find(key[i]), position);
+                int figure_id = stoi(temp);
+                msg.erase(0, pos + delimeter.length());
+            }
+
             handler.moveFigure(figure_id, start_tile, end_tile);
         }
         catch (invalid_argument)
