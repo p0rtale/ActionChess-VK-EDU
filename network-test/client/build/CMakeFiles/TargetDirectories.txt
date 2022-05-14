@@ -1,0 +1,9 @@
+/home/nurik/Рабочий стол/2022/c++/client/build/CMakeFiles/rapidjson.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/CMakeFiles/edit_cache.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/CMakeFiles/rebuild_cache.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/common/CMakeFiles/common.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/common/CMakeFiles/edit_cache.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/common/CMakeFiles/rebuild_cache.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/server/CMakeFiles/main.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/server/CMakeFiles/edit_cache.dir
+/home/nurik/Рабочий стол/2022/c++/client/build/server/CMakeFiles/rebuild_cache.dir

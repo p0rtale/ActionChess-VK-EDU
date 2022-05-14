@@ -1,0 +1,1 @@
+#define DEFAULT_FONT_PATH "./fonts/gost.ttf"
