@@ -11,7 +11,7 @@ class FigureHandler
 private:
     Figure board[16];
     char winner;
-    void moveFigure(Figure figure, Tile startTile, Tile endTile);
+    void moveFigure(int figure, int startTile, int endTile);
     void castling(Rock rock, King king);
 public:
     FigureHandler();
@@ -20,6 +20,8 @@ public:
     bool isCorrect(Figure figure);
     bool setFlightTimer(Figure figure);
     bool setCallDownTimer(Figure figure);
+    Tile findTile(int id);
+    Figure findFigure(int id);
 };
 
 #endif

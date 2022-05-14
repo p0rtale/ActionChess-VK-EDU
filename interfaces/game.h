@@ -4,17 +4,17 @@
 #include <iostream>
 #include <string>
 
-class game
+class Game
 {
 private:
     MsgQueue requestQueue;
 
 public:
-    game();
-    ~game();
+    Game();
+    ~Game();
     void addRequest(std::string request);
     void extractData();
-    std::string sendResponse();
+    std::string sendResponse(int code);
 };
 
 #endif

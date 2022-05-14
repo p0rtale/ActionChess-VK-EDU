@@ -2,18 +2,17 @@
 #define MESSAGE_QUEUE_H
 #include <iostream>
 #include <string>
+#include <queue>
 
 class MsgQueue
 {
 private:
-    int bufferSize;
-    int dataSize;
-    std::string* data;
+    queue <std::string> data;
 public:
     MsgQueue();
     ~MsgQueue();
     std::string get();
-    void add();
+    void add(std::string msg);
 };
 
 #endif
