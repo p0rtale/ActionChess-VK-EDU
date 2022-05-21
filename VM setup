@@ -1,0 +1,5 @@
+sudo apt-get install build-essential
+sudo snap install cmake --clasic
+sudo apt-get install libsfml-dev
+sudo apt-get install libboost-all-dev
+sudo apt-get install libssl-dev
