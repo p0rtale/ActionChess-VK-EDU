@@ -11,6 +11,7 @@ public:
     MenuView(sf::RenderWindow* inp_window, BasicModel* inp_model){
         window = inp_window;
         model = inp_model;
+        init();
     };
 private:
     menu_assets menu_media;

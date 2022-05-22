@@ -5,8 +5,8 @@
 class BasicModel{
 //Абстрактный класс для model
 public:
-    virtual void init();    
-    virtual void tick();
+    virtual void init() = 0;    
+    virtual void tick() = 0;
 
     BasicModel(BasicModel const& other) = delete;
     BasicModel &operator=(BasicModel const& other) = delete;

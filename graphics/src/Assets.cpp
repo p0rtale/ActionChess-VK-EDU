@@ -3,7 +3,7 @@
 #include "Variables.hpp"
 void Assets::load(){
     menu.background_image.loadFromFile(MENU_BACKGROUND_IMAGE_PATH);
-
+    menu.name_textbox_background_image.loadFromFile(MENU_NAME_TEXTBOX_BACKGROUND_IMAGE);
     general.font.loadFromFile(GENERAL_FONT_PATH);
 }
 

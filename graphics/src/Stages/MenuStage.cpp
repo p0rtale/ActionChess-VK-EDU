@@ -6,12 +6,16 @@
 #include "MenuController.hpp"
 #include "MenuView.hpp"
 
-void MenuStage::init(sf::RenderWindow* inp_window){
-    window = inp_window;
+void MenuStage::init(){
     model = new MenuModel();
     view = new MenuView(window,model);
-    controller = new MenuController(view,model);
+    controller = new MenuController(view,model,window);
     
+}
+
+MenuStage::MenuStage(sf::RenderWindow* inp_window){
+    window = inp_window;
+    init();
 }
 MenuStage::~MenuStage(){
     delete model;
@@ -21,7 +25,8 @@ MenuStage::~MenuStage(){
 }
 BasicStage* MenuStage::run(){
     while(window->isOpen()){
-    controller->run();
+        controller->run();
     }
+    return this;
 }
 

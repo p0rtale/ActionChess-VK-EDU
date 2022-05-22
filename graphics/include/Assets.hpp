@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 struct menu_assets{
     sf::Texture background_image;
-    
+    sf::Texture name_textbox_background_image;
 };
 
 struct room_assets{

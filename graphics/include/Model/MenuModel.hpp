@@ -5,7 +5,7 @@
 class MenuModel: public BasicModel{
 //Абстрактный класс для model
 public:
-    void init() override;    
-    void tick() override;
+    void init() {};// TODO: override     
+    void tick() {} ;// TODO: override 
     ~MenuModel() = default ;
 };

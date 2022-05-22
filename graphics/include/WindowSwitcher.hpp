@@ -21,7 +21,7 @@ private:
     sf::RenderWindow* window;
     std::string window_head_name = "Action Chess";
     BasicStage* Stage;
-    WindowSwitcher();
+    WindowSwitcher() = default;
     ~WindowSwitcher();
     WindowSwitcher(WindowSwitcher const& other) = delete;
     WindowSwitcher &operator=(WindowSwitcher const& other) = delete;

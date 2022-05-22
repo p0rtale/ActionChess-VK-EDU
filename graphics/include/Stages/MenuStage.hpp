@@ -7,9 +7,10 @@
 class MenuStage: public BasicStage{
 
 public:
-    void init(sf::RenderWindow* inp_window) override;
+    void init() override;
     BasicStage* run() override;
     ~MenuStage() override;
+    MenuStage(sf::RenderWindow* inp_window);
 
 private:
     
