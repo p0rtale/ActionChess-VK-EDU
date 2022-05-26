@@ -5,6 +5,8 @@ project(action-chess-client)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 find_package(SFML REQUIRED COMPONENTS system window graphics )
 include_directories(${SFML_INCLUDE_DIR} )
 find_package(Boost REQUIRED COMPONENTS system)

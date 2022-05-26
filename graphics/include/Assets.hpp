@@ -15,7 +15,7 @@ struct game_assets{
 };
 
 struct general_assets{
-    sf::Font font; 
+    sf::Font gost_font; 
 };
 
 class Assets{

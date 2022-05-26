@@ -7,7 +7,7 @@
 #include <memory>
 void MenuView::init(){
     menu_media = Assets::get_instance().get_menu_assets();
-    general_assets temp = Assets::get_instance().get_general_assets();
+    general_media = Assets::get_instance().get_general_assets();
     //font = temp.font;
     background_image = menu_media.background_image;
     background_image.setSmooth(true);
@@ -21,7 +21,10 @@ void MenuView::init(){
     sf::Text caption;
     sf::Text hint;
     sf::Text databox;
-    sf::Rect<float> act = sf::Rect<float>(name_textbox_pos,name_textbox_pos);
+    databox.setFillColor(sf::Color::Black);
+    databox.setFont(general_media.gost_font);
+    databox.setCharacterSize(30);
+    sf::Rect<float> act = sf::Rect<float>(NAME_TEXTBOX_ACTBOX_X*scale_factor.x, NAME_TEXTBOX_ACTBOX_Y*scale_factor.y, NAME_TEXTBOX_ACTBOX_WIDTH*scale_factor.x, NAME_TEXTBOX_ACTBOX_HEIGHT*scale_factor.y);
     widgets.push_back(std::make_shared<TextBox>(menu_media.name_textbox_background_image,scale_factor,name_textbox_pos, act,caption,hint,databox));
 
 

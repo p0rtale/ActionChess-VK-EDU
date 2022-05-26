@@ -1,6 +1,10 @@
 #pragma once
 #include "BasicController.hpp"
 #include <SFML/Graphics.hpp>
+#include "BasicWidget.hpp"
+#include "CursorController.hpp"
+#define DEBUG
+
 class MenuController: public BasicController{
 public:
     void init() override;    
@@ -13,4 +17,7 @@ public:
     };
 
     ~MenuController() = default;
+    private:
+        
+        BasicWidget* widget_on_focus = NULL;
 };

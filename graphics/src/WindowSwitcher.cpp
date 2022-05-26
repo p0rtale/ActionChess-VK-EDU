@@ -11,9 +11,9 @@ void WindowSwitcher::init(){
 }
 
 void WindowSwitcher::run(){
-    while(window->isOpen()){
+    //while(window->isOpen()){
         Stage = Stage->run(); 
-    }
+    //}
 }
 WindowSwitcher::~WindowSwitcher(){
     delete window;

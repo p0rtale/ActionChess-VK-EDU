@@ -15,4 +15,5 @@ public:
     };
 private:
     menu_assets menu_media;
+    general_assets general_media;
 };

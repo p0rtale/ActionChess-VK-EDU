@@ -18,6 +18,7 @@ public:
     friend void swap(BasicView& lhs, BasicView& rhs) = delete;
     BasicView() = default;
     virtual ~BasicView() = default;
+    inline std::vector<std::shared_ptr<BasicWidget>>& get_widget_vec(){return widgets;}
 protected:
     sf::RenderWindow* window;
     BasicModel* model;
