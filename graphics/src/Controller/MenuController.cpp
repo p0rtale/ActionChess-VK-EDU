@@ -42,7 +42,7 @@ void MenuController::run(){
                 case sf::Event::TextEntered:
                 {
                     for(auto& widget:view->get_widget_vec()){
-                        widget->on_type(window);
+                        widget->on_type(window,e);
                     }
                     break;
                 }

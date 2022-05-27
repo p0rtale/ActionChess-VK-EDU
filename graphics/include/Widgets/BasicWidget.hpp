@@ -25,7 +25,7 @@ public:
     virtual void on_click_release(sf::RenderWindow* window) = 0;
     virtual void on_click_press(sf::RenderWindow* window) = 0;
     virtual void on_mouse_over(sf::RenderWindow* window) = 0;
-    virtual void on_type(sf::RenderWindow* window) = 0;
+    virtual void on_type(sf::RenderWindow* window, sf::Event event) = 0;
     virtual void draw(sf::RenderWindow* window) = 0;
     // sf::String get_data(){return data;};
     // void set_caption(sf::String inp) {caption.setString(inp);};

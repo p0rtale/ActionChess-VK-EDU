@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <SFML/Graphics.hpp>
 #include "BasicWidget.hpp"
 #include "Variables.hpp"
@@ -12,20 +13,23 @@ public:
                 background.setPosition(pos.x*scale_factor.x,pos.y*scale_factor.y);  
                 background.setScale(scale_factor);
                 databox.setPosition(active_zone.left,active_zone.top); // TODO: вместо умножения на скейл фактор нужно сделать инлайн функцию
-                      
+                hint.setPosition(active_zone.left,active_zone.top); // TODO: вместо умножения на скейл фактор нужно сделать инлайн функцию
+
             };
     
     TextBox() {};
     ~TextBox() {};
 
-    void on_click_release(sf::RenderWindow* window)override {};
+    void on_click_release(sf::RenderWindow* window)override;
     void on_click_press(sf::RenderWindow* window) override;
     void on_mouse_over(sf::RenderWindow* window)override;
-    void on_type(sf::RenderWindow* window)override;
+    void on_type(sf::RenderWindow* window, sf::Event event)override;
     void draw(sf::RenderWindow* window) override;
+    sf::String get_data(){return data;}
 
 
 protected:
+    sf::String fit_in_table(sf::Text* box,sf::String str);
     sf::String to_show = "";
     sf::Clock cursor_animation;
     bool show_cursor = false;

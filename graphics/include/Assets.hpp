@@ -4,6 +4,10 @@
 struct menu_assets{
     sf::Texture background_image;
     sf::Texture name_textbox_background_image;
+    sf::Texture slider_stick_image;
+    sf::Texture slider_image;
+    sf::Texture button_filling;
+    sf::Texture button_edge;
 };
 
 struct room_assets{
