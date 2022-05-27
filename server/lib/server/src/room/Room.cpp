@@ -28,7 +28,7 @@ std::uint64_t Room::getMaxUsersNum() const {
 }
 
 bool Room::addSession(const std::shared_ptr<Session>& session) {
-    const auto id = session->getUser().m_id;
+    const auto id = session->getUser().getId();
     auto userNum = getUsersNum();
 
     if (userNum >= m_maxUsersNum) {
@@ -68,7 +68,7 @@ void Room::broadcast(const std::string& message, std::uint64_t id) {
 
     for (auto& pair: m_sessions) {
         auto session = pair.second;
-        const auto currentId = session->getUser().m_id;
+        const auto currentId = session->getUser().getId();
         if (currentId != id) {
             session->write(message);
         }

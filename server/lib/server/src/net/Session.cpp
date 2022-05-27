@@ -16,10 +16,10 @@ Session::Session(std::shared_ptr<boost::asio::io_context> ioContext,
                    m_connection(std::make_shared<Connection>(
                        ioContext.get(), 
                        sslContext.get(),
-                       std::move(socket), 
-                       m_requestQueue
-                   )) {
-    m_user.m_roomId = RoomController::s_mainRoomID;
+                       std::move(socket),
+                       m_user.getId(),
+                       m_requestQueue)) {
+    m_user.changeRoomId(RoomController::s_mainRoomID);
 }
 
 Session::~Session() {
@@ -42,7 +42,7 @@ void Session::acknowledge() {
 }
 
 std::uint64_t Session::getId() const {
-    return m_user.m_id;
+    return m_user.getId();
 }
 
 bool Session::isSyn() const {
@@ -62,7 +62,7 @@ const User& Session::getUser() const {
 }
 
 const Room& Session::getRoom() const {
-    return m_roomController->getRoom(m_user.m_roomId);
+    return m_roomController->getRoom(m_user.getRoomId());
 }
 
 std::vector<std::shared_ptr<Room>> Session::getAllRooms() const {
@@ -70,11 +70,11 @@ std::vector<std::shared_ptr<Room>> Session::getAllRooms() const {
 }
 
 void Session::changeUserName(std::string name) {
-    m_user.m_name = std::move(name);
+    m_user.changeName(name);
 }
 
 bool Session::userInMainRoom() const {
-    return m_user.m_roomId == RoomController::s_mainRoomID;
+    return m_user.getRoomId() == RoomController::s_mainRoomID;
 }
 
 void Session::write(std::string message) {
@@ -87,24 +87,24 @@ std::uint64_t Session::createRoom(const std::string& name, std::size_t maxUserNu
 
 bool Session::moveToRoom(std::uint64_t roomId) {
     if (m_roomController->moveToRoom(roomId, shared_from_this())) {
-        m_user.m_roomId = roomId;
+        m_user.changeRoomId(roomId);
         return true;
     }
     return false;
 }
 
 bool Session::moveFromRoom() {
-    if (m_user.m_roomId != RoomController::s_mainRoomID) {
-        m_roomController->moveFromRoom(m_user.m_roomId, shared_from_this());
-        m_user.m_roomId = RoomController::s_mainRoomID;
+    if (m_user.getRoomId() != RoomController::s_mainRoomID) {
+        m_roomController->moveFromRoom(m_user.getRoomId(), shared_from_this());
+        m_user.changeRoomId(RoomController::s_mainRoomID);
         return true;
     }
     return false;
 }
 
 bool Session::runGame() {
-    if (m_user.m_roomId != RoomController::s_mainRoomID) {
-        m_roomController->runGame(m_user.m_roomId);
+    if (m_user.getRoomId() != RoomController::s_mainRoomID) {
+        m_roomController->runGame(m_user.getRoomId());
         return true;
     }
     return false;
@@ -115,10 +115,10 @@ void Session::broadcast(const std::string& message) {
 }
 
 void Session::removeFromRoomController() {
-    if (m_user.m_roomId != RoomController::s_mainRoomID) {
+    if (m_user.getRoomId() != RoomController::s_mainRoomID) {
         m_roomController->removeSession(shared_from_this());
     }
-    m_state = State::CLOSED;    
+    m_state = State::CLOSED;
 }
 
 void Session::closeConnection() {
@@ -160,6 +160,9 @@ void Session::handleRequest(Request&& request) {
             break;
         case RequestType::MAKE_MOVE:
             createHandler<RequestType::MAKE_MOVE>(&request, this)->run();
+            break;
+        case RequestType::UNDEFINED:
+            createHandler<RequestType::UNDEFINED>(&request, this)->run();
             break;
     }
 }

@@ -7,4 +7,5 @@ target_include_directories(server PUBLIC include/handler include/message include
 
 # add_subdirectory(lib/game)
 
-target_link_libraries(server PRIVATE common #[[ game ]] ${Boost_LIBRARIES} OpenSSL::SSL)
+target_link_libraries(server PUBLIC common #[[ game ]] 
+                             PRIVATE ${Boost_LIBRARIES} OpenSSL::SSL)

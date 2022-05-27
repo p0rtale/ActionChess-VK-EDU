@@ -8,7 +8,7 @@ public:
 
     ResponseStatus m_status = ResponseStatus::OK;
 
-    std::string m_data;
+    std::string m_jsonData;
 
     void parseJSON(const std::string& json) override;
 

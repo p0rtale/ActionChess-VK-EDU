@@ -16,8 +16,8 @@ static std::string valueToString(const rapidjson::Value& value) {
 }
 
 static rapidjson::Value userToValue(const User& user, rapidjson::MemoryPoolAllocator<>& allocator) {
-    const auto userId = user.m_id;
-    const auto userName = user.m_name;
+    const auto userId = user.getId();
+    const auto userName = user.getName();
 
     rapidjson::Value value(rapidjson::kObjectType);
     value.AddMember("user", rapidjson::Value(rapidjson::kObjectType), allocator);
@@ -72,20 +72,31 @@ namespace Handlers {
             m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
         }
 
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
+        if (doc.Parse(m_request->m_jsonData.data()).HasParseError() ||
+            !doc.HasMember("user") || 
+            !doc["user"].HasMember("name") || !doc["user"]["name"].IsString() ||
+            !doc.HasMember("room") ||
+            !doc["room"].HasMember("name") || !doc["room"]["name"].IsString() ||
+            !doc["room"].HasMember("max-users-num") || !doc["room"]["max-users-num"].IsUint64()) {
+            m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
+        }
+
         return m_response.m_status == ResponseStatus::OK;
     }
 
     void CreateRoom::execute() {
         rapidjson::Document doc;
         auto& allocator = doc.GetAllocator();
-        doc.Parse(m_request->m_data.data());
+        doc.Parse(m_request->m_jsonData.data());
 
         const std::string roomName = doc["room"]["name"].GetString();
         const auto maxUsersNum = doc["room"]["max-users-num"].GetUint64();
         const auto roomId = m_session->createRoom(roomName, maxUsersNum); 
         if (m_session->moveToRoom(roomId)) {
             m_session->changeUserName(doc["user"]["name"].GetString());
-            m_response.m_data = valueToString(roomToValue(m_session->getRoom(), allocator));
+            m_response.m_jsonData = valueToString(roomToValue(m_session->getRoom(), allocator));
         } else {
             m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
         }
@@ -102,18 +113,28 @@ namespace Handlers {
             m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
         }
 
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
+        if (doc.Parse(m_request->m_jsonData.data()).HasParseError() ||
+            !doc.HasMember("user") || 
+            !doc["user"].HasMember("name") || !doc["user"]["name"].IsString() ||
+            !doc.HasMember("room") || 
+            !doc["room"].HasMember("id") || !doc["room"]["id"].IsUint64()) {
+            m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
+        }
+
         return m_response.m_status == ResponseStatus::OK;
     }
 
     void JoinRoom::execute() {
         rapidjson::Document doc;
         auto& allocator = doc.GetAllocator();
-        doc.Parse(m_request->m_data.data());
+        doc.Parse(m_request->m_jsonData.data());
         const auto roomId = doc["room"]["id"].GetUint64();
 
         if (m_session->moveToRoom(roomId)) {
             m_session->changeUserName(doc["user"]["name"].GetString());
-            m_response.m_data = valueToString(roomToValue(m_session->getRoom(), allocator));
+            m_response.m_jsonData = valueToString(roomToValue(m_session->getRoom(), allocator));
         } else {
             m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
         }
@@ -144,9 +165,9 @@ namespace Handlers {
 
             rapidjson::Value value(rapidjson::kObjectType);
             value.AddMember("user", rapidjson::Value(rapidjson::kObjectType), allocator);
-            value["user"].AddMember("id", m_session->getUser().m_id, allocator);
+            value["user"].AddMember("id", m_session->getUser().getId(), allocator);
 
-            updateMessage.m_data = valueToString(value);
+            updateMessage.m_jsonData = valueToString(value);
 
             std::string json;
             updateMessage.toJSON(json);
@@ -183,7 +204,7 @@ namespace Handlers {
             arrayValue.PushBack(roomToValue(*room, allocator), allocator);
         }
 
-        m_response.m_data = valueToString(value);
+        m_response.m_jsonData = valueToString(value);
     }
 
     bool WriteMessage::isValid() {
@@ -197,13 +218,20 @@ namespace Handlers {
             m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
         }
 
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
+        if (doc.Parse(m_request->m_jsonData.data()).HasParseError() ||
+            !doc.HasMember("message") || !doc["message"].IsString()) {
+            m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
+        }
+
         return m_response.m_status == ResponseStatus::OK;
     }
 
     void WriteMessage::execute() {
         rapidjson::Document doc;
         auto& allocator = doc.GetAllocator();
-        doc.Parse(m_request->m_data.data());
+        doc.Parse(m_request->m_jsonData.data());
         const std::string message = doc["message"].GetString();
 
         {
@@ -213,7 +241,7 @@ namespace Handlers {
             stringValue.SetString(message.data(), allocator);
             value.AddMember("message", stringValue, allocator);
 
-            m_response.m_data = valueToString(value);
+            m_response.m_jsonData = valueToString(value);
         }
 
         Response updateMessage;
@@ -222,13 +250,13 @@ namespace Handlers {
 
         rapidjson::Value value(rapidjson::kObjectType);
         value.AddMember("user", rapidjson::Value(rapidjson::kObjectType), allocator);
-        value["user"].AddMember("id", m_session->getUser().m_id, allocator);
+        value["user"].AddMember("id", m_session->getUser().getId(), allocator);
         
         rapidjson::Value stringValue;
         stringValue.SetString(message.data(), allocator);
         value.AddMember("message", stringValue, allocator);
 
-        updateMessage.m_data = valueToString(value);
+        updateMessage.m_jsonData = valueToString(value);
 
         std::string json;
         updateMessage.toJSON(json);

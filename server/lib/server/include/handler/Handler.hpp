@@ -100,6 +100,16 @@ namespace Handlers {
         void execute() override;
     };
 
+    class Undefined: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
     template<RequestType requestType>
     struct HandlerTrait {
         using type = void; 
@@ -138,6 +148,11 @@ namespace Handlers {
     template<>
     struct HandlerTrait<RequestType::START_GAME> {
         using type = StartGame;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::UNDEFINED> {
+        using type = Undefined;
     };
 
     template<RequestType requestType>

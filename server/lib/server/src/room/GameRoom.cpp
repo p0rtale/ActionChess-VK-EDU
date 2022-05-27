@@ -3,7 +3,7 @@
 GameRoom::GameRoom(std::uint64_t id, const std::string& name, std::uint64_t maxUserNum): Room(id, name, maxUserNum) {}
 
 bool GameRoom::addSession(const std::shared_ptr<Session>& session) {
-    const auto id = session->getUser().m_id;
+    const auto id = session->getUser().getId();
     auto userNum = getUsersNum();
 
     if (userNum >= m_maxUsersNum) {
@@ -13,7 +13,7 @@ bool GameRoom::addSession(const std::shared_ptr<Session>& session) {
     std::lock_guard<std::mutex> guard(m_mutex);
     m_sessions.emplace(id, session);
 
-    if (userNum == m_maxUsersNum - 1) {
+    if (getUsersNum() == m_maxUsersNum) {
         runGame();
     }
 
