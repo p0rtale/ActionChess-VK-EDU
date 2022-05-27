@@ -5,9 +5,8 @@
 class Pawn :public Figure
 {
 public:
-    Pawn();
-    ~Pawn();
-    bool isMoveCorrect();
+    Pawn(int id, char color, int count);
+    bool isMoveCorrect(Tile end_position);
 };
 
 #endif

@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../interfaces/figure.h
+tile.h
+../interfaces/tile.h
+
+../interfaces/pawn.h
+figure.h
+../interfaces/figure.h
+
+../interfaces/tile.h
+
+/media/sf_/ActionChess-VK-EDU/rules/pawn.cpp
+figure.h
+/media/sf_/ActionChess-VK-EDU/rules/figure.h
+pawn.h
+/media/sf_/ActionChess-VK-EDU/rules/pawn.h
+math.h
+-
+iostream
+-
+

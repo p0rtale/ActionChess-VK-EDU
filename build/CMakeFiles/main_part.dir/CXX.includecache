@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../interfaces/figure.h
+tile.h
+../interfaces/tile.h
+
+../interfaces/figure_handler.h
+iostream
+-
+string
+-
+figure.h
+../interfaces/figure.h
+rock.h
+../interfaces/rock.h
+king.h
+../interfaces/king.h
+
+../interfaces/king.h
+tile.h
+../interfaces/tile.h
+figure.h
+../interfaces/figure.h
+
+../interfaces/rock.h
+tile.h
+../interfaces/tile.h
+figure.h
+../interfaces/figure.h
+
+../interfaces/tile.h
+
+/media/sf_/ActionChess-VK-EDU/rules/main.cpp
+figure_handler.h
+/media/sf_/ActionChess-VK-EDU/rules/figure_handler.h
+tile.h
+/media/sf_/ActionChess-VK-EDU/rules/tile.h
+iostream
+-
+

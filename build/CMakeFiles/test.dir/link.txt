@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtest.a CMakeFiles/test.dir/rules/tile.cpp.o CMakeFiles/test.dir/rules/figure.cpp.o CMakeFiles/test.dir/rules/pawn.cpp.o CMakeFiles/test.dir/rules/figure_handler.cpp.o
+/usr/bin/ranlib libtest.a

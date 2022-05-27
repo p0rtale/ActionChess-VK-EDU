@@ -9,19 +9,19 @@
 class FigureHandler
 {
 private:
-    Figure board[16];
+    Figure* board[16];
     char winner;
-    void moveFigure(int figure, int startTile, int endTile);
-    void castling(Rock rock, King king);
+    void moveFigure(int figure, Tile endTile);
+    // void castling(Rock rock, King king);
 public:
     FigureHandler();
-    ~FigureHandler();
-    char getWinner();
-    bool isCorrect(Figure figure);
-    bool setFlightTimer(Figure figure);
-    bool setCallDownTimer(Figure figure);
-    Tile findTile(int id);
-    Figure findFigure(int id);
+    // ~FigureHandler();
+    // char getWinner();
+    // bool isCorrect(Figure figure);
+    // bool setFlightTimer(Figure figure);
+    // bool setCallDownTimer(Figure figure);
+    // Tile findTile(int id);
+    // Figure findFigure(int id);
 };
 
 #endif
