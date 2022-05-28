@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 class WriteBufferSequence {
 public:
     WriteBufferSequence() = default;
@@ -7,20 +9,28 @@ public:
     ~WriteBufferSequence() = default;
 
     void push(std::string&& data) {
-        m_buffers.emplace_back(data);
+        m_buffers[m_currentBuffer].emplace_back(std::move(data));
     }
 
-    void popAll(std::vector<boost::asio::const_buffer>& bufferSequence) {
-        for (const auto& string: m_buffers) {
+    std::vector<boost::asio::const_buffer> popAll() {
+        m_buffers[1 - m_currentBuffer].clear();
+
+        std::vector<boost::asio::const_buffer> bufferSequence;
+        for (const auto& string: m_buffers[m_currentBuffer]) {
             bufferSequence.emplace_back(boost::asio::const_buffer(string.data(), string.size()));
         }
-        m_buffers.clear();
+
+        m_currentBuffer = 1 - m_currentBuffer;
+
+        return bufferSequence;
     }
 
     std::size_t size() const {
-        return m_buffers.size();
+        return m_buffers[m_currentBuffer].size();
     }
 
 private:
-    std::vector<std::string> m_buffers;
+    std::array<std::vector<std::string>, 2> m_buffers;
+
+    std::size_t m_currentBuffer = 0;
 };

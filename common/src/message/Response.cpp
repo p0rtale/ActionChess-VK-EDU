@@ -6,16 +6,20 @@
 
 void Response::parseJSON(const std::string& json) {
     rapidjson::Document doc;
-    doc.Parse(json.c_str());
-
-    m_type = strToType(doc["type"].GetString());
-    m_status = static_cast<ResponseStatus>(doc["status"].GetInt());
+    if (doc.Parse(json.data()).HasParseError() ||
+        !doc.HasMember("type") || !doc["type"].IsString() ||
+        !doc.HasMember("status") || !doc["status"].IsInt()) {
+        m_type = RequestType::UNDEFINED;
+    } else {
+        m_type = strToType(doc["type"].GetString());
+        m_status = static_cast<ResponseStatus>(doc["status"].GetInt());
+    }
 
     if (doc.HasMember("data")) {
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
         doc["data"].Accept(writer);
-        m_data = std::string(buffer.GetString(), buffer.GetSize());
+        m_jsonData = std::string(buffer.GetString(), buffer.GetSize());
     } 
 }
 
@@ -27,7 +31,7 @@ void Response::toJSON(std::string& json) const {
     rapidjson::Value value;
 
     const auto type = typeToStr(m_type);
-    value.SetString(type.data(), alloc);
+    value.SetString(type.c_str(), alloc);
     doc.AddMember("type", value, alloc);
 
     value.SetInt(static_cast<int>(m_status));
@@ -38,10 +42,10 @@ void Response::toJSON(std::string& json) const {
     doc.Accept(writer);
 
     json = std::string(buffer.GetString(), buffer.GetSize());
-    if (!m_data.empty()) {
+    if (!m_jsonData.empty()) {
         json.pop_back();
         json += ",\"data\":";
-        json += m_data;
+        json += m_jsonData;
         json += "}";
     }
     json += kMessageSeparator;

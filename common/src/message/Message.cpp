@@ -13,7 +13,11 @@ std::string typeToStr(const RequestType type) {
         { RequestType::START_GAME,     "start-game"    },
         { RequestType::MAKE_MOVE,      "make-move"     }
     };
-    return kMapType.at(type);
+
+    if (kMapType.find(type) != kMapType.end()) {
+        return kMapType.at(type);
+    }
+    return "undefined";
 }
 
 RequestType strToType(const std::string& str) {
@@ -30,5 +34,9 @@ RequestType strToType(const std::string& str) {
         { "game-started",   RequestType::GAME_STARTED  },
         { "make-move",      RequestType::MAKE_MOVE     }
     };
-    return kMapStr.at(str);
+
+    if (kMapStr.find(str) != kMapStr.end()) {
+        return kMapStr.at(str);
+    }
+    return RequestType::UNDEFINED;
 }
