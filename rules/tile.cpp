@@ -24,3 +24,14 @@
         this->column =  t2.column - t1.column;
         this->row = t2.row - t1.row;
     }
+    void Tile::print()
+    {
+        std::cout<<(char)('a' + this->row - 1)<<this->column<<std::endl;
+    }
+    bool Tile::isEqual(Tile tile)
+    {
+        if (this->column == tile.column && this->row == tile.row)
+            return true;
+        else
+            return false;
+    }

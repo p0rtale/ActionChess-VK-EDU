@@ -12,7 +12,7 @@
         if (color == 'w')
             this->location = Tile(2, count);
         else 
-            this->location = Tile(7, count);
+            this->location = Tile(5, count);
     }
     bool Pawn::isMoveCorrect(Tile range)
     {
@@ -22,7 +22,7 @@
                 switch (range.column)
                 {
                 case 1:
-                    if (range.row == 1 || range.row == -1)
+                    if ((range.row == 1 || range.row == -1) && this->isAtack())
                         return true;
                     else if (range.row == 0) 
                         return true;

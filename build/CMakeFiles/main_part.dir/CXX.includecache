@@ -21,6 +21,12 @@ rock.h
 ../interfaces/rock.h
 king.h
 ../interfaces/king.h
+unistd.h
+-
+chrono
+-
+thread
+-
 
 ../interfaces/king.h
 tile.h
@@ -35,6 +41,8 @@ figure.h
 ../interfaces/figure.h
 
 ../interfaces/tile.h
+iostream
+-
 
 /media/sf_/ActionChess-VK-EDU/rules/main.cpp
 figure_handler.h

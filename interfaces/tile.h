@@ -1,6 +1,6 @@
 #ifndef TILE_H
 #define TILE_H
-
+#include <iostream>
 struct Tile
 {
     int column;
@@ -9,6 +9,8 @@ struct Tile
     Tile();
     bool isCorrect();
     void range(Tile t1, Tile t2);
+    void print();
+    bool isEqual(Tile tile);
 };
 
 #endif

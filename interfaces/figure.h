@@ -1,5 +1,4 @@
-#ifndef FIGURE_H
-#define FIGURE_H
+#pragma once
 #include "tile.h"
 
 #define PAWN 'p'
@@ -19,6 +18,7 @@ protected:
     bool onCallDown;
     bool inFlight;
     char type;
+    bool atack;
 public:
     Figure();
     bool isDead();
@@ -29,6 +29,13 @@ public:
     char getType();
     void setPosition(Tile new_position);
     Tile getPosition();
+    void die();
+    void setOnCallDown();
+    void endCallDown();
+    void setInFlight();
+    void endFlight();
+    char getColor();
+    void kill(Figure figure);
+    bool isAtack();
+    void setAtack(bool b);
 };
-
-#endif
