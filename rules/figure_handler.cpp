@@ -10,6 +10,7 @@
 #include <thread>
 #include "knight.h"
 #include "bishop.h"
+#include "queen.h"
 
     FigureHandler::FigureHandler()
     {
@@ -50,6 +51,9 @@
         board[26] = new Bishop(26, 'b', 3);
         board[27] = new Bishop(27, 'b', 6);
 
+        board[28] = new Queen(28, 'w', 4);
+        board[29] = new Queen(29, 'b', 4);
+
         moveFigure(0, Tile(1, 4));
                moveFigure(26, Tile(1, 6));
         moveFigure(9, Tile(2, 6));
@@ -66,8 +70,11 @@
         moveFigure(16, Tile(1, 7));
         moveFigure(0, Tile(3, 7));
         moveFigure(23, Tile(8, 5));
+        sleep(2);
+        moveFigure(28, Tile(5, 2));
         sleep(15);
         moveFigure(18, Tile(1,7));
+        moveFigure(28, Tile(5, 7));
         sleep(8);
         moveFigure(18, Tile(3,7));
         sleep(15);
@@ -117,6 +124,9 @@
             break;
         case BISHOP:
             move = ((Bishop*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
+            break;
+        case QUEEN:
+            move = ((Queen*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
             break;
         default:
             break;

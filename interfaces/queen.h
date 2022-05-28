@@ -6,9 +6,8 @@
 class Queen :public Figure
 {
 public:
-    Queen();
-    ~Queen();
-    bool isMoveCorrect();
+    Queen(int id, char color, int count);
+    bool isMoveCorrect(Tile range, Field* f, Tile startPosition);
 };
 
 #endif
