@@ -44,12 +44,21 @@
         board[22] = new Knight(23, 'b', 2);
         board[23] = new Knight(23, 'b', 7);
 
+        board[24] = new Bishop(24, 'w', 3);
+        board[25] = new Bishop(25, 'w', 6);
+
+        board[26] = new Bishop(26, 'b', 3);
+        board[27] = new Bishop(27, 'b', 6);
+
         moveFigure(0, Tile(1, 4));
+               moveFigure(26, Tile(1, 6));
         moveFigure(9, Tile(2, 6));
         sleep(8);
         moveFigure(0, Tile(1, 5));
         moveFigure(23, Tile(6, 6));
+        moveFigure(26, Tile(1, 6));
         sleep(10);
+        moveFigure(26, Tile(5, 2));
         moveFigure(16, Tile(1, 7));
         moveFigure(13, Tile(6, 5));
         moveFigure(0, Tile(2, 6));
@@ -105,6 +114,9 @@
             break;
         case KNIGHT:
             move = ((Knight*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
+            break;
+        case BISHOP:
+            move = ((Bishop*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
             break;
         default:
             break;
