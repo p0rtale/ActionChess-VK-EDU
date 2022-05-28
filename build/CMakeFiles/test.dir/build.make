@@ -115,9 +115,35 @@ CMakeFiles/test.dir/rules/pawn.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test.dir/rules/pawn.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_/ActionChess-VK-EDU/rules/pawn.cpp -o CMakeFiles/test.dir/rules/pawn.cpp.s
 
+CMakeFiles/test.dir/rules/rock.cpp.o: CMakeFiles/test.dir/flags.make
+CMakeFiles/test.dir/rules/rock.cpp.o: ../rules/rock.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_/ActionChess-VK-EDU/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/test.dir/rules/rock.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test.dir/rules/rock.cpp.o -c /media/sf_/ActionChess-VK-EDU/rules/rock.cpp
+
+CMakeFiles/test.dir/rules/rock.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test.dir/rules/rock.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_/ActionChess-VK-EDU/rules/rock.cpp > CMakeFiles/test.dir/rules/rock.cpp.i
+
+CMakeFiles/test.dir/rules/rock.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test.dir/rules/rock.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_/ActionChess-VK-EDU/rules/rock.cpp -o CMakeFiles/test.dir/rules/rock.cpp.s
+
+CMakeFiles/test.dir/rules/field.cpp.o: CMakeFiles/test.dir/flags.make
+CMakeFiles/test.dir/rules/field.cpp.o: ../rules/field.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_/ActionChess-VK-EDU/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/test.dir/rules/field.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test.dir/rules/field.cpp.o -c /media/sf_/ActionChess-VK-EDU/rules/field.cpp
+
+CMakeFiles/test.dir/rules/field.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/test.dir/rules/field.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_/ActionChess-VK-EDU/rules/field.cpp > CMakeFiles/test.dir/rules/field.cpp.i
+
+CMakeFiles/test.dir/rules/field.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/test.dir/rules/field.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_/ActionChess-VK-EDU/rules/field.cpp -o CMakeFiles/test.dir/rules/field.cpp.s
+
 CMakeFiles/test.dir/rules/figure_handler.cpp.o: CMakeFiles/test.dir/flags.make
 CMakeFiles/test.dir/rules/figure_handler.cpp.o: ../rules/figure_handler.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_/ActionChess-VK-EDU/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/test.dir/rules/figure_handler.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_/ActionChess-VK-EDU/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/test.dir/rules/figure_handler.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/test.dir/rules/figure_handler.cpp.o -c /media/sf_/ActionChess-VK-EDU/rules/figure_handler.cpp
 
 CMakeFiles/test.dir/rules/figure_handler.cpp.i: cmake_force
@@ -133,6 +159,8 @@ test_OBJECTS = \
 "CMakeFiles/test.dir/rules/tile.cpp.o" \
 "CMakeFiles/test.dir/rules/figure.cpp.o" \
 "CMakeFiles/test.dir/rules/pawn.cpp.o" \
+"CMakeFiles/test.dir/rules/rock.cpp.o" \
+"CMakeFiles/test.dir/rules/field.cpp.o" \
 "CMakeFiles/test.dir/rules/figure_handler.cpp.o"
 
 # External object files for target test
@@ -141,10 +169,12 @@ test_EXTERNAL_OBJECTS =
 libtest.a: CMakeFiles/test.dir/rules/tile.cpp.o
 libtest.a: CMakeFiles/test.dir/rules/figure.cpp.o
 libtest.a: CMakeFiles/test.dir/rules/pawn.cpp.o
+libtest.a: CMakeFiles/test.dir/rules/rock.cpp.o
+libtest.a: CMakeFiles/test.dir/rules/field.cpp.o
 libtest.a: CMakeFiles/test.dir/rules/figure_handler.cpp.o
 libtest.a: CMakeFiles/test.dir/build.make
 libtest.a: CMakeFiles/test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/sf_/ActionChess-VK-EDU/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libtest.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/sf_/ActionChess-VK-EDU/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libtest.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/test.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test.dir/link.txt --verbose=$(VERBOSE)
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "tile.h"
+#include "field.h"
 
 #define PAWN 'p'
 #define ROCK 'r'

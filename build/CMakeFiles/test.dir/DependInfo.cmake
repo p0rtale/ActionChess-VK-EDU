@@ -4,9 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/media/sf_/ActionChess-VK-EDU/rules/field.cpp" "/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/test.dir/rules/field.cpp.o"
   "/media/sf_/ActionChess-VK-EDU/rules/figure.cpp" "/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/test.dir/rules/figure.cpp.o"
   "/media/sf_/ActionChess-VK-EDU/rules/figure_handler.cpp" "/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/test.dir/rules/figure_handler.cpp.o"
   "/media/sf_/ActionChess-VK-EDU/rules/pawn.cpp" "/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/test.dir/rules/pawn.cpp.o"
+  "/media/sf_/ActionChess-VK-EDU/rules/rock.cpp" "/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/test.dir/rules/rock.cpp.o"
   "/media/sf_/ActionChess-VK-EDU/rules/tile.cpp" "/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/test.dir/rules/tile.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

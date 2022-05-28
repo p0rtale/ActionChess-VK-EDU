@@ -6,9 +6,8 @@
 class Rock :public Figure
 {
 public:
-    Rock();
-    ~Rock();
-    bool isMoveCorrect();
+    Rock(int id, char color, int count);
+    bool isMoveCorrect(Tile range);
 };
 
 #endif

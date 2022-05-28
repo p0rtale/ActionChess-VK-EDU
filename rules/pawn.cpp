@@ -10,14 +10,14 @@
         this->type = PAWN;
         // no magic numbers thats how chess works
         if (color == 'w')
-            this->location = Tile(2, count);
+            this->location = Tile(count, 2);
         else 
-            this->location = Tile(5, count);
+            this->location = Tile(count, 7);
     }
     bool Pawn::isMoveCorrect(Tile range)
     {
         if (this->color == 'b')
-            range.column = abs(range.column);
+            range.column = -1 * (range.column);
 
                 switch (range.column)
                 {

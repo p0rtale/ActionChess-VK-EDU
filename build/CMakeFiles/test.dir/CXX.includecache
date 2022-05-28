@@ -6,9 +6,13 @@
 
 #IncludeRegexTransform: 
 
+../interfaces/field.h
+
 ../interfaces/figure.h
 tile.h
 ../interfaces/tile.h
+field.h
+../interfaces/field.h
 
 ../interfaces/figure_handler.h
 iostream
@@ -27,6 +31,8 @@ chrono
 -
 thread
 -
+field.h
+../interfaces/field.h
 
 ../interfaces/king.h
 tile.h
@@ -48,6 +54,14 @@ figure.h
 iostream
 -
 
+/media/sf_/ActionChess-VK-EDU/rules/figure.cpp
+tile.h
+/media/sf_/ActionChess-VK-EDU/rules/tile.h
+figure.h
+/media/sf_/ActionChess-VK-EDU/rules/figure.h
+iostream
+-
+
 /media/sf_/ActionChess-VK-EDU/rules/figure_handler.cpp
 iostream
 -
@@ -57,6 +71,8 @@ figure_handler.h
 /media/sf_/ActionChess-VK-EDU/rules/figure_handler.h
 figure.h
 /media/sf_/ActionChess-VK-EDU/rules/figure.h
+rock.h
+/media/sf_/ActionChess-VK-EDU/rules/rock.h
 pawn.h
 /media/sf_/ActionChess-VK-EDU/rules/pawn.h
 math.h
@@ -64,5 +80,25 @@ math.h
 chrono
 -
 thread
+-
+
+/media/sf_/ActionChess-VK-EDU/rules/pawn.cpp
+figure.h
+/media/sf_/ActionChess-VK-EDU/rules/figure.h
+pawn.h
+/media/sf_/ActionChess-VK-EDU/rules/pawn.h
+math.h
+-
+iostream
+-
+
+/media/sf_/ActionChess-VK-EDU/rules/rock.cpp
+figure.h
+/media/sf_/ActionChess-VK-EDU/rules/figure.h
+rock.h
+/media/sf_/ActionChess-VK-EDU/rules/rock.h
+math.h
+-
+iostream
 -
 

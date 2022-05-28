@@ -1,7 +1,7 @@
 #include "tile.h"
     int column;
     int row;
-    Tile::Tile(int column, int row)
+    Tile::Tile(int row, int column)
     {
         this->column = column;
         this->row = row;
@@ -34,4 +34,9 @@
             return true;
         else
             return false;
+    }
+    void Tile::copy(Tile t1)
+    {
+        this->column = t1.column;
+        this->row = t1.row;
     }

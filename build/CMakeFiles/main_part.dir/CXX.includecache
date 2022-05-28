@@ -6,9 +6,13 @@
 
 #IncludeRegexTransform: 
 
+../interfaces/field.h
+
 ../interfaces/figure.h
 tile.h
 ../interfaces/tile.h
+field.h
+../interfaces/field.h
 
 ../interfaces/figure_handler.h
 iostream
@@ -27,6 +31,8 @@ chrono
 -
 thread
 -
+field.h
+../interfaces/field.h
 
 ../interfaces/king.h
 tile.h

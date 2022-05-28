@@ -16,6 +16,10 @@ set(FIRST_LIB   rules/tile.cpp
                 interfaces/figure.h
                 rules/pawn.cpp
                 interfaces/pawn.h
+                rules/rock.cpp
+                interfaces/rock.h
+                rules/field.cpp
+                interfaces/field.h
                 rules/figure_handler.cpp
                 interfaces/figure_handler.h)
 

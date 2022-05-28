@@ -155,6 +155,33 @@ test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
+rules/field.o: rules/field.cpp.o
+
+.PHONY : rules/field.o
+
+# target to build an object file
+rules/field.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/rules/field.cpp.o
+.PHONY : rules/field.cpp.o
+
+rules/field.i: rules/field.cpp.i
+
+.PHONY : rules/field.i
+
+# target to preprocess a source file
+rules/field.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/rules/field.cpp.i
+.PHONY : rules/field.cpp.i
+
+rules/field.s: rules/field.cpp.s
+
+.PHONY : rules/field.s
+
+# target to generate assembly for a file
+rules/field.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/rules/field.cpp.s
+.PHONY : rules/field.cpp.s
+
 rules/figure.o: rules/figure.cpp.o
 
 .PHONY : rules/figure.o
@@ -263,6 +290,33 @@ rules/pawn.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/rules/pawn.cpp.s
 .PHONY : rules/pawn.cpp.s
 
+rules/rock.o: rules/rock.cpp.o
+
+.PHONY : rules/rock.o
+
+# target to build an object file
+rules/rock.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/rules/rock.cpp.o
+.PHONY : rules/rock.cpp.o
+
+rules/rock.i: rules/rock.cpp.i
+
+.PHONY : rules/rock.i
+
+# target to preprocess a source file
+rules/rock.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/rules/rock.cpp.i
+.PHONY : rules/rock.cpp.i
+
+rules/rock.s: rules/rock.cpp.s
+
+.PHONY : rules/rock.s
+
+# target to generate assembly for a file
+rules/rock.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/rules/rock.cpp.s
+.PHONY : rules/rock.cpp.s
+
 rules/tile.o: rules/tile.cpp.o
 
 .PHONY : rules/tile.o
@@ -300,6 +354,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... main_part"
 	@echo "... test"
+	@echo "... rules/field.o"
+	@echo "... rules/field.i"
+	@echo "... rules/field.s"
 	@echo "... rules/figure.o"
 	@echo "... rules/figure.i"
 	@echo "... rules/figure.s"
@@ -312,6 +369,9 @@ help:
 	@echo "... rules/pawn.o"
 	@echo "... rules/pawn.i"
 	@echo "... rules/pawn.s"
+	@echo "... rules/rock.o"
+	@echo "... rules/rock.i"
+	@echo "... rules/rock.s"
 	@echo "... rules/tile.o"
 	@echo "... rules/tile.i"
 	@echo "... rules/tile.s"

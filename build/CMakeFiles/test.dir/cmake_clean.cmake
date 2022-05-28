@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/test.dir/rules/field.cpp.o"
   "CMakeFiles/test.dir/rules/figure.cpp.o"
   "CMakeFiles/test.dir/rules/figure_handler.cpp.o"
   "CMakeFiles/test.dir/rules/pawn.cpp.o"
+  "CMakeFiles/test.dir/rules/rock.cpp.o"
   "CMakeFiles/test.dir/rules/tile.cpp.o"
   "libtest.a"
   "libtest.pdb"

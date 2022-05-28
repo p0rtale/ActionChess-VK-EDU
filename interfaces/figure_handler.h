@@ -8,8 +8,9 @@
 #include <unistd.h>
 #include <chrono>
 #include <thread>
+#include "field.h"
 
-#define CHESS_COUNT 3
+#define CHESS_COUNT 20
 
 #define EMPTY 0
 #define ALLY 1
@@ -22,6 +23,7 @@ class FigureHandler
 private:
     Figure* board[CHESS_COUNT];
     char winner;
+    Field field;
     bool isCorrect(Figure* figure);
     void setTimer(Figure* figure, int length);
     Figure* findFigure(int id);
@@ -31,9 +33,6 @@ public:
     FigureHandler();
     void moveFigure(int figure, Tile endTile);
     // ~FigureHandler();
-    // char getWinner();
-
-    // Tile findTile(int id);
     Figure* findEnemy(Tile tile, char color);
     char isColision(Figure* figure, Tile endTile);
 };
