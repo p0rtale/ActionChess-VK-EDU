@@ -3,7 +3,7 @@
 #include "figure_handler.h"
 #include "figure.h"
 #include "rock.h"
-// #include "king.h"
+#include "king.h"
 #include "pawn.h"
 #include "math.h"
 #include <chrono>
@@ -15,6 +15,7 @@
     FigureHandler::FigureHandler()
     {
         field = new Field();
+        this->winner = 'n';
         board[0] = new Pawn(0, 'w',1);
         board[1] = new Pawn(1, 'w',2);
         board[2] = new Pawn(2, 'w',3);
@@ -54,6 +55,9 @@
         board[28] = new Queen(28, 'w', 4);
         board[29] = new Queen(29, 'b', 4);
 
+        board[30] = new King(30, 'w', 5);
+        board[31] = new King(31, 'b', 5);
+
         moveFigure(0, Tile(1, 4));
                moveFigure(26, Tile(1, 6));
         moveFigure(9, Tile(2, 6));
@@ -75,15 +79,23 @@
         sleep(15);
         moveFigure(18, Tile(1,7));
         moveFigure(28, Tile(5, 7));
+        moveFigure(25, Tile(3, 4));
         sleep(8);
         moveFigure(18, Tile(3,7));
+        moveFigure(31, Tile(5, 7));
         sleep(15);
-        
+        moveFigure(31, Tile(5, 6));
+        sleep(10);
+        moveFigure(25, Tile(5, 6));
+        sleep(10);
+        std::cout<<this->getWinner()<<std::endl;
     }
 
 
     void FigureHandler::moveFigure(int figure, Tile endTile)
     {
+        if (getWinner() != 'n')
+            return;
         bool flag = false;
         if (!endTile.isCorrect())
             {
@@ -96,7 +108,7 @@
         if (!isCorrect(temp))
             return;
         Tile* startTile;
-        //startTile->copy(temp->getPosition());
+
         char tile_flag = isColision(temp, endTile);
         if (tile_flag == ALLY)
             {
@@ -128,6 +140,9 @@
         case QUEEN:
             move = ((Queen*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
             break;
+        case KING:
+            move = ((King*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
+            break;
         default:
             break;
         }
@@ -150,7 +165,15 @@
                 std::cout<<"Wrong"<<std::endl;
     }
 
-    // char getWinner()
+    char FigureHandler::getWinner()
+    {
+        return this->winner;
+    }
+
+    void FigureHandler::setWinner(char w)
+    {
+        this->winner = w;
+    }
     bool FigureHandler::isCorrect(Figure* figure)
     {
         if (figure == nullptr)
@@ -191,7 +214,11 @@
                 victim = findEnemy(figure->getPosition(), figure->getColor());
 
                 if (victim && (victim->getColor() != figure->getColor()))
-                    victim->die();
+                    {
+                        if (victim->getType() == KING)
+                            setWinner(figure->getColor());
+                        victim->die();
+                    }
                 figure->setAtack(false);
             }
 

@@ -24,6 +24,8 @@ set(FIRST_LIB   rules/tile.cpp
                 interfaces/bishop.h
                 rules/queen.cpp
                 interfaces/queen.h
+                rules/king.cpp
+                interfaces/king.h
                 rules/field.cpp
                 interfaces/field.h
                 rules/figure_handler.cpp

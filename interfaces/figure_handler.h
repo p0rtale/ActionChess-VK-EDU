@@ -10,7 +10,7 @@
 #include <thread>
 #include "field.h"
 
-#define CHESS_COUNT 30
+#define CHESS_COUNT 32
 
 #define EMPTY 0
 #define ALLY 1
@@ -35,6 +35,8 @@ public:
     // ~FigureHandler();
     Figure* findEnemy(Tile tile, char color);
     char isColision(Figure* figure, Tile endTile);
+    char getWinner();
+    void setWinner(char w);
 };
 
 #endif
