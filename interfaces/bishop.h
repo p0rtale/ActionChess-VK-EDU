@@ -6,9 +6,8 @@
 class Bishop :public Figure
 {
 public:
-    Bishop();
-    ~Bishop();
-    bool isMoveCorrect();
+    Bishop(int id, char color, int count);
+    bool isMoveCorrect(Tile range, Field* f, Tile startPosition);
 };
 
 #endif

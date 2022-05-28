@@ -9,6 +9,7 @@
 #include <chrono>
 #include <thread>
 #include "knight.h"
+#include "bishop.h"
 
     FigureHandler::FigureHandler()
     {
@@ -49,6 +50,7 @@
         moveFigure(0, Tile(1, 5));
         moveFigure(23, Tile(6, 6));
         sleep(10);
+        moveFigure(16, Tile(1, 7));
         moveFigure(13, Tile(6, 5));
         moveFigure(0, Tile(2, 6));
         sleep(10);
@@ -58,6 +60,8 @@
         sleep(15);
         moveFigure(18, Tile(1,7));
         sleep(8);
+        moveFigure(18, Tile(3,7));
+        sleep(15);
         
     }
 

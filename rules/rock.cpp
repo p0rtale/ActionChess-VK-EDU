@@ -16,59 +16,45 @@
     }
     bool Rock::isMoveCorrect(Tile range, Field* f, Tile startPosition)
     {
-        range.column = abs(range.column);
-        range.column = abs(range.column);
-        int i;
-
+        int i, max_path;
         if (range.column == 0 && range.row != 0)
         {
-            i = range.row - 1;
-                while (i > 0)
+            max_path = range.row;
+            if (max_path <= 0 )
+                i = -1;
+            else
+                i = 1;
+            max_path = abs(max_path) - 1;
+
+                while (max_path > 0)
                 {
-                    if (this->color == 'w')
-                    {
-                        if (!f->isEnpty(startPosition.row + i, startPosition.column))
+                        if (!f->isEnpty(startPosition.row + (i * max_path), startPosition.column))
                             {
-                                std::cout<<"Error there is another figure on your way "<<startPosition.row + i<<" "<< startPosition.column<<std::endl;
+                                std::cout<<"Error there is another figure on your way "<<startPosition.row + (i * max_path)<<" "<< startPosition.column<<std::endl;
                                 return false;
                             }
-                    }
-                    else
-                    {
-                        if (!f->isEnpty(startPosition.row - i, startPosition.column))
-                            {
-                                std::cout<<"Error there is another figure on your way "<<startPosition.row - i<<" "<< startPosition.column<<std::endl;
-                                return false;
-                            }
-                    }
-                    i--;
+                    max_path--;
                 }
             return true;
         }
         else if (range.column != 0 && range.row == 0)
         {
-            i = range.column - 1;
-            while (i > 0)
-            {
-                    if (this->color == 'w')
-                    {
-                        if (!f->isEnpty(startPosition.row , startPosition.column + i))
+            max_path = range.column;
+            if (max_path <= 0 )
+                i = -1;
+            else
+                i = 1;
+            max_path = abs(max_path) - 1;
+
+                while (max_path > 0)
+                {
+                        if (!f->isEnpty(startPosition.row , startPosition.column + (i * max_path)))
                             {
-                                std::cout<<"Error there is another figure on your way "<<startPosition.row<<" "<< startPosition.column + i<<std::endl;
+                                std::cout<<"Error there is another figure on your way "<<startPosition.row <<" "<< startPosition.column + (i * max_path)<<std::endl;
                                 return false;
                             }
-                    }
-                    else
-                    {
-                        if (!f->isEnpty(startPosition.row , startPosition.column - i))
-                            {
-                                std::cout<<"Error there is another figure on your way "<<startPosition.row <<" "<< startPosition.column - i<<std::endl;
-                                return false;
-                            }
-                    }
-                i--;
-            }
-            
+                    max_path--;
+                }
             return true;
         }
         else
