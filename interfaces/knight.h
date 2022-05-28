@@ -6,9 +6,8 @@
 class Knight :public Figure
 {
 public:
-    Knight();
-    ~Knight();
-    bool isMoveCorrect();
+    Knight(int id, char color, int count);
+    bool isMoveCorrect(Tile range, Field* f, Tile startPosition);
 };
 
 #endif

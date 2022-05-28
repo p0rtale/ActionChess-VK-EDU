@@ -8,6 +8,7 @@
 #include "math.h"
 #include <chrono>
 #include <thread>
+#include "knight.h"
 
     FigureHandler::FigureHandler()
     {
@@ -36,17 +37,24 @@
         board[18] = new Rock(18, 'b', 1);
         board[19] = new Rock(19, 'b', 8);
 
+        board[20] = new Knight(20, 'w', 2);
+        board[21] = new Knight(21, 'w', 7);
+
+        board[22] = new Knight(23, 'b', 2);
+        board[23] = new Knight(23, 'b', 7);
+
         moveFigure(0, Tile(1, 4));
         moveFigure(9, Tile(2, 6));
         sleep(8);
         moveFigure(0, Tile(1, 5));
+        moveFigure(23, Tile(6, 6));
         sleep(10);
-        moveFigure(16, Tile(1, 7));
+        moveFigure(13, Tile(6, 5));
         moveFigure(0, Tile(2, 6));
         sleep(10);
         moveFigure(16, Tile(1, 7));
         moveFigure(0, Tile(3, 7));
-        moveFigure(19, Tile(8, 6));
+        moveFigure(23, Tile(8, 5));
         sleep(15);
         moveFigure(18, Tile(1,7));
         sleep(8);
@@ -91,7 +99,9 @@
         case ROCK:
             move = ((Rock*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
             break;
-        
+        case KNIGHT:
+            move = ((Knight*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
+            break;
         default:
             break;
         }

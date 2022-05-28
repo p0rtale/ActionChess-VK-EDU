@@ -33,6 +33,19 @@
                 case 2:
                     if (range.row == 0)
                     {
+                        if (color == 'w' && !f->isEnpty(startPosition.row , startPosition.column + 1))
+                        {
+                            std::cout<<"Error there is another figure on your way "<<startPosition.row<<" "<< startPosition.column + 1<<std::endl;
+                            return false;
+                        }
+
+                        else if (color == 'b' && !f->isEnpty(startPosition.row , startPosition.column - 1))
+                        {
+                            std::cout<<"Error there is another figure on your way "<<startPosition.row<<" "<< startPosition.column - 1<<std::endl;
+                            return false;
+                        }
+
+
                         if (this->color == 'b' && this->location.column == 7)
                             return true;
                         else if (this->location.column == 2)

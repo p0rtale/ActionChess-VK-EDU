@@ -18,6 +18,8 @@ set(FIRST_LIB   rules/tile.cpp
                 interfaces/pawn.h
                 rules/rock.cpp
                 interfaces/rock.h
+                rules/knight.cpp
+                interfaces/knight.h
                 rules/field.cpp
                 interfaces/field.h
                 rules/figure_handler.cpp
