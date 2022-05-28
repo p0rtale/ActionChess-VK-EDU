@@ -8,6 +8,7 @@ struct menu_assets{
     sf::Texture slider_image;
     sf::Texture button_filling;
     sf::Texture button_edge;
+    sf::Texture table_background;
 };
 
 struct room_assets{

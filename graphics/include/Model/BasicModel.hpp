@@ -1,7 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 
 
+#include "Client.hpp"
 class BasicModel{
 //Абстрактный класс для model
 public:
@@ -13,8 +13,8 @@ public:
     BasicModel(BasicModel&& that) = delete;
     BasicModel &operator=(BasicModel&& that) = delete;
     friend void swap(BasicModel& lhs, BasicModel& rhs) = delete;
-    BasicModel()= default;
+    BasicModel() = default;
     virtual ~BasicModel() = default;
-private:
-    //Client client = Client::get_instance; TODO: расскоментировать после реализации сетевой части
+protected:
+    Client* c;// TODO: расскоментировать после реализации сетевой части
 };

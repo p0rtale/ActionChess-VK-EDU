@@ -1,14 +1,14 @@
-#include "Request.hpp"
-
+#include "Response.hpp"
+#include "rapidjson/writer.h"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
 
-void Request::parseJSON(const std::string& json) {
+void Response::parseJSON(const std::string& json) {
     rapidjson::Document doc;
     doc.Parse(json.c_str());
 
     m_type = strToType(doc["type"].GetString());
+    m_status = static_cast<ResponseStatus>(doc["status"].GetInt());
 
     if (doc.HasMember("data")) {
         rapidjson::StringBuffer buffer;
@@ -18,7 +18,7 @@ void Request::parseJSON(const std::string& json) {
     } 
 }
 
-void Request::toJSON(std::string& json) const {
+void Response::toJSON(std::string& json) const {
     rapidjson::Document doc;
     auto& alloc = doc.GetAllocator();
     doc.SetObject();
@@ -29,8 +29,8 @@ void Request::toJSON(std::string& json) const {
     value.SetString(type.c_str(), alloc);
     doc.AddMember("type", value, alloc);
 
-    value.SetString(m_data.c_str(), alloc);
-    doc.AddMember("data", value, alloc);
+    value.SetInt(static_cast<int>(m_status));
+    doc.AddMember("status", value, alloc);
 
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -43,5 +43,5 @@ void Request::toJSON(std::string& json) const {
         json += m_data;
         json += "}";
     }
-    json += kMessageSeparator;    
+    json += kMessageSeparator;
 }

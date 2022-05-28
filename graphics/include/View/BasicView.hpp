@@ -20,6 +20,7 @@ public:
     virtual ~BasicView() = default;
     inline std::vector<std::shared_ptr<BasicWidget>>& get_widget_vec(){return widgets;}
 protected:
+    sf::Vector2f scale_factor;
     sf::RenderWindow* window;
     BasicModel* model;
     

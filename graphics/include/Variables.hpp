@@ -9,6 +9,7 @@
 #define MENU_BUTTON_FILL_IMAGE "./images/button_filling.png"
 #define MENU_BUTTON_EDGE_IMAGE "./images/button_edge.png"
 #define MENU_SLIDER_IMAGE "./images/slider.png"
+#define MENU_TABLE_IMAGE "./images/room_table.png"
 
 #define WINDOW_START_HEIGHT 720
 #define WINDOW_START_WIDTH 1080
@@ -35,8 +36,10 @@
 #define NAME_TEXTBOX_CHARACTER_SIZE 30
 
 #define BUTTON_SHRINK_SCALE_WHEN_PRESSED 0.8
-#define MENU_BUTTON_POS_X 1300
+#define MENU_BUTTON_POS_X 1750
 #define MENU_BUTTON_POS_Y 1100
+#define MENU_TABLE_POS_X 200.f
+#define MENU_TABLE_POS_Y 800.f
 #define MENU_BUTTON_SIZE_OFFSET 50
 #define MENU_NAME_BUTTON_CHARACTER_SIZE 40
 #define NAME_BUTTON_CAPTION_STRING "OK"

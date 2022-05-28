@@ -7,7 +7,6 @@
 #include "TextBox.hpp"
 #include <SFML/Graphics.hpp>
 #include "BasicWidget.hpp"
-#include "iostream"
 #include "CursorController.hpp"
 #include "Variables.hpp"
 void Button::on_click_press(sf::RenderWindow* window){
@@ -24,7 +23,11 @@ void Button::on_click_release(sf::RenderWindow* window){
     if(active&& visible){
         sf::Vector2i mouse_pos = sf::Mouse::getPosition(*window);
         clicked = (background.getGlobalBounds().contains(window->mapPixelToCoords(mouse_pos))) ? OVER : FAR;
+        if (clicked == OVER){
+            handler();
+        }
         animate_click();
+
     }
     
 

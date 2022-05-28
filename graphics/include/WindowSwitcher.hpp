@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Assets.hpp"
 #include "BasicStage.hpp"
+#include "Client.hpp"
 
 class WindowSwitcher{ 
 /* Глобальный контроллер приложения, синглтон Имеет в себе указатель
@@ -15,7 +16,7 @@ public:
         static WindowSwitcher instance;
         return instance;
     }
-    void init();
+    void init(Client* inp_c);
     void run();
 private:
     sf::RenderWindow* window;
@@ -28,4 +29,5 @@ private:
     WindowSwitcher(WindowSwitcher&& that) = delete;
     WindowSwitcher &operator=(WindowSwitcher&& that) = delete;
     friend void swap(WindowSwitcher& lhs, WindowSwitcher& rhs) = delete;
+    Client* c;
 };

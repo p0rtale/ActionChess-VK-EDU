@@ -19,9 +19,9 @@ public:
     BasicWidget &operator=(BasicWidget&& that) = delete;
     friend void swap(BasicWidget& lhs, BasicWidget& rhs) = delete;
 
-    // void set_focus(bool inp){focused = inp;};
-    // void set_visible(bool inp){visible = inp;};
-    // void set_active(bool inp){active = inp;};
+    void set_focus(bool inp){focused = inp;};
+    void set_visible(bool inp){visible = inp;};
+    void set_active(bool inp){active = inp;};
     virtual void on_click_release(sf::RenderWindow* window) = 0;
     virtual void on_click_press(sf::RenderWindow* window) = 0;
     virtual void on_mouse_over(sf::RenderWindow* window) = 0;
@@ -32,11 +32,12 @@ public:
     // void set_hint(sf::String inp) {hint.setString(inp);};
 
 protected:
-    // bool focused;
-    // mouseState clicked = FAR;
-    // bool visible; 
-    // bool active;
-    // sf::Text caption;
+//TODO: удалить все перегруженные конструкторы дочерних классов и переписать все через сеттеры, чтобы расскоментировать поля ниже
+    bool focused = false;
+    mouseState clicked = FAR;
+    bool visible = true; 
+    bool active = true;
+    //sf::Text caption;
     // sf::Text hint;
     // sf::Text data_box;
     // sf::String data;

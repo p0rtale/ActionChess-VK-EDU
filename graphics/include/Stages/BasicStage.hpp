@@ -29,6 +29,7 @@ protected:
     BasicView* view;
     BasicController* controller;
     BasicModel* model;
+    Client *c;
 
     
 };

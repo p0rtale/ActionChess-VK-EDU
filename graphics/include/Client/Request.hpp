@@ -2,11 +2,9 @@
 
 #include "Message.hpp"
 
-class Response: public Message {
+class Request: public Message {
 public:
     RequestType m_type = RequestType::DEFAULT;
-
-    ResponseStatus m_status = ResponseStatus::OK;
 
     std::string m_data;
 

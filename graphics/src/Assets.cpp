@@ -8,6 +8,7 @@ void Assets::load(){ //TODO: написать хендлеоры ошибок и
     menu.slider_image.loadFromFile(MENU_SLIDER_IMAGE);
     menu.button_filling.loadFromFile(MENU_BUTTON_FILL_IMAGE);
     menu.button_edge.loadFromFile(MENU_BUTTON_EDGE_IMAGE);
+    menu.table_background.loadFromFile(MENU_TABLE_IMAGE);
     general.gost_font.loadFromFile("./fonts/gost.ttf");
 }
 

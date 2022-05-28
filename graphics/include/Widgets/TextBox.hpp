@@ -33,10 +33,6 @@ protected:
     sf::String to_show = "";
     sf::Clock cursor_animation;
     bool show_cursor = false;
-    bool focused = false;
-    mouseState clicked = FAR;
-    bool visible = true; 
-    bool active = true;
     sf::Text caption;
     sf::Text hint;
     sf::Text databox;
