@@ -9,6 +9,7 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(interfaces)
 include_directories(rules)
+include_directories(logic)
 
 set(FIRST_LIB   rules/tile.cpp
                 interfaces/tile.h
@@ -29,7 +30,11 @@ set(FIRST_LIB   rules/tile.cpp
                 rules/field.cpp
                 interfaces/field.h
                 rules/figure_handler.cpp
-                interfaces/figure_handler.h)
+                interfaces/figure_handler.h
+                logic/message_queue.cpp
+                interfaces/message_queue.h
+                logic/game.cpp
+                interfaces/game.h)
 
 
 

@@ -32,7 +32,7 @@ private:
 public:
     FigureHandler();
     void moveFigure(int figure, Tile endTile);
-    // ~FigureHandler();
+    ~FigureHandler();
     Figure* findEnemy(Tile tile, char color);
     char isColision(Figure* figure, Tile endTile);
     char getWinner();

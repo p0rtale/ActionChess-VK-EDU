@@ -25,70 +25,39 @@
         board[6] = new Pawn(6, 'w',7);
         board[7] = new Pawn(7, 'w',8);
 
-        board[8] = new Pawn(8, 'b',1);
-        board[9] = new Pawn(9, 'b',2);
-        board[10] = new Pawn(10, 'b',3);
-        board[11] = new Pawn(11, 'b',4);
-        board[12] = new Pawn(12, 'b',5);
-        board[13] = new Pawn(13, 'b',6);
-        board[14] = new Pawn(14, 'b',7);
-        board[15] = new Pawn(15, 'b',8);
+        board[8] = new Rock(8, 'w', 1);
+        board[9] = new Rock(9, 'w', 8);
+
+        board[10] = new Knight(10, 'w', 2);
+        board[11] = new Knight(11, 'w', 7);
+
+        board[12] = new Bishop(12, 'w', 3);
+        board[13] = new Bishop(13, 'w', 6);
+
+        board[14] = new Queen(14, 'w', 4);
+        board[15] = new King(15, 'w', 5);
+
+        board[16] = new Pawn(16, 'b',1);
+        board[17] = new Pawn(17, 'b',2);
+        board[18] = new Pawn(18, 'b',3);
+        board[19] = new Pawn(19, 'b',4);
+        board[20] = new Pawn(20, 'b',5);
+        board[21] = new Pawn(21, 'b',6);
+        board[22] = new Pawn(22, 'b',7);
+        board[23] = new Pawn(23, 'b',8);
         
-        board[16] = new Rock(16, 'w', 1);
-        board[17] = new Rock(17, 'w', 8);
+        board[24] = new Rock(24, 'b', 1);
+        board[25] = new Rock(25, 'b', 8);
 
-        board[18] = new Rock(18, 'b', 1);
-        board[19] = new Rock(19, 'b', 8);
+        board[26] = new Knight(26, 'b', 2);
+        board[27] = new Knight(27, 'b', 7);
 
-        board[20] = new Knight(20, 'w', 2);
-        board[21] = new Knight(21, 'w', 7);
+        board[28] = new Bishop(28, 'b', 3);
+        board[29] = new Bishop(29, 'b', 6);
 
-        board[22] = new Knight(23, 'b', 2);
-        board[23] = new Knight(23, 'b', 7);
+        board[30] = new Queen(30, 'b', 4);
 
-        board[24] = new Bishop(24, 'w', 3);
-        board[25] = new Bishop(25, 'w', 6);
-
-        board[26] = new Bishop(26, 'b', 3);
-        board[27] = new Bishop(27, 'b', 6);
-
-        board[28] = new Queen(28, 'w', 4);
-        board[29] = new Queen(29, 'b', 4);
-
-        board[30] = new King(30, 'w', 5);
         board[31] = new King(31, 'b', 5);
-
-        moveFigure(0, Tile(1, 4));
-               moveFigure(26, Tile(1, 6));
-        moveFigure(9, Tile(2, 6));
-        sleep(8);
-        moveFigure(0, Tile(1, 5));
-        moveFigure(23, Tile(6, 6));
-        moveFigure(26, Tile(1, 6));
-        sleep(10);
-        moveFigure(26, Tile(5, 2));
-        moveFigure(16, Tile(1, 7));
-        moveFigure(13, Tile(6, 5));
-        moveFigure(0, Tile(2, 6));
-        sleep(10);
-        moveFigure(16, Tile(1, 7));
-        moveFigure(0, Tile(3, 7));
-        moveFigure(23, Tile(8, 5));
-        sleep(2);
-        moveFigure(28, Tile(5, 2));
-        sleep(15);
-        moveFigure(18, Tile(1,7));
-        moveFigure(28, Tile(5, 7));
-        moveFigure(25, Tile(3, 4));
-        sleep(8);
-        moveFigure(18, Tile(3,7));
-        moveFigure(31, Tile(5, 7));
-        sleep(15);
-        moveFigure(31, Tile(5, 6));
-        sleep(10);
-        moveFigure(25, Tile(5, 6));
-        sleep(10);
-        std::cout<<this->getWinner()<<std::endl;
     }
 
 
@@ -274,4 +243,10 @@
                     return board[i];
             }
         return nullptr;
+    }
+    FigureHandler:: ~FigureHandler()
+    {
+        delete field;
+        for (int i=0; i< CHESS_COUNT; i++)
+            delete board[i];
     }

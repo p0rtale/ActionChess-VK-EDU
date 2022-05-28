@@ -1,16 +1,12 @@
-#include "../interfaces/message_queue.h"
+#include "message_queue.h"
 
 
 using namespace std;
-
-class MsgQueue
-{
-private:
-    queue<std::string> data;
-public:
-    MsgQueue(){}
-    ~MsgQueue(){}
-    string get()
+    MsgQueue::MsgQueue()
+    {
+        queue <std::string> data;
+    }
+    string MsgQueue::get()
     {
         if (data.empty())
             return NULL;
@@ -18,8 +14,7 @@ public:
         data.pop();
         return temp;
     }
-    void add(string msg)
+    void MsgQueue::add(string msg)
     {
         data.push(msg);
     }
-};

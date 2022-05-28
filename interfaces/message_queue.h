@@ -7,10 +7,9 @@
 class MsgQueue
 {
 private:
-    queue <std::string> data;
+    std::queue <std::string> data;
 public:
     MsgQueue();
-    ~MsgQueue();
     std::string get();
     void add(std::string msg);
 };
