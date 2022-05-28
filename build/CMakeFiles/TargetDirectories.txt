@@ -1,4 +1,0 @@
-/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/rebuild_cache.dir
-/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/main_part.dir
-/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/edit_cache.dir
-/media/sf_/ActionChess-VK-EDU/build/CMakeFiles/test.dir

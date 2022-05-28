@@ -100,7 +100,7 @@
                     field.feelCell(a,b, true);
                 }
                 temp->setPosition(endTile);
-                std::cout<<field.isEnpty(1, 4)<<"\n";
+                std::cout<<field.isEnpty(1, 5)<<"\n";
                 field.feelCell(endTile.row, endTile.column, false);
                 std::cout<<"Very good"<<std::endl;
                 std::cout.flush();
