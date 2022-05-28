@@ -14,7 +14,7 @@
         else 
             this->location = Tile(count, 7);
     }
-    bool Pawn::isMoveCorrect(Tile range)
+    bool Pawn::isMoveCorrect(Tile range, Field* f, Tile startPosition)
     {
         if (this->color == 'b')
             range.column = -1 * (range.column);

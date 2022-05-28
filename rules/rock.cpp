@@ -14,21 +14,63 @@
         else 
             this->location = Tile(count, 8);
     }
-    bool Rock::isMoveCorrect(Tile range)
+    bool Rock::isMoveCorrect(Tile range, Field* f, Tile startPosition)
     {
         range.column = abs(range.column);
         range.column = abs(range.column);
-        Tile temp(range.row, range.column);
+        int i;
+
         if (range.column == 0 && range.row != 0)
         {
-            // while (temp.row > 0)
-            // {
-            //     if ()
-            // }
+            i = range.row - 1;
+                while (i > 0)
+                {
+                    if (this->color == 'w')
+                    {
+                        if (!f->isEnpty(startPosition.row + i, startPosition.column))
+                            {
+                                std::cout<<"Error there is another figure on your way "<<startPosition.row + i<<" "<< startPosition.column<<std::endl;
+                                return false;
+                            }
+                    }
+                    else
+                    {
+                        if (!f->isEnpty(startPosition.row - i, startPosition.column))
+                            {
+                                std::cout<<"Error there is another figure on your way "<<startPosition.row - i<<" "<< startPosition.column<<std::endl;
+                                return false;
+                            }
+                    }
+                    i--;
+                }
             return true;
         }
         else if (range.column != 0 && range.row == 0)
+        {
+            i = range.column - 1;
+            while (i > 0)
+            {
+                    if (this->color == 'w')
+                    {
+                        if (!f->isEnpty(startPosition.row , startPosition.column + i))
+                            {
+                                std::cout<<"Error there is another figure on your way "<<startPosition.row<<" "<< startPosition.column + i<<std::endl;
+                                return false;
+                            }
+                    }
+                    else
+                    {
+                        if (!f->isEnpty(startPosition.row , startPosition.column - i))
+                            {
+                                std::cout<<"Error there is another figure on your way "<<startPosition.row <<" "<< startPosition.column - i<<std::endl;
+                                return false;
+                            }
+                    }
+                i--;
+            }
+            
             return true;
+        }
         else
             return false;
     }

@@ -25,7 +25,7 @@ public:
     bool isDead();
     bool isOnCallDown();
     bool isInFlight();
-    bool isMoveCorrect(Tile end_position);
+    bool isMoveCorrect(Tile range, Field* f, Tile startPosition);
     int getId();
     char getType();
     void setPosition(Tile new_position);

@@ -23,7 +23,7 @@ class FigureHandler
 private:
     Figure* board[CHESS_COUNT];
     char winner;
-    Field field;
+    Field* field;
     bool isCorrect(Figure* figure);
     void setTimer(Figure* figure, int length);
     Figure* findFigure(int id);

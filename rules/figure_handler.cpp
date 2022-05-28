@@ -11,6 +11,7 @@
 
     FigureHandler::FigureHandler()
     {
+        field = new Field();
         board[0] = new Pawn(0, 'w',1);
         board[1] = new Pawn(1, 'w',2);
         board[2] = new Pawn(2, 'w',3);
@@ -40,11 +41,15 @@
         sleep(8);
         moveFigure(0, Tile(1, 5));
         sleep(10);
+        moveFigure(16, Tile(1, 7));
         moveFigure(0, Tile(2, 6));
         sleep(10);
         moveFigure(16, Tile(1, 7));
         moveFigure(0, Tile(3, 7));
+        moveFigure(19, Tile(8, 6));
         sleep(15);
+        moveFigure(18, Tile(1,7));
+        sleep(8);
         
     }
 
@@ -75,17 +80,16 @@
 
         Tile* ran;
         ran->range(temp->getPosition(), endTile);
-        //startTile->range(endTile, *ran);
         int length = round(sqrt(ran->column*ran->column + ran->row*ran->row));
 
         bool move = false;
         switch (temp->getType())
         {
         case PAWN:
-            move = ((Pawn*) temp)->isMoveCorrect(*ran);
+            move = ((Pawn*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
             break;
         case ROCK:
-            move = ((Rock*) temp)->isMoveCorrect(*ran);
+            move = ((Rock*) temp)->isMoveCorrect(*ran, field, temp->getPosition());
             break;
         
         default:
@@ -96,12 +100,12 @@
                 int a = temp->getPosition().row;
                 {
                     int b = temp->getPosition().column;
-                    std:: cout<<a<<" "<<b<<"\n";
-                    field.feelCell(a,b, true);
+                    //std:: cout<<a<<" "<<b<<"\n";
+                    field->feelCell(a,b, true);
                 }
                 temp->setPosition(endTile);
-                std::cout<<field.isEnpty(1, 5)<<"\n";
-                field.feelCell(endTile.row, endTile.column, false);
+                //std::cout<<field->isEnpty(1, 4)<<"\n";
+                field->feelCell(endTile.row, endTile.column, false);
                 std::cout<<"Very good"<<std::endl;
                 std::cout.flush();
                 setTimer(temp, length);
