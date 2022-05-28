@@ -2,6 +2,7 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/document.h"
 #include "rapidjson/stringbuffer.h"
+#include "Message.hpp"
 
 void Request::parseJSON(const std::string& json) {
     rapidjson::Document doc;
