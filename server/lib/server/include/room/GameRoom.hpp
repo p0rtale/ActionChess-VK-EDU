@@ -2,6 +2,7 @@
 
 #include <unordered_set>
 
+#include "Game.hpp"
 #include "Room.hpp"
 
 class GameRoom: public Room {
@@ -21,7 +22,7 @@ public:
     bool setReady(std::uint64_t id);
 
 private:
-    //std::shared_ptr<Game> m_game;
+    std::shared_ptr<Game> m_game;
 
     std::unordered_set<std::uint64_t> m_readyPlayers;  // Guarded m_readyPlayersMutex 
 
