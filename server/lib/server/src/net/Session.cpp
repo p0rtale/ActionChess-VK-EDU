@@ -107,11 +107,7 @@ bool Session::moveFromRoom() {
 }
 
 bool Session::setReadyToPlay() {
-    if (m_user.getRoomId() != RoomController::s_mainRoomID) {
-        m_roomController->setReadyToPlay(m_user.getRoomId(), m_user.getId());
-        return true;
-    }
-    return false;
+    return m_roomController->setReadyToPlay(m_user.getRoomId(), m_user.getId());
 }
 
 bool Session::runGame() {
@@ -173,8 +169,8 @@ void Session::handleRequest(Request&& request) {
         case RequestType::READY_PLAY:
             createHandler<RequestType::READY_PLAY>(&request, this)->run();
             break;
-        case RequestType::MAKE_MOVE:
-            createHandler<RequestType::MAKE_MOVE>(&request, this)->run();
+        case RequestType::MOVE_FIGURE:
+            createHandler<RequestType::MOVE_FIGURE>(&request, this)->run();
             break;
         case RequestType::UNDEFINED:
             createHandler<RequestType::UNDEFINED>(&request, this)->run();

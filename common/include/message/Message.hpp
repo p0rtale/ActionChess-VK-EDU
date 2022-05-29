@@ -25,7 +25,7 @@ enum class RequestType {
     READY_PLAY,
     GAME_STARTED,
 
-    MAKE_MOVE,
+    MOVE_FIGURE,
 
     UNDEFINED
 };

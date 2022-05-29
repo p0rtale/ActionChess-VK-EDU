@@ -13,7 +13,7 @@ void Request::parseJSON(const std::string& json) {
         m_type = strToType(doc["type"].GetString());
     }
 
-    if (doc.HasMember("data")) {
+    if (!doc.Parse(json.data()).HasParseError() && doc.HasMember("data")) {
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
         doc["data"].Accept(writer);

@@ -39,7 +39,7 @@ public:
 
     void runGame(std::uint64_t id);
 
-    void setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId);
+    bool setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId);
 
     void write(const std::string& message, std::uint64_t id);
 

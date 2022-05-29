@@ -10,7 +10,7 @@ class Room {
 public:
     Room(std::uint64_t id, const std::string& name, std::uint64_t maxUsersNum);
 
-    ~Room();
+    virtual ~Room();
 
     std::string getName() const;
 

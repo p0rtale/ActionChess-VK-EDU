@@ -100,7 +100,7 @@ namespace Handlers {
         void execute() override;
     };
 
-    class MakeMove: public Handler {
+    class MoveFigure: public Handler {
     public:
         using Handler::Handler;
 
@@ -156,8 +156,8 @@ namespace Handlers {
     };
 
     template<>
-    struct HandlerTrait<RequestType::MAKE_MOVE> {
-        using type = MakeMove;
+    struct HandlerTrait<RequestType::MOVE_FIGURE> {
+        using type = MoveFigure;
     };
 
     template<>

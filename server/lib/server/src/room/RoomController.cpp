@@ -29,7 +29,7 @@ void RoomController::removeSession(const std::shared_ptr<Session>& session) {
 std::uint64_t RoomController::createRoom(std::string name, std::uint64_t maxUserNum) {
     std::lock_guard<std::mutex> guard(m_mutex);
 
-    const std::uint64_t id = m_rooms.size() + 1;
+    const std::uint64_t id = m_rooms.size();
     auto room = std::make_shared<GameRoom>(id, name, maxUserNum);
 
     m_rooms.emplace(id, std::move(room));
@@ -152,13 +152,14 @@ void RoomController::runGame(std::uint64_t id) {
     }
 }
 
-void RoomController::setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId) {
+bool RoomController::setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId) {
     std::lock_guard<std::mutex> guard(m_mutex);
     auto it = m_rooms.find(roomId);
     if (it != m_rooms.end()) {
         auto room = it->second;
-        room->setReady(playerId);
+        return room->setReady(playerId);
     }
+    return false;
 }
 
 void RoomController::write(const std::string& message, std::uint64_t id) {

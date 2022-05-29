@@ -28,6 +28,8 @@ std::uint64_t Room::getMaxUsersNum() const {
 }
 
 bool Room::addSession(const std::shared_ptr<Session>& session) {
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
+
     const auto id = session->getUser().getId();
     auto userNum = getUsersNum();
 
@@ -35,7 +37,6 @@ bool Room::addSession(const std::shared_ptr<Session>& session) {
         return false;
     }
 
-    std::lock_guard<std::mutex> guard(m_sessionsMutex);
     m_sessions.emplace(id, session);
 
     return true;

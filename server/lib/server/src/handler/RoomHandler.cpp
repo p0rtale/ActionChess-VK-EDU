@@ -190,26 +190,24 @@ namespace Handlers {
     }
 
     void LeaveRoom::execute() {
-        if (m_session->moveFromRoom()) {
-            rapidjson::Document doc;
-            auto& allocator = doc.GetAllocator();
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
 
-            Response updateMessage;
-            updateMessage.m_type = RequestType::USER_LEFT;
-            updateMessage.m_status = ResponseStatus::UPDATE;
+        Response updateMessage;
+        updateMessage.m_type = RequestType::USER_LEFT;
+        updateMessage.m_status = ResponseStatus::UPDATE;
 
-            rapidjson::Value value(rapidjson::kObjectType);
-            value.AddMember("user", rapidjson::Value(rapidjson::kObjectType), allocator);
-            value["user"].AddMember("id", m_session->getUser().getId(), allocator);
+        rapidjson::Value value(rapidjson::kObjectType);
+        value.AddMember("user", rapidjson::Value(rapidjson::kObjectType), allocator);
+        value["user"].AddMember("id", m_session->getUser().getId(), allocator);
 
-            updateMessage.m_jsonData = valueToString(value);
+        updateMessage.m_jsonData = valueToString(value);
 
-            std::string json;
-            updateMessage.toJSON(json);
-            m_session->broadcast(json);
-        } else {
-            m_response.m_status = ResponseStatus::FAILED_DEPENDENCY;
-        }
+        std::string json;
+        updateMessage.toJSON(json);
+        m_session->broadcast(json);
+
+        m_session->moveFromRoom();
     }
 
     bool GetAllRooms::isValid() {
@@ -236,8 +234,12 @@ namespace Handlers {
         rapidjson::Value arrayValue(rapidjson::kArrayType);
         const auto rooms = m_session->getAllRooms();
         for (const auto& room: rooms) {
-            arrayValue.PushBack(roomToValue(*room, allocator), allocator);
+            if (room.get() != nullptr) {
+                arrayValue.PushBack(roomToValue(*room, allocator), allocator);
+            }
         }
+
+        value["rooms"] = arrayValue;
 
         m_response.m_jsonData = valueToString(value);
     }

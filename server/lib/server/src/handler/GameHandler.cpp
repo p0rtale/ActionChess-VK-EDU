@@ -64,8 +64,8 @@ namespace Handlers {
         }
     }
 
-    bool MakeMove::isValid() {
-        m_response.m_type = RequestType::MAKE_MOVE;
+    bool MoveFigure::isValid() {
+        m_response.m_type = RequestType::MOVE_FIGURE;
 
         if (!m_session->isAcknowleged()) {
             m_response.m_status = ResponseStatus::FAILED_DEPENDENCY;
@@ -75,11 +75,42 @@ namespace Handlers {
             m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
         }
 
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
+        if (doc.Parse(m_request->m_jsonData.data()).HasParseError() ||
+            !doc.HasMember("id") || !doc["user"]["name"].IsUint64() ||
+            !doc.HasMember("pos-to") || !doc["pos-to"].IsArray() ||
+            doc["pos-to"].Size() != 2) {
+            m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
+        }
+
+        for (auto& value: doc["pos-to"].GetArray()) {
+            if (!value.IsUint64()) {
+                m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
+            }
+        }
+
         return m_response.m_status == ResponseStatus::OK;
     }
 
-    void MakeMove::execute() {
+    void MoveFigure::execute() {
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
+        doc.Parse(m_request->m_jsonData.data());
 
+        const auto id = doc["id"].GetUint64();
+        auto x = doc["pos-to"][0].GetUint64();
+        auto y = doc["pos-to"][1].GetUint64();
+        if (true) {
+            std::uint64_t time = 0;
+
+            rapidjson::Value value(rapidjson::kObjectType);
+            value.AddMember("time", time, allocator);
+
+            m_response.m_jsonData = valueToString(value);
+        } else {
+            m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
+        }
     }
 
 }  // namespace Handlers
