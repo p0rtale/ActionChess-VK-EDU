@@ -23,6 +23,7 @@ enum class RequestType {
     NEW_MESSAGE,
 
     READY_PLAY,
+    NEW_READY,
     GAME_STARTED,
 
     MOVE_FIGURE,

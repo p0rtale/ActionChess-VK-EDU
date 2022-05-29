@@ -46,8 +46,10 @@ bool GameRoom::gameStarted() const {
 bool GameRoom::setReady(std::uint64_t id) {
     std::lock_guard<std::mutex> guard(m_readyPlayersMutex);
 
-    m_readyPlayers.insert(id);
-    m_readyPlayersNum++;
+    if (m_readyPlayers.find(id) == m_readyPlayers.end()) {
+        m_readyPlayers.insert(id);
+        m_readyPlayersNum++;
+    }
 
     if (m_readyPlayersNum == m_maxUsersNum) {
         runGame();

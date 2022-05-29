@@ -33,10 +33,10 @@ namespace Handlers {
     }
 
     void ReadyPlay::execute() {
-        if (m_session->setReadyToPlay()) {
-            rapidjson::Document doc;
-            auto& allocator = doc.GetAllocator();
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
 
+        if (m_session->setReadyToPlay()) {
             std::string json;
 
             Response updateMessage;
@@ -62,6 +62,20 @@ namespace Handlers {
                 sessions[1]->write(json);
             }
         }
+
+        Response updateMessage;
+        updateMessage.m_type = RequestType::NEW_READY;
+        updateMessage.m_status = ResponseStatus::UPDATE;
+
+        rapidjson::Value value(rapidjson::kObjectType);
+        value.AddMember("user", rapidjson::Value(rapidjson::kObjectType), allocator);
+        value["user"].AddMember("id", m_session->getUser().getId(), allocator);
+
+        updateMessage.m_jsonData = valueToString(value);
+
+        std::string json;
+        updateMessage.toJSON(json);
+        m_session->broadcast(json);
     }
 
     bool MoveFigure::isValid() {
@@ -78,7 +92,7 @@ namespace Handlers {
         rapidjson::Document doc;
         auto& allocator = doc.GetAllocator();
         if (doc.Parse(m_request->m_jsonData.data()).HasParseError() ||
-            !doc.HasMember("id") || !doc["user"]["name"].IsUint64() ||
+            !doc.HasMember("id") || !doc["id"].IsUint64() ||
             !doc.HasMember("pos-to") || !doc["pos-to"].IsArray() ||
             doc["pos-to"].Size() != 2) {
             m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;

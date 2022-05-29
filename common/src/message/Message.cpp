@@ -15,6 +15,7 @@ std::string typeToStr(const RequestType type) {
         { RequestType::WRITE_MESSAGE,  "write-message" },
         { RequestType::NEW_MESSAGE,    "new-message"   },
         { RequestType::READY_PLAY,     "ready-play"    },
+        { RequestType::NEW_READY,      "new-ready"     },
         { RequestType::GAME_STARTED,   "game-started"  },
         { RequestType::MOVE_FIGURE,    "move-figure"   }
     };
@@ -38,6 +39,7 @@ RequestType strToType(const std::string& str) {
         { "write-message",  RequestType::WRITE_MESSAGE },
         { "new-message",    RequestType::NEW_MESSAGE   },
         { "ready-play",     RequestType::READY_PLAY    },
+        { "new-ready",      RequestType::NEW_READY     },
         { "game-started",   RequestType::GAME_STARTED  },
         { "move-figure",    RequestType::MOVE_FIGURE   }
     };
