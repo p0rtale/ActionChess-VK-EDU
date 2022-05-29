@@ -12,14 +12,10 @@ struct Id_color
 {
     std::uint16_t white_id;
     std::uint16_t black_id;
-<<<<<<< HEAD:server/lib/server/include/game/logic/Game.hpp
 
     Id_color() = default;
 
     void setPlayersId(std::uint64_t id1, std::uint64_t id2)
-=======
-    Id_color(std::uint64_t id1, std::uint64_t id2)
->>>>>>> 097f616e05b83ff425765b75027edbaf557909cd:interfaces/game.h
     {
         this->white_id = id1;
         this->black_id = id2;
