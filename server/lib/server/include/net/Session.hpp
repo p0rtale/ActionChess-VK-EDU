@@ -9,6 +9,7 @@
 #include "User.hpp"
 
 class Connection;
+class GameRoom;
 class RequestQueue;
 class Room;
 class RoomController;
@@ -40,6 +41,8 @@ public:
 
     const Room& getRoom() const;
 
+    const GameRoom& getGameRoom() const;
+
     std::vector<std::shared_ptr<Room>> getAllRooms() const;
 
     void changeUserName(std::string name);
@@ -55,6 +58,8 @@ public:
     bool moveToRoom(std::uint64_t roomId);
 
     bool moveFromRoom();
+
+    bool setReadyToPlay();
 
     bool runGame();
 
@@ -78,11 +83,11 @@ private:
 
     State m_state = State::CLOSED;
 
-    std::shared_ptr<RoomController> m_roomController = nullptr;
+    std::shared_ptr<RoomController> m_roomController;
 
-    std::shared_ptr<RequestQueue> m_requestQueue = nullptr;
+    std::shared_ptr<RequestQueue> m_requestQueue;
 
-    std::shared_ptr<boost::asio::io_context> m_ioContext = nullptr;
+    std::shared_ptr<boost::asio::io_context> m_ioContext;
 
-    std::shared_ptr<Connection> m_connection = nullptr;
+    std::shared_ptr<Connection> m_connection;
 };

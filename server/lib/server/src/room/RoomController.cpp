@@ -1,5 +1,9 @@
 #include "RoomController.hpp"
 
+RoomController::RoomController() {
+    m_rooms.emplace(s_unusedGameRoomID, nullptr);
+}
+
 RoomController::~RoomController() {
     clear();
 }
@@ -9,9 +13,9 @@ bool RoomController::addSession(const std::shared_ptr<Session>& session) {
 }
 
 void RoomController::removeSession(const std::shared_ptr<Session>& session) {
-    const auto userId = session->getUser().m_id;
+    const auto userId = session->getUser().getId();
     if (!m_mainRoom->removeSession(userId)) {
-        const auto roomId = session->getUser().m_roomId;
+        const auto roomId = session->getUser().getRoomId();
 
         std::lock_guard<std::mutex> guard(m_mutex);
         const auto it = m_rooms.find(roomId);
@@ -23,10 +27,11 @@ void RoomController::removeSession(const std::shared_ptr<Session>& session) {
 }
 
 std::uint64_t RoomController::createRoom(std::string name, std::uint64_t maxUserNum) {
-    const std::uint64_t id = m_rooms.size() + 1;
+    std::lock_guard<std::mutex> guard(m_mutex);
+
+    const std::uint64_t id = m_rooms.size();
     auto room = std::make_shared<GameRoom>(id, name, maxUserNum);
 
-    std::lock_guard<std::mutex> guard(m_mutex);
     m_rooms.emplace(id, std::move(room));
 
     return id;
@@ -37,7 +42,7 @@ void RoomController::removeRoom(std::uint64_t roomId) {
 }
 
 bool RoomController::moveToRoom(std::uint64_t roomId, const std::shared_ptr<Session>& session) {
-    const auto userId = session->getUser().m_id;
+    const auto userId = session->getUser().getId();
     m_mainRoom->removeSession(userId);
     {
         std::lock_guard<std::mutex> guard(m_mutex);
@@ -68,7 +73,7 @@ void RoomController::moveFromRoom(std::uint64_t roomId, const std::shared_ptr<Se
         }
     }
 
-    const auto userId = session->getUser().m_id;
+    const auto userId = session->getUser().getId();
     if (room->removeSession(userId)) {
         m_mainRoom->addSession(session);        
     }
@@ -84,6 +89,18 @@ const Room& RoomController::getRoom(std::uint64_t id) const {
     }
 
     return *m_mainRoom;
+}
+
+const GameRoom& RoomController::getGameRoom(std::uint64_t id) const {
+    std::lock_guard<std::mutex> guard(m_mutex);
+
+    const auto it = m_rooms.find(id);
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        return *room;
+    }
+
+    return *m_rooms.at(s_unusedGameRoomID);
 }
 
 std::string RoomController::getRoomJSON(std::uint64_t id) const {
@@ -135,24 +152,36 @@ void RoomController::runGame(std::uint64_t id) {
     }
 }
 
-void RoomController::broadcast(const std::string& message, std::uint64_t id) {
+bool RoomController::setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto it = m_rooms.find(roomId);
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        return room->setReady(playerId);
+    }
+    return false;
+}
+
+void RoomController::write(const std::string& message, std::uint64_t id) {
     std::lock_guard<std::mutex> guard(m_mutex);
     auto it = m_rooms.find(id);
     if (it != m_rooms.end()) {
         auto room = it->second;
-        room->broadcast(message, id);
+        room->write(message, id);
+    }
+}
+
+void RoomController::broadcast(const std::string& message, std::uint64_t roomId, std::uint64_t userId) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto it = m_rooms.find(roomId);
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        room->broadcast(message, userId);
     }
 }
 
 void RoomController::clear() {
-    {
-        std::lock_guard<std::mutex> guard(m_mutex);
-        for (auto& pair: m_rooms) {
-            auto room = pair.second;
-            room->clear();
-        }
-        m_rooms.clear();
-    }
-
+    std::lock_guard<std::mutex> guard(m_mutex);
+    m_rooms.clear();
     m_mainRoom->clear();
 }

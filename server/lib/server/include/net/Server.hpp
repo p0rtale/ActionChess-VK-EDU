@@ -6,6 +6,8 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
 
+#include "Logger.hpp"
+
 class RoomController; 
 
 class Server final {
@@ -33,5 +35,7 @@ private:
 
     std::optional<boost::asio::ip::tcp::socket> m_socket;
 
-    std::shared_ptr<RoomController> m_roomController = nullptr;
+    Logger m_logger = "server_log.txt";
+
+    std::shared_ptr<RoomController> m_roomController;
 };

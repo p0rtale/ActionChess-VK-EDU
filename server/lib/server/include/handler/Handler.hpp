@@ -30,6 +30,16 @@ namespace Handlers {
         Response m_response;
     };
 
+    class GetId: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
     class CreateRoom: public Handler {
     public:
         using Handler::Handler;
@@ -80,7 +90,7 @@ namespace Handlers {
         void execute() override;
     };
 
-    class StartGame: public Handler {
+    class ReadyPlay: public Handler {
     public:
         using Handler::Handler;
 
@@ -90,7 +100,17 @@ namespace Handlers {
         void execute() override;
     };
 
-    class MakeMove: public Handler {
+    class MoveFigure: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
+    class Undefined: public Handler {
     public:
         using Handler::Handler;
 
@@ -103,6 +123,11 @@ namespace Handlers {
     template<RequestType requestType>
     struct HandlerTrait {
         using type = void; 
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::GET_ID> {
+        using type = GetId;
     };
 
     template<>
@@ -131,13 +156,18 @@ namespace Handlers {
     };
 
     template<>
-    struct HandlerTrait<RequestType::MAKE_MOVE> {
-        using type = MakeMove;
+    struct HandlerTrait<RequestType::MOVE_FIGURE> {
+        using type = MoveFigure;
     };
 
     template<>
-    struct HandlerTrait<RequestType::START_GAME> {
-        using type = StartGame;
+    struct HandlerTrait<RequestType::READY_PLAY> {
+        using type = ReadyPlay;
+    };
+
+    template<>
+    struct HandlerTrait<RequestType::UNDEFINED> {
+        using type = Undefined;
     };
 
     template<RequestType requestType>

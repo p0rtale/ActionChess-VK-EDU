@@ -4,7 +4,9 @@
 
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
+#include <optional>
 
+#include "Logger.hpp"
 #include "WriteBufferSequence.hpp"
 
 class RequestQueue;
@@ -15,6 +17,7 @@ public:
     Connection(boost::asio::io_context* ioContext, 
                boost::asio::ssl::context* sslContext,
                boost::asio::ip::tcp::socket&& socket,
+               std::uint64_t id,
                std::shared_ptr<RequestQueue> requestQueue);
 
     ~Connection();
@@ -51,9 +54,13 @@ private:
 
     boost::asio::io_context::strand m_strand;
 
-    std::shared_ptr<RequestQueue> m_requestQueue = nullptr;
+    std::shared_ptr<RequestQueue> m_requestQueue;
 
     std::weak_ptr<Session> m_bindedSession;
+
+    std::optional<Logger> m_logger;
+
+    const std::uint64_t m_id = 0;
 
     boost::asio::streambuf m_readBuf;
     WriteBufferSequence m_writeBuf;
