@@ -4,7 +4,7 @@
 #include "figure_handler.h"
 #include <iostream>
 #include <string>
-#include <map>
+#include <vector>
 
 struct Id_color
 {
@@ -38,7 +38,7 @@ public:
     Game();
     ~Game();
     int makeMove(char color, int id, int x, int y);
-    void init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2);
+    vector<char> init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2);
     // void addRequest(std::string request);
     // void extractData();
     // std::string sendResponse(int code);

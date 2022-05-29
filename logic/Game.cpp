@@ -1,5 +1,5 @@
 #include "game.h"
-
+#include <vector>
 
     Game::Game()
     {
@@ -21,9 +21,14 @@
             cout<<"Winner is "<<this->handler->getWinner()<<endl;
         return timer;
     }
-    void Game:: init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2)
+    vector<char> Game:: init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2)
     {
         this->colors(session1->getId(), session2->getId());
+        vector<char> res;
+        res.push_back("w");
+        res.push_back("b");
+        return res;
+
     }
     // void addRequest(string request)
     // void extractData();
