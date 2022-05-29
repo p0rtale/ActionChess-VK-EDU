@@ -25,17 +25,17 @@ void Response::parseJSON(const std::string& json) {
 
 void Response::toJSON(std::string& json) const {
     rapidjson::Document doc;
-    auto& alloc = doc.GetAllocator();
+    auto& allocator = doc.GetAllocator();
     doc.SetObject();
 
     rapidjson::Value value;
 
     const auto type = typeToStr(m_type);
-    value.SetString(type.c_str(), alloc);
-    doc.AddMember("type", value, alloc);
+    value.SetString(type.c_str(), allocator);
+    doc.AddMember("type", value, allocator);
 
     value.SetInt(static_cast<int>(m_status));
-    doc.AddMember("status", value, alloc);
+    doc.AddMember("status", value, allocator);
 
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
