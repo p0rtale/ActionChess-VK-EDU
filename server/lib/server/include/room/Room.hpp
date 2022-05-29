@@ -22,9 +22,11 @@ public:
 
     virtual bool addSession(const std::shared_ptr<Session>& session);
 
-    bool removeSession(std::uint64_t id);
+    virtual bool removeSession(std::uint64_t id);
 
     std::vector<std::shared_ptr<Session>> getSessions() const;
+
+    void write(const std::string& message, std::uint64_t id);
 
     void broadcast(const std::string& message, std::uint64_t id);
 
@@ -41,7 +43,7 @@ protected:
 
     std::uint64_t m_maxUsersNum = 0;
 
-    std::unordered_map<std::uint64_t, std::shared_ptr<Session>> m_sessions;  // Guarded by m_mutex 
+    std::unordered_map<std::uint64_t, std::shared_ptr<Session>> m_sessions;  // Guarded by m_sessionsMutex 
 
-    mutable std::mutex m_mutex;
+    mutable std::mutex m_sessionsMutex;
 };

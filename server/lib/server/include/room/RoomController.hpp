@@ -11,7 +11,7 @@ class Session;
 
 class RoomController final {
 public:
-    RoomController() = default;
+    RoomController();
 
     ~RoomController();
 
@@ -29,6 +29,8 @@ public:
 
     const Room& getRoom(std::uint64_t id) const;
 
+    const GameRoom& getGameRoom(std::uint64_t id) const;
+
     std::string getRoomJSON(std::uint64_t id) const;
 
     std::vector<std::shared_ptr<Room>> getAllRooms() const;
@@ -37,11 +39,17 @@ public:
 
     void runGame(std::uint64_t id);
 
-    void broadcast(const std::string& message, std::uint64_t id);
+    void setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId);
+
+    void write(const std::string& message, std::uint64_t id);
+
+    void broadcast(const std::string& message, std::uint64_t roomId, std::uint64_t userId);
 
     void clear();
 
     static constexpr std::uint64_t s_mainRoomID = 0;
+
+    static constexpr std::uint64_t s_unusedGameRoomID = 0;
 
 private:
     std::unordered_map<std::uint64_t, std::shared_ptr<GameRoom>> m_rooms;  // Guarded by m_mutex 

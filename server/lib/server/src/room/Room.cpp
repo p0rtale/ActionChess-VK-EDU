@@ -35,14 +35,14 @@ bool Room::addSession(const std::shared_ptr<Session>& session) {
         return false;
     }
 
-    std::lock_guard<std::mutex> guard(m_mutex);
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
     m_sessions.emplace(id, session);
 
     return true;
 }
 
 bool Room::removeSession(std::uint64_t id) {
-    std::lock_guard<std::mutex> guard(m_mutex);
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
 
     if (m_sessions.erase(id)) {
         return true;
@@ -54,7 +54,7 @@ bool Room::removeSession(std::uint64_t id) {
 std::vector<std::shared_ptr<Session>> Room::getSessions() const {
     std::vector<std::shared_ptr<Session>> sessions;
 
-    std::lock_guard<std::mutex> guard(m_mutex);
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
     for (const auto& pair: m_sessions) {
         const auto session = pair.second;
         sessions.emplace_back(session);
@@ -63,8 +63,18 @@ std::vector<std::shared_ptr<Session>> Room::getSessions() const {
     return sessions;
 }
 
+void Room::write(const std::string& message, std::uint64_t id) {
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
+
+    auto iterator = m_sessions.find(id);
+    if (iterator != m_sessions.end()) {
+        auto session = iterator->second;
+        session->write(message);
+    }
+}
+
 void Room::broadcast(const std::string& message, std::uint64_t id) {
-    std::lock_guard<std::mutex> guard(m_mutex);
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
 
     for (auto& pair: m_sessions) {
         auto session = pair.second;
@@ -100,6 +110,6 @@ std::string Room::toJSON() const {
 }
 
 void Room::clear() {
-    std::lock_guard<std::mutex> guard(m_mutex);
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
     m_sessions.clear();    
 }

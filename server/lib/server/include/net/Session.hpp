@@ -9,6 +9,7 @@
 #include "User.hpp"
 
 class Connection;
+class GameRoom;
 class RequestQueue;
 class Room;
 class RoomController;
@@ -40,6 +41,8 @@ public:
 
     const Room& getRoom() const;
 
+    const GameRoom& getGameRoom() const;
+
     std::vector<std::shared_ptr<Room>> getAllRooms() const;
 
     void changeUserName(std::string name);
@@ -55,6 +58,8 @@ public:
     bool moveToRoom(std::uint64_t roomId);
 
     bool moveFromRoom();
+
+    bool setReadyToPlay();
 
     bool runGame();
 

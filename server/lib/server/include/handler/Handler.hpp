@@ -30,6 +30,16 @@ namespace Handlers {
         Response m_response;
     };
 
+    class GetId: public Handler {
+    public:
+        using Handler::Handler;
+
+    private:
+        bool isValid() override;
+
+        void execute() override;
+    };
+
     class CreateRoom: public Handler {
     public:
         using Handler::Handler;
@@ -80,7 +90,7 @@ namespace Handlers {
         void execute() override;
     };
 
-    class StartGame: public Handler {
+    class ReadyPlay: public Handler {
     public:
         using Handler::Handler;
 
@@ -116,6 +126,11 @@ namespace Handlers {
     };
 
     template<>
+    struct HandlerTrait<RequestType::GET_ID> {
+        using type = GetId;
+    };
+
+    template<>
     struct HandlerTrait<RequestType::CREATE_ROOM> {
         using type = CreateRoom;
     };
@@ -146,8 +161,8 @@ namespace Handlers {
     };
 
     template<>
-    struct HandlerTrait<RequestType::START_GAME> {
-        using type = StartGame;
+    struct HandlerTrait<RequestType::READY_PLAY> {
+        using type = ReadyPlay;
     };
 
     template<>

@@ -3,9 +3,10 @@
 #include "Session.hpp"
 #include "Room.hpp"
 
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
+#include <rapidjson/allocators.h>
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 static std::string valueToString(const rapidjson::Value& value) {
     rapidjson::StringBuffer buffer;
@@ -61,6 +62,26 @@ static rapidjson::Value roomToValue(const Room& room, rapidjson::MemoryPoolAlloc
 
 namespace Handlers {
 
+    bool GetId::isValid() {
+        m_response.m_type = RequestType::GET_ID;
+
+        if (!m_session->isAcknowleged()) {
+            m_response.m_status = ResponseStatus::FAILED_DEPENDENCY;
+        }
+
+        return m_response.m_status == ResponseStatus::OK;
+    }
+
+    void GetId::execute() {
+        rapidjson::Document doc;
+        auto& allocator = doc.GetAllocator();
+
+        rapidjson::Value value(rapidjson::kObjectType);
+        value.AddMember("id", m_session->getUser().getId(), allocator);
+
+        m_response.m_jsonData = valueToString(value);
+    }
+
     bool CreateRoom::isValid() {
         m_response.m_type = RequestType::CREATE_ROOM;
 
@@ -80,6 +101,11 @@ namespace Handlers {
             !doc.HasMember("room") ||
             !doc["room"].HasMember("name") || !doc["room"]["name"].IsString() ||
             !doc["room"].HasMember("max-users-num") || !doc["room"]["max-users-num"].IsUint64()) {
+            m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
+        }
+
+        // So far only 1vs1
+        if (doc["room"]["max-users-num"] != 2) {
             m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
         }
 
@@ -135,6 +161,15 @@ namespace Handlers {
         if (m_session->moveToRoom(roomId)) {
             m_session->changeUserName(doc["user"]["name"].GetString());
             m_response.m_jsonData = valueToString(roomToValue(m_session->getRoom(), allocator));
+
+            Response updateMessage;
+            updateMessage.m_type = RequestType::USER_ENTERED;
+            updateMessage.m_status = ResponseStatus::UPDATE;
+            updateMessage.m_jsonData = valueToString(userToValue(m_session->getUser(), allocator));
+
+            std::string json;
+            updateMessage.toJSON(json);
+            m_session->broadcast(json);
         } else {
             m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
         }

@@ -1,5 +1,9 @@
 #include "RoomController.hpp"
 
+RoomController::RoomController() {
+    m_rooms.emplace(s_unusedGameRoomID, nullptr);
+}
+
 RoomController::~RoomController() {
     clear();
 }
@@ -87,6 +91,18 @@ const Room& RoomController::getRoom(std::uint64_t id) const {
     return *m_mainRoom;
 }
 
+const GameRoom& RoomController::getGameRoom(std::uint64_t id) const {
+    std::lock_guard<std::mutex> guard(m_mutex);
+
+    const auto it = m_rooms.find(id);
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        return *room;
+    }
+
+    return *m_rooms.at(s_unusedGameRoomID);
+}
+
 std::string RoomController::getRoomJSON(std::uint64_t id) const {
     std::lock_guard<std::mutex> guard(m_mutex);
     
@@ -136,12 +152,30 @@ void RoomController::runGame(std::uint64_t id) {
     }
 }
 
-void RoomController::broadcast(const std::string& message, std::uint64_t id) {
+void RoomController::setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto it = m_rooms.find(roomId);
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        room->setReady(playerId);
+    }
+}
+
+void RoomController::write(const std::string& message, std::uint64_t id) {
     std::lock_guard<std::mutex> guard(m_mutex);
     auto it = m_rooms.find(id);
     if (it != m_rooms.end()) {
         auto room = it->second;
-        room->broadcast(message, id);
+        room->write(message, id);
+    }
+}
+
+void RoomController::broadcast(const std::string& message, std::uint64_t roomId, std::uint64_t userId) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto it = m_rooms.find(roomId);
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        room->broadcast(message, userId);
     }
 }
 

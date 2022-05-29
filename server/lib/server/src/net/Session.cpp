@@ -65,6 +65,10 @@ const Room& Session::getRoom() const {
     return m_roomController->getRoom(m_user.getRoomId());
 }
 
+const GameRoom& Session::getGameRoom() const {
+    return m_roomController->getGameRoom(m_user.getRoomId());
+}
+
 std::vector<std::shared_ptr<Room>> Session::getAllRooms() const {
     return m_roomController->getAllRooms();
 }
@@ -102,6 +106,14 @@ bool Session::moveFromRoom() {
     return false;
 }
 
+bool Session::setReadyToPlay() {
+    if (m_user.getRoomId() != RoomController::s_mainRoomID) {
+        m_roomController->setReadyToPlay(m_user.getRoomId(), m_user.getId());
+        return true;
+    }
+    return false;
+}
+
 bool Session::runGame() {
     if (m_user.getRoomId() != RoomController::s_mainRoomID) {
         m_roomController->runGame(m_user.getRoomId());
@@ -111,7 +123,7 @@ bool Session::runGame() {
 }
 
 void Session::broadcast(const std::string& message) {
-    m_roomController->broadcast(message, getId());
+    m_roomController->broadcast(message, m_user.getRoomId(), m_user.getId());
 }
 
 void Session::removeFromRoomController() {
@@ -140,6 +152,9 @@ void Session::handleRequest(Request&& request) {
     using namespace Handlers;
 
     switch (request.m_type) {
+        case RequestType::GET_ID:
+            createHandler<RequestType::GET_ID>(&request, this)->run();
+            break;
         case RequestType::CREATE_ROOM:
             createHandler<RequestType::CREATE_ROOM>(&request, this)->run();
             break;
@@ -155,8 +170,8 @@ void Session::handleRequest(Request&& request) {
         case RequestType::WRITE_MESSAGE:
             createHandler<RequestType::WRITE_MESSAGE>(&request, this)->run();
             break;
-        case RequestType::START_GAME:
-            createHandler<RequestType::START_GAME>(&request, this)->run();
+        case RequestType::READY_PLAY:
+            createHandler<RequestType::READY_PLAY>(&request, this)->run();
             break;
         case RequestType::MAKE_MOVE:
             createHandler<RequestType::MAKE_MOVE>(&request, this)->run();
