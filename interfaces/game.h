@@ -10,7 +10,7 @@ struct Id_color
 {
     std::uint16_t white_id;
     std::uint16_t black_id;
-    Id_color(std::uint64_t id1, std::uint64_t id1)
+    Id_color(std::uint64_t id1, std::uint64_t id2)
     {
         this->white_id = id1;
         this->white_id = id2;

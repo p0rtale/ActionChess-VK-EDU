@@ -7,7 +7,7 @@
         this->requestQueue = new MsgQueue();
     }
     Game::~Game()
-    {
+    { 
         delete handler;
         delete requestQueue;
     }
