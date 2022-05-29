@@ -13,5 +13,5 @@ public:
     void parseJSON(const std::string& json) override;
 
     void toJSON(std::string& json) const override;
-    ~Response() = default;
+    //~Response() = default;
 };

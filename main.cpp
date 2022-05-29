@@ -20,8 +20,10 @@
 #include "rapidjson/stringbuffer.h"
 #include <string>
 #include <bitset>
+#include <X11/Xlib.h>
 
 int main(){
+    XInitThreads();
     boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23);
     ctx.load_verify_file("./settings/server.crt");
     boost::asio::io_context io_context;

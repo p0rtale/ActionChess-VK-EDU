@@ -44,7 +44,9 @@ public:
     void on_mouse_over(sf::RenderWindow* window)override;
     void on_type(sf::RenderWindow* window, sf::Event event)override;
     void draw(sf::RenderWindow* window) override;
-
+    float get_pos(){
+        return position;
+    }
 
 protected:
     sf::Texture slider_image;
@@ -56,5 +58,6 @@ protected:
     sf::Vector2f scale_factor;
     float mouse_delta=0.f;
     float mouse_prev_pos = 0.f;
+    float position=0;
 
 };
