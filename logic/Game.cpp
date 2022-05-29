@@ -1,6 +1,5 @@
 #include "game.h"
 
-using namespace std;
 
     Game::Game()
     {
@@ -12,13 +11,19 @@ using namespace std;
         delete handler;
         delete requestQueue;
     }
-    void Game::makeMove(char color, int id, int x, int y)
+    int Game::makeMove(const Session* ses, int id, int x, int y)
     {
-        if (id >=16 && color =='w')
-            return;
-        this->handler->moveFigure(id, Tile(x, y));
+        char temp = colors.getColor(ses->getId());
+        if (temp == NULL)
+            return -1;
+        int timer = this->handler->moveFigure(id, Tile(x, y));
         if (this->handler->getWinner() != 'n')
             cout<<"Winner is "<<this->handler->getWinner()<<endl;
+        return timer;
+    }
+    void Game:: init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2)
+    {
+        this->colors(session1->getId(), session2->getId());
     }
     // void addRequest(string request)
     // void extractData();

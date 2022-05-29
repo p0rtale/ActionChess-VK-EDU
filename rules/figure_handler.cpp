@@ -61,28 +61,28 @@
     }
 
 
-    void FigureHandler::moveFigure(int figure, Tile endTile)
+    int FigureHandler::moveFigure(int figure, Tile endTile)
     {
         if (getWinner() != 'n')
-            return;
+            return -1;
         bool flag = false;
         if (!endTile.isCorrect())
             {
                 std::cout<<"Error there is no tile"<<std::endl;
-                return;
+                return -1;
             }
 
         Figure* temp;
         temp = findFigure(figure);
         if (!isCorrect(temp))
-            return;
+            return -1;
         Tile* startTile;
 
         char tile_flag = isColision(temp, endTile);
         if (tile_flag == ALLY)
             {
                 std::cout<<"Error there is another ally figure"<<std::endl;
-                return;
+                return -1;
             }
         else if (tile_flag == ENEMY) // this whole part just for pawn
             temp->setAtack(true);
@@ -129,9 +129,13 @@
                 std::cout<<"Very good"<<std::endl;
                 std::cout.flush();
                 setTimer(temp, length);
+                return length;
             }
             else
-                std::cout<<"Wrong"<<std::endl;
+                {
+                    std::cout<<"Wrong"<<std::endl;
+                    return -1;
+                }
     }
 
     char FigureHandler::getWinner()
@@ -167,7 +171,6 @@
     {
         figure->setInFlight();
         std::cout<< figure->getId()<<": Fly me to the moon\n ";
-        std::cout<< figure->getId()<< ": "<<length<<std::endl;
         
         std::cout.flush();
         std::thread timer ([figure, length, this] ()

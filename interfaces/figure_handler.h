@@ -31,7 +31,7 @@ private:
     // void castling(Rock rock, King king);
 public:
     FigureHandler();
-    void moveFigure(int figure, Tile endTile);
+    int moveFigure(int figure, Tile endTile);
     ~FigureHandler();
     Figure* findEnemy(Tile tile, char color);
     char isColision(Figure* figure, Tile endTile);
