@@ -1,21 +1,23 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(chess)
+cmake_minimum_required(VERSION 3.20)
+
+project(action)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include("${CMAKE_SOURCE_DIR}/vendor/rapidjson.cmake")
 
-find_package(Boost REQUIRED COMPONENTS system)
-find_package(OpenSSL REQUIRED)
+find_package(SFML REQUIRED COMPONENTS system window graphics )
+include_directories(${SFML_INCLUDE_DIR} )
 
-include_directories(${Boost_INCLUDE_DIRS})
+file(GLOB_RECURSE sources src/*.cpp )
+add_library(src STATIC ${sources})
+target_link_libraries(src PUBLIC sfml-graphics sfml-window sfml-system)
 
-add_subdirectory(src)
+add_executable(main main.cpp )
+target_link_libraries(main src sfml-graphics sfml-window sfml-system)
+target_include_directories(main PUBLIC "src/Engine.hpp")
 
-add_executable(${PROJECT_NAME} main.cpp)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CLIENT_LIB_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${CLIENT_LIB_LIBRARIES})
+
 
 

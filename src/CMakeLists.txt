@@ -1,14 +1,12 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(client_lib)
+project(graphics)
 
-set(CLIENT_LIB_LIBRARIES)
-set(CLIENT_LIB_INCLUDE_DIRS)
+find_package(Boost REQUIRED COMPONENTS system)
+find_package(OpenSSL REQUIRED)
 
-file(GLOB SOURCES *.cpp)
-file(GLOB INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(${PROJECT_NAME} STATIC ${SOURCES})
+find_package(SFML REQUIRED COMPONENTS system window graphics)
+include_directories(${SFML_INCLUDE_DIR} *.cpp *.hpp)
 
-set(CLIENT_LIB_LIBRARIES ${PROJECT_NAME} PARENT_SCOPE)
-set(CLIENT_LIB_INCLUDE_DIRS ${INCLUDE_DIRS} PARENT_SCOPE)
+add_library(src STATIC "*.cpp" "*.hpp")
 
+target_link_libraries(src PUBLIC sfml-graphics sfml-window sfml-system) 

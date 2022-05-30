@@ -4,64 +4,61 @@ Engine::Engine()
 {
     // Получаем разрешение экрана, создаем окно SFML и View
 
-    resolution.x = sf::VideoMode::getDesktopMode().width;
-    resolution.y = sf::VideoMode::getDesktopMode().height;
+    //resolution.x = sf::VideoMode::getDesktopMode().width;
+    //resolution.y = sf::VideoMode::getDesktopMode().height;
+    resolution.x = 1280;
+    resolution.y = 720;
     
     window.create(sf::VideoMode(resolution.x, resolution.y),
-        "Dinamic chess",
-        sf::Style::Fullscreen);
+        "Active chess",sf::Style::Close);
  
     // Загружаем фон в текстуру
-    m_BackgroundTexture.loadFromFile("background.jpg");
+    m_BackgroundTexture.loadFromFile("images/background.jpg");
  
     // Связываем спрайт и текстуру
     m_BackgroundSprite.setTexture(m_BackgroundTexture);
 
-    board = new BoardTable(resolution);
-    player_figures = new GroupFigure(resolution,true,'w');
-    opponent_figures = new GroupFigure(resolution,false,'b');
+    // выстовка по координатам спрайта
+    m_BackgroundSprite.setPosition(0,0);
+
+    float WidgetWidth = (float) resolution.x / (float) m_BackgroundTexture.getSize().x;
+    float WidgetHeight = (float) resolution.y / (float) m_BackgroundTexture.getSize().y;
+    m_BackgroundSprite.setScale(WidgetWidth, WidgetHeight);
+    
+    // response цвет
+    board = std::make_shared<BoardTable>(resolution);
+    player_figures = std::make_shared<GroupFigure>(resolution,true,'w');
+    opponent_figures = std::make_shared<GroupFigure>(resolution,false,'b');
 }
 
-Engine::~Engine(){
-    delete[] board;
-    delete[] player_figures;
-    delete[] opponent_figures;
-}
+Engine::~Engine(){}
 
-void Engine::update(float dtAsSeconds,sf::Event event)
+void Engine::update(sf::Event event)
 {
-    player_figures->update(event,window,*board);
-    opponent_figures->update(event,window,*board);
+    //response delete и move
+    player_figures->update(event,&window,board);
+    opponent_figures->update(event,&window,board);
 }
-
 void Engine::draw()
 {
     // Стираем предыдущий кадр
     window.clear(sf::Color::White);
- 
+
     // Отрисовываем фон
     window.draw(m_BackgroundSprite);
+
+    board->draw(&window);
     
-    std::vector<sf::Sprite> cage_figures = board->getSprites(); 
-    for (int i=0; i < cage_figures.size();++i){
-        window.draw(cage_figures[i]);
-    }
-    std::vector<sf::Sprite> pl_figures = player_figures->getSprites(); 
-    for (int i=0; i < pl_figures.size();++i){
-        window.draw(pl_figures[i]);
-    }
-    std::vector<sf::Sprite> op_figures = opponent_figures->getSprites(); 
-    for (int i=0; i < op_figures.size();++i){
-        window.draw(op_figures[i]);
-    }
+    player_figures->draw(&window);
+
+    opponent_figures->draw(&window);
+    
     // Отображаем все, что нарисовали
     window.display();
 }
  
 void Engine::start()
 {
-    // Расчет времени
-    sf::Clock clock;
     // Игровой цикл
     while (window.isOpen())
     {
@@ -72,12 +69,11 @@ void Engine::start()
                 window.close();
             }
         }
-
         // Перезапускаем таймер и записываем отмеренное время в dt
-        sf::Time dt = clock.restart();
+       // sf::Time dt = clock.restart();
  
-        float dtAsSeconds = dt.asSeconds();
-        update(dtAsSeconds,event);
+       // float dtAsSeconds = dt.asSeconds();
+      //  update(event);
         draw();
     }
 }

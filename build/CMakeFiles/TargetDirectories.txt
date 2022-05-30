@@ -1,0 +1,4 @@
+/home/alexeylelikov/texnopark/interface/build/CMakeFiles/src.dir
+/home/alexeylelikov/texnopark/interface/build/CMakeFiles/main.dir
+/home/alexeylelikov/texnopark/interface/build/CMakeFiles/edit_cache.dir
+/home/alexeylelikov/texnopark/interface/build/CMakeFiles/rebuild_cache.dir
