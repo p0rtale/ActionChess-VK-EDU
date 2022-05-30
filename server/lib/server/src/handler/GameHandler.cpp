@@ -43,24 +43,24 @@ namespace Handlers {
             updateMessage.m_type = RequestType::GAME_STARTED;
             updateMessage.m_status = ResponseStatus::UPDATE;
 
+            auto order = m_session->runGame();
+
+            auto firstSession = m_session->getRoom().getSession(order[0]);
+            auto secondSession = m_session->getRoom().getSession(order[1]);
+
             rapidjson::Value valueWhite(rapidjson::kObjectType);
             valueWhite.AddMember("color", 'W', allocator);
             updateMessage.m_jsonData = valueToString(valueWhite);
 
             updateMessage.toJSON(json);
-            m_session->write(json);
+            firstSession->write(json);
 
             rapidjson::Value valueBlack(rapidjson::kObjectType);
             valueBlack.AddMember("color", 'B', allocator);
             updateMessage.m_jsonData = valueToString(valueBlack);
 
             updateMessage.toJSON(json);
-            auto sessions = m_session->getRoom().getSessions();
-            if (sessions[0]->getId() != m_session->getId()) {
-                sessions[0]->write(json);
-            } else {
-                sessions[1]->write(json);
-            }
+            secondSession->write(json);
         }
 
         Response updateMessage;
@@ -116,7 +116,7 @@ namespace Handlers {
         const auto x = doc["pos-to"][0].GetUint64();
         const auto y = doc["pos-to"][1].GetUint64();
 
-        std::uint64_t time = m_session->makeMove(figureId, x, y);
+        std::int64_t time = m_session->makeMove(figureId, x, y);
         if (time != -1) {
             {
                 rapidjson::Value value(rapidjson::kObjectType);
@@ -145,7 +145,7 @@ namespace Handlers {
             updateMessage.toJSON(json);
             m_session->broadcast(json);
         } else {
-            m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
+            m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
         }
     }
 

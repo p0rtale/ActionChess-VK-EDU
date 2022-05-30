@@ -15,9 +15,9 @@ public:
     
     bool removeSession(std::uint64_t id) override;
 
-    std::vector<char> runGame();
+    std::vector<uint64_t> runGame();
 
-    std::uint64_t makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
+    std::int64_t makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
                            std::uint64_t x, std::uint64_t y);
 
     bool gameStarted() const;

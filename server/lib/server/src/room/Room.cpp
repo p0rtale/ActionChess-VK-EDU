@@ -52,6 +52,18 @@ bool Room::removeSession(std::uint64_t id) {
     return false;    
 }
 
+std::shared_ptr<Session> Room::getSession(std::uint64_t id) const {
+    std::lock_guard<std::mutex> guard(m_sessionsMutex);
+
+    auto iterator = m_sessions.find(id);
+    if (iterator != m_sessions.end()) {
+        auto session = iterator->second;
+        return session;
+    }
+
+    return nullptr;
+}
+
 std::vector<std::shared_ptr<Session>> Room::getSessions() const {
     std::vector<std::shared_ptr<Session>> sessions;
 

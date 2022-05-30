@@ -25,7 +25,7 @@ public:
 
     bool moveToRoom(std::uint64_t roomId, const std::shared_ptr<Session>& session);
 
-    void moveFromRoom(std::uint64_t roomId, const std::shared_ptr<Session>& session);
+    bool moveFromRoom(std::uint64_t roomId, const std::shared_ptr<Session>& session);
 
     const Room& getRoom(std::uint64_t id) const;
 
@@ -37,9 +37,9 @@ public:
 
     std::vector<std::string> getAllRoomsJSON() const;
 
-    void runGame(std::uint64_t id);
+    std::vector<uint64_t> runGame(std::uint64_t id);
 
-    std::uint64_t makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
+    std::int64_t makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
                            std::uint64_t x, std::uint64_t y);
 
     bool setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId);

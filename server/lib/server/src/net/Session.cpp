@@ -110,16 +110,15 @@ bool Session::setReadyToPlay() {
     return m_roomController->setReadyToPlay(m_user.getRoomId(), m_user.getId());
 }
 
-bool Session::runGame() {
+std::vector<uint64_t> Session::runGame() {
     if (m_user.getRoomId() != RoomController::s_mainRoomID) {
-        m_roomController->runGame(m_user.getRoomId());
-        return true;
+        return m_roomController->runGame(m_user.getRoomId());
     }
-    return false;
+    return std::vector<uint64_t>();
 }
 
-std::uint64_t Session::makeMove(std::uint64_t figureId, std::uint64_t x, std::uint64_t y) {
-    m_roomController->makeMove(shared_from_this(), figureId, x, y);
+std::int64_t Session::makeMove(std::uint64_t figureId, std::uint64_t x, std::uint64_t y) {
+    return m_roomController->makeMove(shared_from_this(), figureId, x, y);
 }
 
 void Session::broadcast(const std::string& message) {
