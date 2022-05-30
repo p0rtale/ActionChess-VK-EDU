@@ -6,6 +6,7 @@
 #include "TextBox.hpp"
 #include "Table.hpp"
 #include <functional>
+#include "MenuModel.hpp"
 class MenuView:  public BasicView{
 public:
     void activate_name_request();
@@ -13,18 +14,23 @@ public:
     void activate_rooms();
     void disactivate_rooms();
     sf::String get_name();
+    sf::String get_room_name();
     void set_name_button_handler(std::function<void()> inp_handler);
     void set_room_table_handler(std::function<void()> inp_handler);
     void set_create_room_handler(std::function<void()> inp_handler);
+    void set_rooms_table_from_model(){
+        rooms_table->set_rooms(model->get_rooms());
+    }
     void init() override;    
     void render() override;
     ~MenuView() override;
-    MenuView(sf::RenderWindow* inp_window, BasicModel* inp_model){
+    MenuView(sf::RenderWindow* inp_window, MenuModel* inp_model){
         window = inp_window;
         model = inp_model;
         init();
     };
 private:
+    MenuModel* model;
     std::shared_ptr<TextBox> name_textbox;
     std::shared_ptr<Button> name_button;
     std::shared_ptr<Table> rooms_table;

@@ -4,6 +4,7 @@
 //TODO: вместо define неймспейсы с переменными
 #define MENU_BACKGROUND_IMAGE_PATH "./images/Menu_background.png"
 #define MENU_NAME_TEXTBOX_BACKGROUND_IMAGE "./images/Menu_name_textbox_background.png"
+#define MENU_ROOM_TEXTBOX_BACKGROUND_IMAGE "./images/room_textbox.png"
 #define GENERAL_FONT_GOST_PATH "./fonts/gost.ttf"
 #define MENU_SLIDEBAR_STICK_IMAGE "./images/slidebar.png"
 #define MENU_BUTTON_FILL_IMAGE "./images/button_filling.png"

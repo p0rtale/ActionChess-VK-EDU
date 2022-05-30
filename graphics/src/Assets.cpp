@@ -9,6 +9,7 @@ void Assets::load(){ //TODO: написать хендлеоры ошибок и
     menu.button_filling.loadFromFile(MENU_BUTTON_FILL_IMAGE);
     menu.button_edge.loadFromFile(MENU_BUTTON_EDGE_IMAGE);
     menu.table_background.loadFromFile(MENU_TABLE_IMAGE);
+    menu.room_textbox_background_image.loadFromFile(MENU_ROOM_TEXTBOX_BACKGROUND_IMAGE);
     general.gost_font.loadFromFile("./fonts/gost.ttf");
 }
 

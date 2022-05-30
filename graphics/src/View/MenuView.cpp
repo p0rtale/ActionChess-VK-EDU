@@ -27,7 +27,8 @@ void MenuView::init(){
     create_name_textbox();
     create_name_button();
     create_rooms_table();
-
+    create_create_room();
+    create_room_name();
 
 }
 
@@ -68,11 +69,21 @@ void MenuView::activate_rooms(){
     disactivate_name_request();
     rooms_table->set_active(true);
     rooms_table->set_visible(true);    
+    create_room->set_active(true);
+    create_room->set_visible(true);    
+    room_name->set_active(true);
+    room_name->set_visible(true);    
     widgets.push_back(rooms_table);
+    widgets.push_back(create_room);
+    widgets.push_back(room_name);
 }
 void MenuView::disactivate_rooms(){
     rooms_table->set_active(false);
     rooms_table->set_visible(false);    
+    create_room->set_active(false);
+    create_room->set_visible(false);    
+    room_name->set_active(false);
+    room_name->set_visible(false);    
     widgets.clear();
 }
 
@@ -115,18 +126,49 @@ void MenuView::create_rooms_table(){
     
 }
 void MenuView::create_create_room(){
-    
+    std::function <void ()> f = std::bind(&empty);
+    sf::Text caption;
+    caption.setFillColor(sf::Color::Black);
+    caption.setFont(general_media.gost_font);
+    caption.setCharacterSize(MENU_NAME_BUTTON_CHARACTER_SIZE);
+    caption.setString(L"Создать комнату");
+    create_room = std::make_shared<Button>(menu_media.button_filling, menu_media.button_edge,sf::Color(255,255,0), sf::Color(50,50,50,50),sf::Color(255,255,255,50), sf::Color(255,255,255,100), sf::Vector2f(BUTTON_SHRINK_SCALE_WHEN_PRESSED,BUTTON_SHRINK_SCALE_WHEN_PRESSED), scale_factor, sf::Vector2f(2200,1000), caption,f);
+
 }
 
-//void MenuView::create_room_name();
+void MenuView::create_room_name(){
+    sf::Vector2f textbox_pos = sf::Vector2f(1600, 1400);
+    sf::Text caption;
+    sf::Text hint;
+    sf::Text databox;
+    databox.setFillColor(sf::Color::Black);
+    databox.setFont(general_media.gost_font);
+    databox.setCharacterSize(NAME_TEXTBOX_CHARACTER_SIZE);
+    hint.setFillColor(sf::Color(GREY_COLOR_RGB_VALUE,GREY_COLOR_RGB_VALUE,GREY_COLOR_RGB_VALUE));
+    hint.setFont(general_media.gost_font);
+    hint.setCharacterSize(NAME_TEXTBOX_CHARACTER_SIZE);
+    hint.setString(L"Введите имя новой комнаты");
+    sf::Rect<float> act = sf::Rect<float>(1670*scale_factor.x, 1570*scale_factor.y, 1200*scale_factor.x, 100*scale_factor.y);
+    room_name = std::make_shared<TextBox>(menu_media.room_textbox_background_image,scale_factor,textbox_pos, act,caption,hint,databox);
+
+}
 
 
 void MenuView::set_name_button_handler(std::function<void()> inp_handler){
     name_button->set_handler(inp_handler);
 }
-void MenuView::set_room_table_handler(std::function<void()> inp_handler){}
-void MenuView::set_create_room_handler(std::function<void()> inp_handler){}
+void MenuView::set_room_table_handler(std::function<void()> inp_handler){
+    
+}
+void MenuView::set_create_room_handler(std::function<void()> inp_handler){
+    create_room->set_handler(inp_handler);
+
+}
 
 sf::String MenuView::get_name(){
     return name_textbox->get_data();
+}
+
+sf::String MenuView::get_room_name(){
+    return room_name->get_data();
 }

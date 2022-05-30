@@ -18,7 +18,9 @@ enum class RequestType {
 
     START_GAME,
     GAME_STARTED,
-    MAKE_MOVE
+    MAKE_MOVE,
+
+    UNDEFINED
 };
 
 enum class ResponseStatus {

@@ -34,7 +34,7 @@ public:
                 sf::Rect<float> textbox = caption.getGlobalBounds();
                 sf::Rect<float> button_box = background.getGlobalBounds();
                 if ((textbox.width  + MENU_BUTTON_SIZE_OFFSET > button_box.width) || (textbox.height  + MENU_BUTTON_SIZE_OFFSET > button_box.height)){
-                    scale_factor = sf::Vector2f(scale_factor.x*((textbox.width  + MENU_BUTTON_SIZE_OFFSET )/button_box.width),scale_factor.y*((textbox.height  + MENU_BUTTON_SIZE_OFFSET )/button_box.height));
+                    scale_factor = sf::Vector2f(scale_factor.x*((textbox.width  +50+ MENU_BUTTON_SIZE_OFFSET )/button_box.width),scale_factor.y*((textbox.height  +50+ MENU_BUTTON_SIZE_OFFSET )/button_box.height));
                     background.setScale(scale_factor);
                     edge.setScale(scale_factor);
                 }

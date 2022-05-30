@@ -9,6 +9,7 @@ struct menu_assets{
     sf::Texture button_filling;
     sf::Texture button_edge;
     sf::Texture table_background;
+    sf::Texture room_textbox_background_image;
 };
 
 struct room_assets{

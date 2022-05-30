@@ -7,8 +7,17 @@
 #include "MenuModel.hpp"
 #include "MenuView.hpp"
 #include <thread>
-#define DEBUG
+
+#define UPDATE_INTERVAL_TIME 1
+enum MenuState{
+    STAGE_ASK_NAME,
+    STAGE_WAIT_NAME_CONFIRMATION,
+    STAGE_CHOOSE_ROOM,
+    STAGE_WAIT_ROOM_CONFIRMATION,
+};
+ 
 void throw_error(sf::String err);
+
 class MenuController: public BasicController{
 public:
     void init() override;    
@@ -22,7 +31,7 @@ public:
     
 
     ~MenuController(){
-        threads.clear();
+
     };
 protected:
     MenuView* view; // TODO: Законно ли переропределять?
@@ -31,11 +40,12 @@ protected:
     private:
         
         BasicWidget* widget_on_focus = NULL;
-        std::vector<std::thread> threads;
 private:
+    MenuState   state;
+    void handle_create_room();
     void handle_name_enter();      
-    
+    void ask_for_rooms();
     sf::String err;
-
+    sf::Clock update_timer;
 };
 

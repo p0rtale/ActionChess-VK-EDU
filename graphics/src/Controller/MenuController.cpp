@@ -8,10 +8,14 @@
 #include "Assets.hpp"
 #include "Variables.hpp"
 void MenuController::init(){
-    StageState state = STAGE_ACTIVE;
+    state = STAGE_ASK_NAME;
     view->activate_name_request();
     std::function <void ()> handler = std::bind(&MenuController::handle_name_enter,this);
     view->set_name_button_handler(handler);
+    handler = std::bind(&MenuController::handle_create_room,this);
+    view->set_create_room_handler(handler);
+    handler = std::bind(&MenuView::set_rooms_table_from_model ,view);
+    model->set_room_update_handler(handler);
 }    
 
 
@@ -47,23 +51,36 @@ void MenuController::handle_name_enter(){
     sf::String player_name = view->get_name();
     if (player_name.getSize() == 0){ //TODO: реализовать
         err =L"Пустое имя";
-        //state = STAGE_FREEZE;
         std::thread t(throw_error_maslo,err);
         t.detach();
     }
     else{
         model->set_player(player_name);
         view ->activate_rooms();
+        state = STAGE_CHOOSE_ROOM;
+
+    }    
+}
+
+void MenuController::handle_create_room(){
+    sf::String room_name = view->get_room_name();
+    if (room_name.getSize() == 0){ //TODO: реализовать
+        err =L"Пустое имя комнаты";
+        //state = STAGE_FREEZE;
+        std::thread t(throw_error_maslo,err);
+        t.detach();
     }
-    
-    
+    else{
+        model->create_room(room_name.toAnsiString());
+        view->disactivate_rooms();
+    }   
 }
 void MenuController::run(){
     CursorController::get_instance().reset_cursor();
     sf::Event e;
         while (window->pollEvent(e))
         {            
-            if(state == STAGE_ACTIVE){
+            if((state == STAGE_ASK_NAME)||(state == STAGE_CHOOSE_ROOM)){
                 switch (e.type)
                 {
                     
@@ -96,20 +113,25 @@ void MenuController::run(){
                         break;
                     }
                 }
-            }
-            else{
-                if(err.getSize() == 0){
-                        state = STAGE_ACTIVE;
-
+                if(state == STAGE_CHOOSE_ROOM){
+                    ask_for_rooms();
                 }
+            }
+            
             }
             if (e.type == sf::Event::Closed){
                 window->close();
             }
-        }
-
+        
+    model->tick();
     view->render();
     CursorController::get_instance().draw_cursor(window);
 
 }
 
+void MenuController::ask_for_rooms(){
+    if (update_timer.getElapsedTime().asSeconds()>UPDATE_INTERVAL_TIME){
+        model->ask_rooms();
+        update_timer.restart();
+    }
+}

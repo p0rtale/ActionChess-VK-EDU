@@ -44,8 +44,7 @@ public:
     void on_type(sf::RenderWindow* window, sf::Event event)override;
     void draw(sf::RenderWindow* window) override;
 
-
-    void set_rooms(std::vector<Rooms> inp_rooms) {};
+    void set_rooms(std::vector<Rooms> inp_rooms);
 protected:
     void animate_click();
     std::function<void()> handler;
@@ -63,25 +62,16 @@ protected:
     sf::Vector2f scale_when_pressed;
     sf::Color selected_color;
     std::vector<Rooms> rooms;
-    std::vector<sf::String> rooms_str = {
-        "Pervoe",
-        "Komnata 20 10 user/10",
-        "Komnata 2023 10 user/10",
-        "Komnata 24230 10 user/10",
-        "Komna456ta 24230 10 user/10",
-        "Komna654ta 20 10 user/10",
-        "Komna423ta 20 10 user/10",
-        "Komn34ata 20 10 user/10",
-        "Komna234ta 20 10 user/10",
-        "Poslednee"
-    };
+    std::vector<sf::String> rooms_str;
     std::vector<sf::Text> rooms_caption;
     Slidebar slider;
     float slider_offset =0;
     int selected = 0;
+    float selected_offset = 0;
     sf::Rect<float> text_zone;
     sf::RenderTexture table_texture;
     sf::Sprite text_table;
     void render_texture();
     void parse_rooms();
+    sf::Clock move_timer;
 };  

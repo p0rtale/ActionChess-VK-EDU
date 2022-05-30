@@ -37,6 +37,7 @@ int main(){
     WindowSwitcher& MainWindow = WindowSwitcher::get_instance();
     MainWindow.init(&c);
     MainWindow.run();
-    t.join();
+    io_context.stop();
+    t.join() ;//TODO: разобраться 
     return EXIT_SUCCESS;
 }
