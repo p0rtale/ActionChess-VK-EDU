@@ -2,6 +2,7 @@
 
 #include <unordered_set>
 
+#include "Game.hpp"
 #include "Room.hpp"
 
 class GameRoom: public Room {
@@ -14,14 +15,17 @@ public:
     
     bool removeSession(std::uint64_t id) override;
 
-    void runGame();
+    std::vector<uint64_t> runGame();
+
+    std::int64_t makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
+                           std::uint64_t x, std::uint64_t y);
 
     bool gameStarted() const;
 
     bool setReady(std::uint64_t id);
 
 private:
-    //std::shared_ptr<Game> m_game;
+    std::shared_ptr<Game> m_game = std::make_shared<Game>();
 
     std::unordered_set<std::uint64_t> m_readyPlayers;  // Guarded m_readyPlayersMutex 
 

@@ -38,6 +38,7 @@ std::uint64_t RoomController::createRoom(std::string name, std::uint64_t maxUser
 }
 
 void RoomController::removeRoom(std::uint64_t roomId) {
+    std::lock_guard<std::mutex> guard(m_mutex);
     m_rooms.erase(roomId);
 }
 
@@ -59,9 +60,9 @@ bool RoomController::moveToRoom(std::uint64_t roomId, const std::shared_ptr<Sess
     return false;
 }
 
-void RoomController::moveFromRoom(std::uint64_t roomId, const std::shared_ptr<Session>& session) {
+bool RoomController::moveFromRoom(std::uint64_t roomId, const std::shared_ptr<Session>& session) {
     if (roomId == s_mainRoomID) {
-        return;
+        return false;
     }
 
     std::shared_ptr<Room> room;
@@ -70,13 +71,21 @@ void RoomController::moveFromRoom(std::uint64_t roomId, const std::shared_ptr<Se
         auto it = m_rooms.find(roomId);
         if (it != m_rooms.end()) {
             room = it->second;
+        } else {
+            return false;
         }
     }
 
     const auto userId = session->getUser().getId();
     if (room->removeSession(userId)) {
-        m_mainRoom->addSession(session);        
+        m_mainRoom->addSession(session);   
     }
+
+    if (room->getUsersNum() == 0) {
+        removeRoom(roomId);
+    }
+
+    return true;
 }
 
 const Room& RoomController::getRoom(std::uint64_t id) const {
@@ -139,16 +148,28 @@ std::vector<std::string> RoomController::getAllRoomsJSON() const {
     return rooms;
 }
 
-void RoomController::runGame(std::uint64_t id) {
+std::vector<uint64_t> RoomController::runGame(std::uint64_t id) {
     if (id == s_mainRoomID) {
-        return;
+        return std::vector<uint64_t>();
     }
 
     std::lock_guard<std::mutex> guard(m_mutex);
     auto it = m_rooms.find(id);
     if (it != m_rooms.end()) {
         auto room = it->second;
-        room->runGame();
+        return room->runGame();
+    }
+
+    return std::vector<uint64_t>();
+}
+
+std::int64_t RoomController::makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
+                                       std::uint64_t x, std::uint64_t y) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto it = m_rooms.find(session->getUser().getRoomId());
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        return room->makeMove(session, figureId, x, y);
     }
 }
 

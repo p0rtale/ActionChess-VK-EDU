@@ -61,7 +61,9 @@ public:
 
     bool setReadyToPlay();
 
-    bool runGame();
+    std::vector<uint64_t> runGame();
+
+    std::int64_t makeMove(std::uint64_t figureId, std::uint64_t x, std::uint64_t y);
 
     void broadcast(const std::string& message);
 

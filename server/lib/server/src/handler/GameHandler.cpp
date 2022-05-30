@@ -43,24 +43,24 @@ namespace Handlers {
             updateMessage.m_type = RequestType::GAME_STARTED;
             updateMessage.m_status = ResponseStatus::UPDATE;
 
+            auto order = m_session->runGame();
+
+            auto firstSession = m_session->getRoom().getSession(order[0]);
+            auto secondSession = m_session->getRoom().getSession(order[1]);
+
             rapidjson::Value valueWhite(rapidjson::kObjectType);
             valueWhite.AddMember("color", 'W', allocator);
             updateMessage.m_jsonData = valueToString(valueWhite);
 
             updateMessage.toJSON(json);
-            m_session->write(json);
+            firstSession->write(json);
 
             rapidjson::Value valueBlack(rapidjson::kObjectType);
             valueBlack.AddMember("color", 'B', allocator);
             updateMessage.m_jsonData = valueToString(valueBlack);
 
             updateMessage.toJSON(json);
-            auto sessions = m_session->getRoom().getSessions();
-            if (sessions[0]->getId() != m_session->getId()) {
-                sessions[0]->write(json);
-            } else {
-                sessions[1]->write(json);
-            }
+            secondSession->write(json);
         }
 
         Response updateMessage;
@@ -112,18 +112,40 @@ namespace Handlers {
         auto& allocator = doc.GetAllocator();
         doc.Parse(m_request->m_jsonData.data());
 
-        const auto id = doc["id"].GetUint64();
-        auto x = doc["pos-to"][0].GetUint64();
-        auto y = doc["pos-to"][1].GetUint64();
-        if (true) {
-            std::uint64_t time = 0;
+        const auto figureId = doc["id"].GetUint64();
+        const auto x = doc["pos-to"][0].GetUint64();
+        const auto y = doc["pos-to"][1].GetUint64();
+
+        std::int64_t time = m_session->makeMove(figureId, x, y);
+        if (time != -1) {
+            {
+                rapidjson::Value value(rapidjson::kObjectType);
+                value.AddMember("time", time, allocator);
+
+                m_response.m_jsonData = valueToString(value);
+            }
+
+            Response updateMessage;
+            updateMessage.m_type = RequestType::LISTEN_MOVE;
+            updateMessage.m_status = ResponseStatus::UPDATE;
 
             rapidjson::Value value(rapidjson::kObjectType);
+            value.AddMember("id", m_session->getUser().getId(), allocator);
+
+            rapidjson::Value arrayValue(rapidjson::kArrayType);
+            arrayValue.PushBack(x, allocator);
+            arrayValue.PushBack(y, allocator);
+            value.AddMember("pos", arrayValue, allocator);
+
             value.AddMember("time", time, allocator);
 
-            m_response.m_jsonData = valueToString(value);
+            updateMessage.m_jsonData = valueToString(value);
+
+            std::string json;
+            updateMessage.toJSON(json);
+            m_session->broadcast(json);
         } else {
-            m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
+            m_response.m_status = ResponseStatus::METHOD_NOT_ALLOWED;
         }
     }
 

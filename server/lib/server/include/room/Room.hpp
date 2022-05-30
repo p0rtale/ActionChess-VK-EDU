@@ -24,6 +24,8 @@ public:
 
     virtual bool removeSession(std::uint64_t id);
 
+    std::shared_ptr<Session> getSession(std::uint64_t id) const;
+
     std::vector<std::shared_ptr<Session>> getSessions() const;
 
     void write(const std::string& message, std::uint64_t id);
