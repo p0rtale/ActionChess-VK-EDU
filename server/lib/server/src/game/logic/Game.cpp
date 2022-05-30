@@ -22,7 +22,7 @@
             std::cout<<"Winner is "<<this->handler->getWinner()<<std::endl;
         return timer;
     }
-    std::vector<char> Game:: init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2)
+    std::vector<char> Game::init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2)
     {
         colors.setPlayersId(session1->getId(), session2->getId());
         std::vector<char> res;

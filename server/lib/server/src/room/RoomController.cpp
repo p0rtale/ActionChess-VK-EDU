@@ -152,6 +152,16 @@ void RoomController::runGame(std::uint64_t id) {
     }
 }
 
+std::uint64_t RoomController::makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
+                                       std::uint64_t x, std::uint64_t y) {
+    std::lock_guard<std::mutex> guard(m_mutex);
+    auto it = m_rooms.find(session->getUser().getRoomId());
+    if (it != m_rooms.end()) {
+        auto room = it->second;
+        room->makeMove(session, figureId, x, y);
+    }
+}
+
 bool RoomController::setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId) {
     std::lock_guard<std::mutex> guard(m_mutex);
     auto it = m_rooms.find(roomId);

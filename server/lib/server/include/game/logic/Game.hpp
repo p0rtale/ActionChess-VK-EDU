@@ -10,9 +10,6 @@
 
 struct Id_color
 {
-    std::uint16_t white_id;
-    std::uint16_t black_id;
-
     Id_color() = default;
 
     void setPlayersId(std::uint64_t id1, std::uint64_t id2)
@@ -30,6 +27,9 @@ struct Id_color
         else
             return NULL;
     }
+
+    std::uint64_t white_id;
+    std::uint64_t black_id;
 };
 
 

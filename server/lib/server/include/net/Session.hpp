@@ -63,6 +63,8 @@ public:
 
     bool runGame();
 
+    std::uint64_t makeMove(std::uint64_t figureId, std::uint64_t x, std::uint64_t y);
+
     void broadcast(const std::string& message);
 
     void removeFromRoomController();

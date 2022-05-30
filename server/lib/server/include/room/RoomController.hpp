@@ -39,6 +39,9 @@ public:
 
     void runGame(std::uint64_t id);
 
+    std::uint64_t makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
+                           std::uint64_t x, std::uint64_t y);
+
     bool setReadyToPlay(std::uint64_t roomId, std::uint64_t playerId);
 
     void write(const std::string& message, std::uint64_t id);

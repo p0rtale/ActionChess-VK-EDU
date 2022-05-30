@@ -118,6 +118,10 @@ bool Session::runGame() {
     return false;
 }
 
+std::uint64_t Session::makeMove(std::uint64_t figureId, std::uint64_t x, std::uint64_t y) {
+    m_roomController->makeMove(shared_from_this(), figureId, x, y);
+}
+
 void Session::broadcast(const std::string& message) {
     m_roomController->broadcast(message, m_user.getRoomId(), m_user.getId());
 }

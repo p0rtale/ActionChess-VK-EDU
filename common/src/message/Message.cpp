@@ -17,7 +17,11 @@ std::string typeToStr(const RequestType type) {
         { RequestType::READY_PLAY,     "ready-play"    },
         { RequestType::NEW_READY,      "new-ready"     },
         { RequestType::GAME_STARTED,   "game-started"  },
-        { RequestType::MOVE_FIGURE,    "move-figure"   }
+        { RequestType::MOVE_FIGURE,    "move-figure"   },
+        { RequestType::LISTEN_MOVE,    "listen-move"   },
+        { RequestType::TIMEOUT_MOVE,   "timeout-move"  },
+        { RequestType::DELETE_FIGURE,  "delete-figure" },
+        { RequestType::GAME_OVER,      "game-over"     }
     };
 
     if (kMapType.find(type) != kMapType.end()) {
@@ -41,7 +45,11 @@ RequestType strToType(const std::string& str) {
         { "ready-play",     RequestType::READY_PLAY    },
         { "new-ready",      RequestType::NEW_READY     },
         { "game-started",   RequestType::GAME_STARTED  },
-        { "move-figure",    RequestType::MOVE_FIGURE   }
+        { "move-figure",    RequestType::MOVE_FIGURE   },
+        { "listen-move",    RequestType::LISTEN_MOVE   },
+        { "timeout-move",   RequestType::TIMEOUT_MOVE  },
+        { "delete-figure",  RequestType::DELETE_FIGURE },
+        { "game-over",      RequestType::GAME_OVER     }
     };
 
     if (kMapStr.find(str) != kMapStr.end()) {

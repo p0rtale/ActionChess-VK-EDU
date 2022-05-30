@@ -112,16 +112,38 @@ namespace Handlers {
         auto& allocator = doc.GetAllocator();
         doc.Parse(m_request->m_jsonData.data());
 
-        const auto id = doc["id"].GetUint64();
-        auto x = doc["pos-to"][0].GetUint64();
-        auto y = doc["pos-to"][1].GetUint64();
-        if (true) {
-            std::uint64_t time = 0;
+        const auto figureId = doc["id"].GetUint64();
+        const auto x = doc["pos-to"][0].GetUint64();
+        const auto y = doc["pos-to"][1].GetUint64();
+
+        std::uint64_t time = m_session->makeMove(figureId, x, y);
+        if (time != -1) {
+            {
+                rapidjson::Value value(rapidjson::kObjectType);
+                value.AddMember("time", time, allocator);
+
+                m_response.m_jsonData = valueToString(value);
+            }
+
+            Response updateMessage;
+            updateMessage.m_type = RequestType::LISTEN_MOVE;
+            updateMessage.m_status = ResponseStatus::UPDATE;
 
             rapidjson::Value value(rapidjson::kObjectType);
+            value.AddMember("id", m_session->getUser().getId(), allocator);
+
+            rapidjson::Value arrayValue(rapidjson::kArrayType);
+            arrayValue.PushBack(x, allocator);
+            arrayValue.PushBack(y, allocator);
+            value.AddMember("pos", arrayValue, allocator);
+
             value.AddMember("time", time, allocator);
 
-            m_response.m_jsonData = valueToString(value);
+            updateMessage.m_jsonData = valueToString(value);
+
+            std::string json;
+            updateMessage.toJSON(json);
+            m_session->broadcast(json);
         } else {
             m_response.m_status = ResponseStatus::INTERNAL_SERVER_ERROR;
         }

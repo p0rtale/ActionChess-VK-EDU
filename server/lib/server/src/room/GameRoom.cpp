@@ -1,6 +1,7 @@
 #include "GameRoom.hpp"
 
-GameRoom::GameRoom(std::uint64_t id, const std::string& name, std::uint64_t maxUserNum): Room(id, name, maxUserNum) {}
+GameRoom::GameRoom(std::uint64_t id, const std::string& name, std::uint64_t maxUserNum)
+    : Room(id, name, maxUserNum) {}
 
 bool GameRoom::addSession(const std::shared_ptr<Session>& session) {
     const auto id = session->getUser().getId();
@@ -35,8 +36,18 @@ bool GameRoom::removeSession(std::uint64_t id) {
     return false;    
 }
 
-void GameRoom::runGame() {
+std::vector<char> GameRoom::runGame() {
     m_gameStarted = true;
+
+    auto iterator = m_readyPlayers.begin();
+    auto firstSessionId = *iterator;
+    auto secondSessionId = *(++iterator);
+    return m_game->init(m_sessions.at(firstSessionId), m_sessions.at(secondSessionId));
+}
+
+std::uint64_t GameRoom::makeMove(const std::shared_ptr<Session>& session, std::uint64_t figureId, 
+                                 std::uint64_t x, std::uint64_t y) {
+    return m_game->makeMove(session.get(), figureId, x, y);
 }
 
 bool GameRoom::gameStarted() const {

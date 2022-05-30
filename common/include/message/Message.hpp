@@ -27,6 +27,10 @@ enum class RequestType {
     GAME_STARTED,
 
     MOVE_FIGURE,
+    LISTEN_MOVE,
+    TIMEOUT_MOVE,
+    DELETE_FIGURE,
+    GAME_OVER,
 
     UNDEFINED
 };
