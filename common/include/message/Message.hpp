@@ -23,9 +23,14 @@ enum class RequestType {
     NEW_MESSAGE,
 
     READY_PLAY,
+    NEW_READY,
     GAME_STARTED,
 
-    MAKE_MOVE,
+    MOVE_FIGURE,
+    LISTEN_MOVE,
+    TIMEOUT_MOVE,
+    DELETE_FIGURE,
+    GAME_OVER,
 
     UNDEFINED
 };

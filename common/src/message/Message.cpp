@@ -8,11 +8,20 @@ std::string typeToStr(const RequestType type) {
         { RequestType::GET_ID,         "get-id"        },
         { RequestType::CREATE_ROOM,    "create-room"   },
         { RequestType::JOIN_ROOM,      "join-room"     },
+        { RequestType::USER_ENTERED,   "user-entered"  },
         { RequestType::LEAVE_ROOM,     "leave-room"    },
+        { RequestType::USER_LEFT,      "user-left"     },
         { RequestType::GET_ALL_ROOMS,  "get-all-rooms" },
         { RequestType::WRITE_MESSAGE,  "write-message" },
+        { RequestType::NEW_MESSAGE,    "new-message"   },
         { RequestType::READY_PLAY,     "ready-play"    },
-        { RequestType::MAKE_MOVE,      "make-move"     }
+        { RequestType::NEW_READY,      "new-ready"     },
+        { RequestType::GAME_STARTED,   "game-started"  },
+        { RequestType::MOVE_FIGURE,    "move-figure"   },
+        { RequestType::LISTEN_MOVE,    "listen-move"   },
+        { RequestType::TIMEOUT_MOVE,   "timeout-move"  },
+        { RequestType::DELETE_FIGURE,  "delete-figure" },
+        { RequestType::GAME_OVER,      "game-over"     }
     };
 
     if (kMapType.find(type) != kMapType.end()) {
@@ -34,8 +43,13 @@ RequestType strToType(const std::string& str) {
         { "write-message",  RequestType::WRITE_MESSAGE },
         { "new-message",    RequestType::NEW_MESSAGE   },
         { "ready-play",     RequestType::READY_PLAY    },
+        { "new-ready",      RequestType::NEW_READY     },
         { "game-started",   RequestType::GAME_STARTED  },
-        { "make-move",      RequestType::MAKE_MOVE     }
+        { "move-figure",    RequestType::MOVE_FIGURE   },
+        { "listen-move",    RequestType::LISTEN_MOVE   },
+        { "timeout-move",   RequestType::TIMEOUT_MOVE  },
+        { "delete-figure",  RequestType::DELETE_FIGURE },
+        { "game-over",      RequestType::GAME_OVER     }
     };
 
     if (kMapStr.find(str) != kMapStr.end()) {
