@@ -33,7 +33,7 @@ public:
         close();
     }
 
-
+    void ask_id();
     void handle_resolve(const boost::system::error_code& err, const boost::asio::ip::tcp::resolver::results_type& endpoints);
     void handle_connect(const boost::system::error_code& error);
 

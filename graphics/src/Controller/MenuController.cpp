@@ -19,7 +19,7 @@ void MenuController::init(){
 }    
 
 
-void throw_error_maslo(sf::String err){
+void throw_error(sf::String err){
     
     sf::Font font;
     font.loadFromFile(GENERAL_FONT_GOST_PATH);
@@ -51,13 +51,13 @@ void MenuController::handle_name_enter(){
     sf::String player_name = view->get_name();
     if (player_name.getSize() == 0){ //TODO: реализовать
         err =L"Пустое имя";
-        std::thread t(throw_error_maslo,err);
+        std::thread t(throw_error,err);
         t.detach();
     }
     else{
+        state = STAGE_WAIT_NAME_CONFIRMATION;
         model->set_player(player_name);
-        view ->activate_rooms();
-        state = STAGE_CHOOSE_ROOM;
+
 
     }    
 }
@@ -67,7 +67,7 @@ void MenuController::handle_create_room(){
     if (room_name.getSize() == 0){ //TODO: реализовать
         err =L"Пустое имя комнаты";
         //state = STAGE_FREEZE;
-        std::thread t(throw_error_maslo,err);
+        std::thread t(throw_error,err);
         t.detach();
     }
     else{
@@ -76,11 +76,13 @@ void MenuController::handle_create_room(){
     }   
 }
 void MenuController::run(){
-    CursorController::get_instance().reset_cursor();
+    if 
     sf::Event e;
         while (window->pollEvent(e))
         {            
             if((state == STAGE_ASK_NAME)||(state == STAGE_CHOOSE_ROOM)){
+                CursorController::get_instance().reset_cursor();
+
                 switch (e.type)
                 {
                     
@@ -116,8 +118,22 @@ void MenuController::run(){
                 if(state == STAGE_CHOOSE_ROOM){
                     ask_for_rooms();
                 }
-            }
-            
+           }
+           else{
+               CursorController::get_instance().set_cursor(sf::Cursor::Wait);
+               if(state == STAGE_WAIT_NAME_CONFIRMATION){
+                   if (model->GotNameId()){
+                     view ->activate_rooms();
+                    state = STAGE_CHOOSE_ROOM;
+                   }
+               }
+               else if(state == STAGE_WAIT_ROOM_CONFIRMATION){
+                //    if (model->GotNameId()){
+                //      view ->activate_rooms();
+                //     state = STAGE_CHOOSE_ROOM;
+                //    }
+               }
+           }            
             }
             if (e.type == sf::Event::Closed){
                 window->close();

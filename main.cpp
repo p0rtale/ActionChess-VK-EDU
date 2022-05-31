@@ -33,6 +33,7 @@ int main(){
     std::optional<boost::asio::ip::tcp::socket> socket3;
 
     Client c(io_context, server, port, path,&ctx);
+    
     boost::thread t(boost::bind(&boost::asio::io_context::run, &io_context));
     WindowSwitcher& MainWindow = WindowSwitcher::get_instance();
     MainWindow.init(&c);

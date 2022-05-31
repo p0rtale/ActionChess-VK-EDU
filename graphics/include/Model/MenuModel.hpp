@@ -6,7 +6,7 @@
 
 struct User{
     std::string name;
-    int id;
+    int id = -1;
     std::string name_id;
     User(std::string inp_name, int inp_id){
         name = inp_name;
@@ -36,6 +36,9 @@ public:
     MENU_WAITING_FOR_JOIN_ROOM,
     MENU_WAITING_FOR_CREATE_ROOM
     };
+    bool GotNameId(){
+        return(player.id!= -1);
+    }
     void set_player(std::string inp_name);
     void init() override ;// TODO: добавить клиент     
     void tick() override  ;// TODO: override 

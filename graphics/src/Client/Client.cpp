@@ -26,7 +26,27 @@ std::string valueToString(const rapidjson::Value& value) {
     return buffer.GetString();
 }
 
-  
+void Client::ask_id(){
+    std::cout<<"U"<<std::endl;
+       rapidjson::Document doc;
+            auto& allocator = doc.GetAllocator();
+
+            Request get_all_rooms_msg;
+            get_all_rooms_msg.m_type = RequestType::GET_ALL_ROOMS;
+
+        
+
+            get_all_rooms_msg.m_jsonData = "\"\"";
+
+            std::string json;
+            get_all_rooms_msg.toJSON(json);
+            json = "{\"type\":\"get-id\"}\r\n";
+            boost::asio::async_write(socket_, boost::asio::buffer(json.c_str(), json.size()),
+                                     boost::bind(&Client::handle_get_all_rooms, this,
+                                                 boost::asio::placeholders::error));
+
+         
+}
 
 void Client::close(){
     socket_.lowest_layer().close();

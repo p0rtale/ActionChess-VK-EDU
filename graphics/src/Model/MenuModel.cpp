@@ -65,7 +65,8 @@ void MenuModel::parse_rooms(std::string data){//TODO: перенести пар�
 void MenuModel::set_player(std::string inp_name){
     player.name = inp_name;
     player.id = -1;
-    ask_rooms();
+    c->ask_id();
+    state = MenuModel::MenuModelState::MENU_WAITING_FOR_SET_PLAYER;
 }
 
 void MenuModel::ask_rooms(){
@@ -87,6 +88,7 @@ void MenuModel::tick(){
                         parse_rooms(to_process.m_jsonData);
                         break;
                     }
+                    case RequestType::GET_ID
                 }
             }
             else{
