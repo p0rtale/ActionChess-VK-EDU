@@ -10,6 +10,7 @@
 
 #define UPDATE_INTERVAL_TIME 1
 enum MenuState{
+    STAGE_JOINED_ROOM,
     STAGE_ASK_NAME,
     STAGE_WAIT_NAME_CONFIRMATION,
     STAGE_CHOOSE_ROOM,
@@ -21,7 +22,7 @@ void throw_error(sf::String err);
 class MenuController: public BasicController{
 public:
     void init() override;    
-    void run() override;
+    bool run() override;
     MenuController(MenuView* inp_view, MenuModel* inp_model, sf::RenderWindow* inp_window){
         view = inp_view;
         model = inp_model;
@@ -33,6 +34,8 @@ public:
     ~MenuController(){
 
     };
+        MenuState   state;
+
 protected:
     MenuView* view; // TODO: Законно ли переропределять?
     MenuModel* model;   
@@ -41,10 +44,12 @@ protected:
         
         BasicWidget* widget_on_focus = NULL;
 private:
-    MenuState   state;
     void handle_create_room();
+    void handle_join_room();
+
     void handle_name_enter();      
     void ask_for_rooms();
+    
     sf::String err;
     sf::Clock update_timer;
 };

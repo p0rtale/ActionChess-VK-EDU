@@ -21,6 +21,7 @@ public:
     void set_rooms_table_from_model(){
         rooms_table->set_rooms(model->get_rooms());
     }
+
     void init() override;    
     void render() override;
     ~MenuView() override;
@@ -29,14 +30,14 @@ public:
         model = inp_model;
         init();
     };
+        std::shared_ptr<Table> rooms_table;
+
 private:
     MenuModel* model;
     std::shared_ptr<TextBox> name_textbox;
     std::shared_ptr<Button> name_button;
-    std::shared_ptr<Table> rooms_table;
     std::shared_ptr<Button> create_room;
     std::shared_ptr<TextBox> room_name;
-
     void create_name_textbox();
     void create_name_button();
     void create_rooms_table();

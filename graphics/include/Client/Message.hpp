@@ -7,18 +7,30 @@ const std::string kMessageSeparator = "\r\n";
 enum class RequestType {
     DEFAULT,
 
+    GET_ID,
+
     CREATE_ROOM,
+
     JOIN_ROOM,
+    USER_ENTERED,
+
     LEAVE_ROOM,
     USER_LEFT,
+
     GET_ALL_ROOMS,
 
     WRITE_MESSAGE,
     NEW_MESSAGE,
 
-    START_GAME,
+    READY_PLAY,
+    NEW_READY,
     GAME_STARTED,
-    MAKE_MOVE,
+
+    MOVE_FIGURE,
+    LISTEN_MOVE,
+    TIMEOUT_MOVE,
+    DELETE_FIGURE,
+    GAME_OVER,
 
     UNDEFINED
 };

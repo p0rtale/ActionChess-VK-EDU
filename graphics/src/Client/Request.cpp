@@ -13,7 +13,7 @@ void Request::parseJSON(const std::string& json) {
         m_type = strToType(doc["type"].GetString());
     }
 
-    if (doc.HasMember("data")) {
+    if (!doc.Parse(json.data()).HasParseError() && doc.HasMember("data")) {
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
         doc["data"].Accept(writer);
@@ -23,14 +23,14 @@ void Request::parseJSON(const std::string& json) {
 
 void Request::toJSON(std::string& json) const {
     rapidjson::Document doc;
-    auto& alloc = doc.GetAllocator();
+    auto& allocator = doc.GetAllocator();
     doc.SetObject();
 
     rapidjson::Value value;
 
     const auto type = typeToStr(m_type);
-    value.SetString(type.data(), alloc);
-    doc.AddMember("type", value, alloc);
+    value.SetString(type.data(), allocator);
+    doc.AddMember("type", value, allocator);
 
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);

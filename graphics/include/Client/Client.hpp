@@ -16,6 +16,27 @@
 #include "Message.hpp"
 #include <deque>
 #include <mutex> 
+struct User{
+    std::string name;
+    int id = -1;
+    std::string name_id;
+    User(std::string inp_name, int inp_id){
+        name = inp_name;
+        id = inp_id;
+        name_id = inp_name +"#"+ std::to_string(id);
+    }
+    bool ready = false;
+    User() = default;
+};
+struct Rooms{
+    std::string name;
+    int id;
+    std::vector<User> users;
+    int users_num;
+    int max_users_num;
+    Rooms() = default;
+   
+};
 class Client{
 public:
     Client(boost::asio::io_context& io_context,
@@ -40,7 +61,7 @@ public:
     void handle_handshake(const boost::system::error_code& err);
 
     void handle_write_request(const boost::system::error_code& err);
-
+    void handle_join_room(const boost::system::error_code& err);
     void handle_read_status_line(const boost::system::error_code& err);
     void close();
     inline std::deque<Response>* get_response_queue(){
@@ -49,6 +70,7 @@ public:
     void get_all_rooms();
     mutable std::mutex queue_mutex;
     void create_room(std::string room_name, std::string  player);
+    void join_room(Rooms room,std::string name);
 private:
     void handle_create_room(const boost::system::error_code& err);
     void handle_get_all_rooms(const boost::system::error_code& err);

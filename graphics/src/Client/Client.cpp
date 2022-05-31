@@ -15,6 +15,7 @@
 #include "Client.hpp"
 #include "Request.hpp"
 #include "Response.hpp"
+#include "MenuModel.hpp"
 using boost::asio::ip::tcp;
 
 
@@ -297,4 +298,82 @@ Response:
 }
 
 
+*/
+
+
+    
+void Client::join_room(Rooms room,std::string name){
+    rapidjson::Document doc;
+    auto& allocator = doc.GetAllocator();
+
+    Request join_room_msg;
+    join_room_msg.m_type = RequestType::JOIN_ROOM;
+
+
+    
+    rapidjson::Value value(rapidjson::kObjectType);
+    value.AddMember("user", rapidjson::Value(rapidjson::kObjectType), allocator);
+    rapidjson::Value stringValue;
+    stringValue.SetString(name.data(), allocator);
+    value["user"].AddMember("name",  stringValue, allocator);
+    
+    rapidjson::Value masloint;
+
+    masloint.SetInt(room.id);
+
+    value.AddMember("room", rapidjson::Value(rapidjson::kObjectType), allocator);
+    value["room"].AddMember("id", masloint, allocator);
+
+    join_room_msg.m_jsonData = valueToString(value);
+
+    std::string json;
+    join_room_msg.toJSON(json);
+    std::cout<<json<<std::endl;
+    boost::asio::async_write(socket_, boost::asio::buffer(json.c_str(), json.size()),
+                                boost::bind(&Client::handle_join_room, this,
+                                            boost::asio::placeholders::error));
+}
+
+void Client::handle_join_room(const boost::system::error_code& err)
+    {
+        if (err)
+        {
+            std::cout << "Error: " << err << "\n";
+         }
+         boost::asio::async_read_until(socket_, response_buf_, kMessageSeparator,
+            boost::bind(&Client::handle_read_status_line, 
+                                                                this, 
+                                                               boost::asio::placeholders::error
+                                                            ));
+
+}
+
+/*
+Request:
+{
+	“type”: “join-room”, 
+	“data”: {
+		“user”: {
+			“name”: string
+		}
+		“room”: {
+		“id”: int	
+},
+	}
+}
+
+Response:
+{
+	“type”: “join-room”,
+	“status”: …,
+	“data”: {
+	“room”: {
+“name”: string // Имя комнаты
+“id”: int,
+“users”: [ {“name”;string;”id”:int}] // Игроки 
+“users-num”: int
+“max-users-num”: int
+}
+	}
+}
 */

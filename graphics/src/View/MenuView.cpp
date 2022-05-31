@@ -158,7 +158,7 @@ void MenuView::set_name_button_handler(std::function<void()> inp_handler){
     name_button->set_handler(inp_handler);
 }
 void MenuView::set_room_table_handler(std::function<void()> inp_handler){
-    
+    rooms_table->set_handler(inp_handler);
 }
 void MenuView::set_create_room_handler(std::function<void()> inp_handler){
     create_room->set_handler(inp_handler);

@@ -11,6 +11,7 @@ void Assets::load(){ //TODO: написать хендлеоры ошибок и
     menu.table_background.loadFromFile(MENU_TABLE_IMAGE);
     menu.room_textbox_background_image.loadFromFile(MENU_ROOM_TEXTBOX_BACKGROUND_IMAGE);
     general.gost_font.loadFromFile("./fonts/gost.ttf");
+    room.background_image.loadFromFile("./images/room_background.png");
 }
 
 

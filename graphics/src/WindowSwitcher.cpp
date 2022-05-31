@@ -12,9 +12,9 @@ void WindowSwitcher::init(Client* inp_c){
 }
 
 void WindowSwitcher::run(){
-    //while(window->isOpen()){
+    while(window->isOpen()){
         Stage = Stage->run(); 
-    //}
+    }
 }
 WindowSwitcher::~WindowSwitcher(){
     delete window;

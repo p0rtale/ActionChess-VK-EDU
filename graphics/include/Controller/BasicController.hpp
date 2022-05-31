@@ -14,7 +14,7 @@ class BasicController{
 //Абстрактный класс для controller
 public:
     virtual void init() = 0 ;    
-    virtual void run() = 0 ;
+    virtual bool run() = 0 ;
 
     BasicController(BasicController const& other) = delete;
     BasicController &operator=(BasicController const& other) = delete;

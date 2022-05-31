@@ -4,7 +4,7 @@
 #include <iostream>
 #include "rapidjson/document.h"
 #include <mutex>
-
+#include "Client.hpp"
 /*
 Request:
 {
@@ -74,8 +74,21 @@ void MenuModel::ask_rooms(){
     state = MenuModel::MenuModelState::MENU_WAITING_FOR_GET_ALL_ROOMS;
     
 }
+
+void MenuModel::parse_get_player(std::string data){
+    rapidjson::Document doc;
+    auto& allocator = doc.GetAllocator();
+    if (!doc.Parse(data.data()).HasParseError() &&
+        doc.HasMember("id")){
+            player.id = doc["id"].GetInt();
+            player.name_id = player.name + "#" +std::to_string(player.id);
+        }
+                
+
+}
 void MenuModel::init(){};// TODO: добавить клиент     
 void MenuModel::tick(){
+    if(state != MenuModel::MENU_JOINED_ROOM){
     if(c->queue_mutex.try_lock()){
 
     
@@ -88,7 +101,16 @@ void MenuModel::tick(){
                         parse_rooms(to_process.m_jsonData);
                         break;
                     }
-                    case RequestType::GET_ID
+                    case RequestType::GET_ID:{
+                            parse_get_player(to_process.m_jsonData);
+                            state = MENU_ACTIVE;
+                            ask_rooms();
+                      
+                    }
+                    case RequestType::CREATE_ROOM:{
+                        parse_jroom(to_process.m_jsonData);
+                        break;
+                    }
                 }
             }
             else{
@@ -99,9 +121,42 @@ void MenuModel::tick(){
         }
         c->queue_mutex.unlock();
     }
+    }
 }
 
 void MenuModel::create_room(std::string room_name){
     c->create_room(room_name,player.name);
-    state = MenuModel::MenuModelState::MENU_WAITING_FOR_CREATE_ROOM;
+    state = MenuModel::MenuModelState::MENU_WAITING_FOR_JOIN_ROOM;
 }
+
+void MenuModel::join_room(Rooms room){
+    c->join_room(room,player.name);
+    state = MenuModel::MenuModelState::MENU_WAITING_FOR_JOIN_ROOM;
+}
+
+void MenuModel::parse_jroom(std::string data){//TODO: перенести парсер в класс клиента, чтобы модель не занималась парсингом данных.
+    rapidjson::Document doc;
+    std::cout<<"1"<<std::endl;
+    auto& allocator = doc.GetAllocator();
+    std::cout<<"1"<<std::endl;
+    if (!doc.Parse(data.data()).HasParseError() &&
+        doc.HasMember("room")) {
+
+                Rooms inp_room;
+                std::vector<User> inp_users;
+                inp_room.id = doc["room"]["id"].GetInt();
+                inp_room.name = doc["room"]["name"].GetString();
+                for(int j=0;j<doc["room"]["users"].GetArray().Size();j++){
+                    inp_users.push_back(User(doc["room"]["users"].GetArray()[j]["user"]["name"].GetString(),doc["room"]["users"].GetArray()[j]["user"]["id"].GetInt()));
+                }
+                inp_room.users = inp_users;
+                inp_room.users_num= doc["room"]["users-num"].GetInt();
+                inp_room.max_users_num = doc["room"]["max-users-num"].GetInt();
+                
+                jroom = inp_room;
+        jUsers = inp_users;
+        state = MenuModel::MENU_JOINED_ROOM;
+                
+            } 
+        
+    }

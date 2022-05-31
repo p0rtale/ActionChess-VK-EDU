@@ -6,7 +6,7 @@
 #include "MenuController.hpp"
 #include "MenuView.hpp"
 #include "Client.hpp"
-
+#include "RoomStage.hpp"
 void MenuStage::init(){
     model = new MenuModel(c);
     view = new MenuView(window,model);
@@ -26,8 +26,18 @@ MenuStage::~MenuStage(){
     
 }
 BasicStage* MenuStage::run(){
-    while(window->isOpen()){
-        controller->run();
+    while(window->isOpen() and nado){
+        nado = controller->run() && window->isOpen();
+    }
+    if (window->isOpen()){
+        if(!nado){
+            if(controller->state == STAGE_JOINED_ROOM){
+                RoomStage* room = new RoomStage(window,c,model->player,model->jUsers,model->jroom);
+                return room;
+            
+
+            }
+        }
     }
     return this;
 }

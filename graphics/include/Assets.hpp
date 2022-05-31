@@ -13,6 +13,7 @@ struct menu_assets{
 };
 
 struct room_assets{
+    sf::Texture background_image;
 
 };
 

@@ -8,6 +8,7 @@
 #include <functional>
 #include "Slidebar.hpp"
 #include "MenuModel.hpp"
+#include "RoomModel.hpp"
 
 class Table: public BasicWidget{
 // Класс отображаемых таблиц данных
@@ -37,7 +38,9 @@ public:
     
     Table() {};
     ~Table() {};
-
+    void set_handler(std::function<void()> inp_handler){
+        handler = inp_handler;
+    }
     void on_click_release(sf::RenderWindow* window)override;
     void on_click_press(sf::RenderWindow* window) override;
     void on_mouse_over(sf::RenderWindow* window)override;
@@ -45,7 +48,10 @@ public:
     void draw(sf::RenderWindow* window) override;
 
     void set_rooms(std::vector<Rooms> inp_rooms);
+    void set_user(std::vector<User> inp_rooms){};
+    Rooms clicked_room;
 protected:
+
     void animate_click();
     std::function<void()> handler;
     sf::Text caption;

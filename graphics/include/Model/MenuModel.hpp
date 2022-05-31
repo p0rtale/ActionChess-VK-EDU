@@ -4,26 +4,7 @@
 #include <functional>
 
 
-struct User{
-    std::string name;
-    int id = -1;
-    std::string name_id;
-    User(std::string inp_name, int inp_id){
-        name = inp_name;
-        id = inp_id;
-        name_id = inp_name +"#"+ std::to_string(id);
-    }
-    User() = default;
-};
-struct Rooms{
-    std::string name;
-    int id;
-    std::vector<User> users;
-    int users_num;
-    int max_users_num;
-    Rooms() = default;
-   
-};
+
 
 class MenuModel: public BasicModel{
 //Абстрактный класс для model
@@ -34,11 +15,16 @@ public:
     MENU_WAITING_FOR_SET_PLAYER,
     MENU_WAITING_FOR_GET_ALL_ROOMS,
     MENU_WAITING_FOR_JOIN_ROOM,
-    MENU_WAITING_FOR_CREATE_ROOM
+    MENU_WAITING_FOR_CREATE_ROOM,
+    MENU_JOINED_ROOM
     };
     bool GotNameId(){
         return(player.id!= -1);
     }
+    bool JoinedRoom(){
+        return state = MENU_JOINED_ROOM;
+    }
+    void parse_get_player(std::string data);
     void set_player(std::string inp_name);
     void init() override ;// TODO: добавить клиент     
     void tick() override  ;// TODO: override 
@@ -46,6 +32,7 @@ public:
     ~MenuModel(){
         rooms.clear();
     } ;
+    void parse_jroom(std::string data);
     void set_room_update_handler(std::function<void()> inp_handler){
         rooms_update_handler = inp_handler;
     }
@@ -53,12 +40,15 @@ public:
     std::vector<Rooms> get_rooms(){
         return rooms;
     }
+    void join_room(Rooms room);
     void ask_rooms();
+    User player;
+    Rooms jroom;
+    std::vector<User> jUsers;
 private:
     std::function<void()> rooms_update_handler;
 
     void parse_rooms(std::string data);
     MenuModel::MenuModelState state = MENU_ACTIVE;
     std::vector<Rooms> rooms;
-    User player;
 };

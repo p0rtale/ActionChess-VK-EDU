@@ -16,8 +16,23 @@ void Table::on_click_release(sf::RenderWindow* window){
 void Table::on_click_press(sf::RenderWindow* window) {
     if(visible && active){
         slider.on_click_press(window);
-        if(clicked == OVER){
-            handler();
+                sf::Vector2i mouse_pos = sf::Mouse::getPosition(*window);
+        clicked = (text_table.getGlobalBounds().contains(window->mapPixelToCoords(mouse_pos))) ? PRESSED : FAR;
+
+        if(clicked == PRESSED){
+            sf::Vector2f pos_on_texture(window->mapPixelToCoords(mouse_pos).x-text_table.getGlobalBounds().left,window->mapPixelToCoords(mouse_pos).y -text_table.getGlobalBounds().top + slider_offset);
+            int last_selected = selected;
+            int last_offset = selected_offset;
+            for(int i=0;i<rooms_caption.size();i++){
+                if(rooms_caption[i].getGlobalBounds().contains(pos_on_texture)){
+                                                            
+                    clicked_room = rooms[i];
+                    handler();
+                    break;
+                }
+                
+            }
+            
         }
     }
 }
@@ -46,7 +61,8 @@ void Table::on_mouse_over(sf::RenderWindow* window){
         }
         else {
             selected_offset = 0;
-            if((rooms_caption.size()-1)>=selected){
+            std::cout<<rooms_caption.size()<<std::endl;
+            if(((rooms_caption.size())>selected)){
                 rooms_caption[selected].setPosition(0,rooms_caption[selected].getPosition().y);
             }
 

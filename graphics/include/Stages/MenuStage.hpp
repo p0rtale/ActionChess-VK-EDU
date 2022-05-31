@@ -18,9 +18,8 @@ protected:
     MenuView* view ;
     MenuController* controller ;
     MenuModel* model ;
-};void set_name_button_handler(std::function<void()>);
-    void set_room_table_handler(std::function<void()>);
-    void set_create_room_handler(std::function<void()>);
+    bool nado = true;
+};
 
 
 

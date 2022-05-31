@@ -16,6 +16,8 @@ void MenuController::init(){
     view->set_create_room_handler(handler);
     handler = std::bind(&MenuView::set_rooms_table_from_model ,view);
     model->set_room_update_handler(handler);
+    handler  = std::bind(&MenuController::handle_join_room,this);
+    view->set_room_table_handler(handler);
 }    
 
 
@@ -72,11 +74,21 @@ void MenuController::handle_create_room(){
     }
     else{
         model->create_room(room_name.toAnsiString());
-        view->disactivate_rooms();
+        //view->disactivate_rooms();
+        state= STAGE_WAIT_ROOM_CONFIRMATION;
     }   
 }
-void MenuController::run(){
-    if 
+
+void MenuController::handle_join_room(){
+    Rooms room= view->rooms_table->clicked_room;
+
+        model->join_room(room);
+        //view->disactivate_rooms();
+        state= STAGE_WAIT_ROOM_CONFIRMATION;
+       
+}
+bool MenuController::run(){
+    
     sf::Event e;
         while (window->pollEvent(e))
         {            
@@ -128,10 +140,11 @@ void MenuController::run(){
                    }
                }
                else if(state == STAGE_WAIT_ROOM_CONFIRMATION){
-                //    if (model->GotNameId()){
-                //      view ->activate_rooms();
-                //     state = STAGE_CHOOSE_ROOM;
-                //    }
+                    if (model->JoinedRoom()){
+                    state = STAGE_JOINED_ROOM;
+                    std::cout<<"Joined"<<std::endl;
+                    return false;
+                    }
                }
            }            
             }
@@ -142,7 +155,7 @@ void MenuController::run(){
     model->tick();
     view->render();
     CursorController::get_instance().draw_cursor(window);
-
+    return true;
 }
 
 void MenuController::ask_for_rooms(){
