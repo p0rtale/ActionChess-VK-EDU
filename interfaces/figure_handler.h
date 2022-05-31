@@ -24,14 +24,14 @@ private:
     Figure* board[CHESS_COUNT];
     char winner;
     Field* field;
-    bool isCorrect(Figure* figure);
-    void setTimer(Figure* figure, int length);
+    bool isCorrect(Figure* figure, char color);
+    void setTimer(Figure* figure, int length, Session* ses);
     Figure* findFigure(int id);
     Figure* findByTile(Tile tile);
     // void castling(Rock rock, King king);
 public:
     FigureHandler();
-    int moveFigure(int figure, Tile endTile);
+    int moveFigure(int figure, Tile endTile, char color,  Session* ses);
     ~FigureHandler();
     Figure* findEnemy(Tile tile, char color);
     char isColision(Figure* figure, Tile endTile);

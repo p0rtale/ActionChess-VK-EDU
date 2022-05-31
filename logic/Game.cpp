@@ -23,12 +23,23 @@
     }
     vector<char> Game:: init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2)
     {
-        this->colors(session1->getId(), session2->getId());
+        this->colors.getId(session1->getId(), session2->getId());
         vector<char> res;
         res.push_back("w");
         res.push_back("b");
         return res;
 
+    }
+    bool Game::isInGame()
+    {
+        if (this->handler->getWinner() == 'n')
+            return true;
+        else
+            return false;
+    }
+    char Game::whoWins()
+    {
+        return this->handler->getWinner();
     }
     // void addRequest(string request)
     // void extractData();
