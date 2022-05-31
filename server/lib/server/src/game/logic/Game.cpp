@@ -24,11 +24,29 @@
     }
     std::vector<char> Game::init( const std::shared_ptr<Session>& session1,  const std::shared_ptr<Session>& session2)
     {
+<<<<<<< HEAD:server/lib/server/src/game/logic/Game.cpp
         colors.setPlayersId(session1->getId(), session2->getId());
         std::vector<char> res;
         res.push_back('w');
         res.push_back('b');
+=======
+        this->colors.getId(session1->getId(), session2->getId());
+        vector<char> res;
+        res.push_back("w");
+        res.push_back("b");
+>>>>>>> dev-EvilAv:logic/Game.cpp
         return res;
+    }
+    bool Game::isInGame()
+    {
+        if (this->handler->getWinner() == 'n')
+            return true;
+        else
+            return false;
+    }
+    char Game::whoWins()
+    {
+        return this->handler->getWinner();
     }
     // void addRequest(string request)
     // void extractData();

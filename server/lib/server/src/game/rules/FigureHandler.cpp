@@ -5,6 +5,7 @@
 #include <math.h>
 #include <chrono>
 #include <thread>
+<<<<<<< HEAD:server/lib/server/src/game/rules/FigureHandler.cpp
 
 #include "Figure.hpp"
 #include "Rook.hpp"
@@ -13,6 +14,15 @@
 #include "Knight.hpp"
 #include "Bishop.hpp"
 #include "Queen.hpp"
+=======
+#include "knight.h"
+#include "bishop.h"
+#include "queen.h"
+#include <mutex>
+#include <sender.h>
+
+std::mutex mtx;
+>>>>>>> dev-EvilAv:rules/figure_handler.cpp
 
     FigureHandler::FigureHandler()
     {
@@ -63,7 +73,7 @@
     }
 
 
-    int FigureHandler::moveFigure(int figure, Tile endTile)
+    int FigureHandler::moveFigure(int figure, Tile endTile, char color, Session* ses)
     {
         if (getWinner() != 'n')
             return -1;
@@ -76,7 +86,7 @@
 
         Figure* temp;
         temp = findFigure(figure);
-        if (!isCorrect(temp))
+        if (!isCorrect(temp, color))
             return -1;
         Tile* startTile;
 
@@ -130,7 +140,7 @@
                 field->feelCell(endTile.row, endTile.column, false);
                 std::cout<<"Very good"<<std::endl;
                 std::cout.flush();
-                setTimer(temp, length);
+                setTimer(temp, length, ses);
                 return length;
             }
             else
@@ -149,13 +159,15 @@
     {
         this->winner = w;
     }
-    bool FigureHandler::isCorrect(Figure* figure)
+    bool FigureHandler::isCorrect(Figure* figure, char color)
     {
         if (figure == nullptr)
         {
             std::cout<<"Error there is no figure"<<std::endl;
                 return false;
         }
+        if (figure->getColor() != color)
+            return -1;
         if (figure->isDead())
         {
             std::cout<<"Error figure is dead"<<std::endl;
@@ -169,16 +181,17 @@
         return true;
     }
 
-    void FigureHandler::setTimer(Figure* figure, int length)
+    void FigureHandler::setTimer(Figure* figure, int length, Session* ses)
     {
         figure->setInFlight();
         std::cout<< figure->getId()<<": Fly me to the moon\n ";
         
         std::cout.flush();
-        std::thread timer ([figure, length, this] ()
+        std::thread timer ([figure, length, this, ses] ()
         {
             sleep(length);
             figure->endFlight();
+            ses->write(Timeout_Move(figure->getId(), figure->getPosition()));
             std::cout<< figure->getId()<< ": reach ";
             figure->getPosition().print();
 
@@ -190,8 +203,19 @@
                 if (victim && (victim->getColor() != figure->getColor()))
                     {
                         if (victim->getType() == KING)
-                            setWinner(figure->getColor());
-                        victim->die();
+                        {
+                            mtx.lock();
+                                char clr = figure->getColor();
+                                setWinner(clr);
+                                ses->write(Game_Over(clr));
+                            mtx.unlock();
+
+                        }
+                        mtx.lock();
+                            victim->die();
+                            ses->write(Delete_Figure(victim->getId()));
+                        mtx.unlock();
+
                     }
                 figure->setAtack(false);
             }
