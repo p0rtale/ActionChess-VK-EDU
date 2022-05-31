@@ -1,0 +1,2 @@
+/usr/bin/ar qc libsrc.a CMakeFiles/src.dir/src/BoardTable.cpp.o CMakeFiles/src.dir/src/Engine.cpp.o CMakeFiles/src.dir/src/Figure.cpp.o CMakeFiles/src.dir/src/GroupFigure.cpp.o CMakeFiles/src.dir/src/Sprite.cpp.o
+/usr/bin/ranlib libsrc.a
